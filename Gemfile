@@ -1,14 +1,15 @@
 source 'https://rubygems.org'
+ruby '1.9.3'
 
 gem 'rails', '3.2.11'
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
  
 group :production do
   gem 'pg'
   gem "activerecord-postgresql-adapter"
+  gem 'newrelic_rpm'
+  gem 'unicorn'
 end
  
 # Gems used only for assets and not required
@@ -24,6 +25,12 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'bootstrap-sass', '~> 3.0.2.0'
+gem 'rails_12factor', group: :production
+
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

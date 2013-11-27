@@ -1,88 +1,148 @@
+<div style="width:100%;float:left">
+  <div style="float:right;width:80%">
+	    <img src="<%=@imageUrl%>" style="width:100%">
+  </div>
+<%= form_for(@verification) do |f| %>
+  <%= f.hidden_field :acta_id %>
+  <%= f.hidden_field :is_valid %>
 
-<div style="float:right">
-    <img src="<%=@imageUrl%>">
-</div>
+  <div style="float:left;width:20%">	
+	<table id="stored-data"style="float:left">
+		<tr>
+			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
+		</tr>
+		<tr>
+			<td><b>DC:</b></td><td><%= @actum.dc %></td>
+		</tr>
+		<tr>
+			<td><b>Alianza Pat.</b></td><td><%= @actum.alianza %></td>
+		</tr>
+		<tr>
+			<td><b>Liberal:</b></td><td><%= @actum.liberal %></td>
+		</tr>
+		<tr>
+			<td><b>PAC:</b></td><td><%= @actum.pac %></td>
+		</tr>
+		<tr>
+			<td><b>Libre:</b></td><td><%= @actum.libre %></td>
+		</tr>
+		<tr>
+			<td><b>UD:</b></td><td><%= @actum.ud %></td>
+		</tr>
+		<tr>
+			<td><b>Pinu:</b></td><td><%= @actum.pinu %></td>
+		</tr>
+		<tr>
+			<td><b>Nacional:</b></td><td><%= @actum.nacional %></td>
+		</tr>
+		<tr>
+			<td><b>Blancos:</b></td><td><%= @actum.blancos %></td>
+		</tr>
+		<tr>
+			<td><b>Nulos:</b></td><td><%= @actum.nulos %></td>
+		</tr>
+		<tr>
+			<td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
+		</tr>
+		<% if @actum.verified_count>0%>
+		<tr>
+			<td><b>Verificado:</b></td><td><%= @actum.verified_count %> veces</td>
+		</tr>
+		<%end%>
+	</table>
 
-<p id="notice"><%= notice %></p>
+	<table id="editable-data" style="display:none">
+		<tr>
+			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
+		</tr>
+		<tr>
+			<td><b>DC:</b></td><td><%= f.number_field :dc%></td>
+		</tr>
+		<tr>
+			<td><b>Alianza Pat.</b></td><td><%= f.number_field :alianza %></td>
+		</tr>
+		<tr>
+			<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
+		</tr>
+		<tr>
+			<td><b>PAC:</b></td><td><%= f.number_field :pac %></td>
+		</tr>
+		<tr>
+			<td><b>Libre:</b></td><td><%= f.number_field :libre %></td>
+		</tr>
+		<tr>
+			<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
+		</tr>
+		<tr>
+			<td><b>Pinu:</b></td><td><%= f.number_field :pinu %></td>
+		</tr>
+		<tr>
+			<td><b>Nacional:</b></td><td><%= f.number_field :nacional %></td>
+		</tr>
+		<tr>
+			<td><b>Blancos:</b></td><td><%= f.number_field :blancos %></td>
+		</tr>
+		<tr>
+			<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
+		</tr>
+	</table>
+  </div>
 
-
-
-<p>
-  <b>Numero:</b>
-  <%= @actum.numero %>
-</p>
-
-<p>
-  <b>DC</b>
-  <%= @actum.dc %>
-</p>
-
-<p>
-  <b>Alianza:</b>
-  <%= @actum.alianza %>
-</p>
-
-<p>
-  <b>Liberal:</b>
-  <%= @actum.liberal %>
-</p>
-
-<p>
-  <b>PAC:</b>
-  <%= @actum.pac %>
-</p>
-
-<p>
-  <b>Libre:</b>
-  <%= @actum.libre %>
-</p>
-
-
-
-
-<p>
-  <b>UD:</b>
-  <%= @actum.ud %>
-</p>
-
-
- 
-<p>
-  <b>Pinu:</b>
-  <%= @actum.pinu %>
-</p>
-
-<p>
-  <b>Nacional:</b>
-  <%= @actum.nacional %>
-</p>
-
-<p>
-  <b>Blancos:</b>
-  <%= @actum.blancos %>
-</p>
-
-
-<p>
-  <b>Nulos:</b>
-  <%= @actum.nulos %>
-</p>
-
-<p>
-    <b> Total Votos:</b>
-    <%=@totalVotos%>
-    </p>
-
-<% if @actum.verified%>
-<p>
-  <b>Verificado</b>
-  <%= @actum.verified %>
-</p>
+  <div style="float:left;margin-top:5px">
+	  <%if @actum.verified_count<VERIFICATIONS %>
+	    <h2>Verificación</h2>
+	    
+	    <div id="correct-buttons">
+	      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
+	    </div>
+	
+	    <div id="incorrect-buttons" style="display:none">
+	      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
+	    </div>
+	
+	  <%else%>
+	    <h3>Verificación completa</h3>
+	  <%end%>
+  </div>
 <%end%>
 
+<%if @actum.verified_count>0%>
+<div style="float:left:width:100%;clear:both;padding-top:20px">
+  <h2>Auditor&iacute;a de verificaciones</h2>
+  <table>
+  <tr>
+	 <th>User</th>
+	 <th>Hora</th>
+	 <th>Vered&iacute;cto</th>
+	 <th>DC</th><th>AP</th><th>PL</th><th>PAC</th><th>LIB</th><th>UD</th><th>PINU</th><th>PN</th><th>Blancos</th><th>Nulos</th>
+  </tr>
+  <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
+    <tr>
+	  <td><%=verification.user_id%></td>
+	  <td><%=verification.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
+	  <td><%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%></td>
+	  <td><%=verification.dc%></td>
+	  <td><%=verification.alianza%></td>
+	  <td><%=verification.liberal%></td>
+	  <td><%=verification.pac%></td>
+	  <td><%=verification.libre%></td>
+	  <td><%=verification.ud%></td>
+	  <td><%=verification.pinu%></td>
+	  <td><%=verification.nacional%></td>
+	  <td><%=verification.blancos%></td>
+	  <td><%=verification.nulos%></td>
+    </tr>
+  <%end%>
+  </table>
+</div>
+<%end%>
 
-<%= link_to 'Edit', edit_actum_path(@actum) %> |
-<%= link_to 'Nueva Acta', new_actum_path() %> | 
-<%= link_to 'Listado', acta_path %> 
-
-<h2>Acta Correcta | Reportar Acta</h2>
+<script>
+$('#show-form').click(function(){
+  $('#stored-data').hide();
+  $('#correct-buttons').hide();
+  $('#editable-data').show();
+  $('#incorrect-buttons').show();
+  $('#verification_is_valid').val(false);
+})
+</script>

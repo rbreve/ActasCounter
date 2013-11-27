@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+#Secret tokens... you have to set these directly on the Heroku Config Vars
+/config/initializers/dev_environment.rb
