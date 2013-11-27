@@ -29,7 +29,7 @@ class ActaController < ApplicationController
   # GET /acta/1
   # GET /acta/1.json
   def show
-    if(params[:random]==1)
+    if(params[:id]=="random")
       @actum= Actum.order("RANDOM()").first
     else
       @actum = Actum.find(params[:id])
@@ -50,13 +50,19 @@ class ActaController < ApplicationController
   # GET /acta/new.json
   def new
     @invalid=true
-    while(@invalid)   
-      i = Random.rand(15000)
+    begin
+      i = Actum.order("numero ASC").last.numero.to_i
+    rescue
+      i = 1
+    end
+    
+    while(@invalid)
+      i+=1    
       @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
       begin
         open(@imageUrl)
       rescue OpenURI::HTTPError  
-        print "invalid "  
+        print "invalid"
       else
         print "valid"
         @invalid=false
