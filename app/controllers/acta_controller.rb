@@ -17,7 +17,7 @@ class ActaController < ApplicationController
   def show
     
     
-    if(params[:random]=1)
+    if(params[:random]==1)
       @actum= Actum.order("RANDOM()").first
     else
       
