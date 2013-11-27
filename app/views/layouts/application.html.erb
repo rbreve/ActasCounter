@@ -13,6 +13,9 @@
 	<%= link_to 'Listar Actas', acta_path %> |
 	<%= link_to 'Registrar Nueva Acta', new_actum_path %> | 
 	<a href="/acta/random"> Validar Acta</a>
+	<%if current_user.is_admin%>
+	   |  <a href="/users">User admin</a>
+	<%end%>
   </div>
   <div style="float:right">
     <img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"> 

@@ -15,7 +15,7 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><a href="http://facebook.com/<%=current_user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"></a></td>
+    <td><a href="http://facebook.com/<%=user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=user.uid%>/picture?width=35&height=35"></a></td>
     <td><%= user.name %></td>
     <td><%= user.lastname %></td>
     <td><%= user.email %></td>
