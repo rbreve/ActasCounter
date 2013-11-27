@@ -1,3 +1,13 @@
 <h1>Verificación de Actas - Elecciones Honduras</h1>
+
+<%if user_signed_in?%>
+<p>Colabora con una de estas tareas:</p>
+
+<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-pencil"></span> Digital un acta</button></a>
+
+<a href="/acta/random"> <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Validar un acta</button></a>
+
+<%else%>
 <p>Colabora, ingresa con su cuenta de facebook.</p>
 <p><%= link_to "Comenzar...", user_omniauth_authorize_path(:facebook) %></p>
+<%end%>

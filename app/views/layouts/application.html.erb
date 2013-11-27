@@ -7,28 +7,34 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div style="float:left;width:100%;clear:both">
-<%if user_signed_in?%>
-  <div style="float:left">
-	<%= link_to 'Listar Actas', acta_path %> |
-	<%= link_to 'Registrar Nueva Acta', new_actum_path %> | 
-	<a href="/acta/random"> Validar Acta</a>
-	<%if current_user.is_admin%>
-	   |  <a href="/users">User admin</a>
-	<%end%>
-  </div>
-  <div style="float:right">
-    <img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"> 
-    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-  </div>
-<%else%>
-  <div style="float:right">
-    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
-  </div>
-<%end%>
-</div>
+<nav class="navbar navbar-default" role="navigation" style="padding:10px">
+	<div class="navbar-left">
+		<a href="<%=acta_path%>"><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button></a>
 
-<div class="content">
+		<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digital un acta</button></a>
+
+		<a href="/acta/random"> <button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar un acta</button></a>
+
+	</div>
+	<div class="navbar-right">
+	 	<%if user_signed_in?%>
+	        
+		    <%if current_user.is_admin%>
+		      <a href="/users">User admin</a> | 
+		   <%end%>
+		
+		    <img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"> 
+		    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+		  </div>
+		<%else%>
+		  <div style="float:right">
+		    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+		  </div>
+		<%end%>
+	</div>
+</nav>
+
+<div class="content" style="width:90%;margin:auto">
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
