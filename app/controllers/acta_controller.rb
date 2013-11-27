@@ -64,7 +64,7 @@ class ActaController < ApplicationController
   # GET /acta/new.json
   def new
     @invalid=true
-    i = begin Actum.order("numero ASC").last.numero.to_i rescue 0 end
+    i = begin Actum.order("created_at DESC").limit(1).first.numero.to_i rescue 0 end
 
     while(@invalid)
       i+=1    
