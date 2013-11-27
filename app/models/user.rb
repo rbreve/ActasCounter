@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
   has_many :actum
   has_many :verifications
   
+  def shortname
+    "#{name} #{lastname[0]}"
+  end
+  
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
@@ -23,4 +27,6 @@ class User < ActiveRecord::Base
     end
     user
   end
+  
+  
 end

@@ -44,6 +44,9 @@
 		<tr>
 			<td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
 		</tr>
+		<tr>
+			<td><b>Ingresada por</b></td><td><a href="http://facebook.com/<%=@actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=@actum.user.uid%>/picture?width=35&height=35" alt="<%=@actum.user.shortname%>" title="<%=@actum.user.shortname%>"></a></td>
+		</tr>
 		<% if @actum.verified_count>0%>
 		<tr>
 			<td><b>Verificado:</b></td><td><%= @actum.verified_count %> veces</td>
@@ -125,7 +128,9 @@
   </tr>
   <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
     <tr>
-	  <td><%=verification.user_id%></td>
+	  <td>
+		<a href="http://facebook.com/<%=verification.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=verification.user.uid%>/picture?width=35&height=35" alt="<%=verification.user.shortname%>" title="<%=verification.user.shortname%>"></a>
+	  </td>
 	  <td><%=verification.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
 	  <td><%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%></td>
 	  <td><%=verification.dc%></td>
