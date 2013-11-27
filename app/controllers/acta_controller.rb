@@ -1,5 +1,7 @@
 require 'open-uri'
 class ActaController < ApplicationController
+  before_filter :verify_authentication
+  
   # GET /acta
   # GET /acta.json
   def index
@@ -23,14 +25,10 @@ class ActaController < ApplicationController
   # GET /acta/1
   # GET /acta/1.json
   def show
-    
-    
     if(params[:random]==1)
       @actum= Actum.order("RANDOM()").first
     else
-      
       @actum = Actum.find(params[:id])
-    
     end
     
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
@@ -47,30 +45,23 @@ class ActaController < ApplicationController
   # GET /acta/new
   # GET /acta/new.json
   def new
-    
-     
-     
-     @invalid=true
-      
-      while(@invalid)
-         
+    @invalid=true
+    while(@invalid)   
       i = Random.rand(15000)
-
       @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
- 
-        begin
+      begin
         open(@imageUrl)
-       rescue OpenURI::HTTPError  
-         print "invalid "  
-       else
-         print "valid"
-         @invalid=false
-       end
-       
+      rescue OpenURI::HTTPError  
+        print "invalid "  
+      else
+        print "valid"
+        @invalid=false
+      end
     end
     
-     @actum = Actum.new
-    @actum.numero=i 
+    @actum = Actum.new
+    @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+    @actum.numero=i
 
     respond_to do |format|
       format.html # new.html.erb
@@ -80,17 +71,16 @@ class ActaController < ApplicationController
 
   # GET /acta/1/edit
   def edit
-    
     @actum = Actum.find(params[:id])
     @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
-    
   end
 
   # POST /acta
   # POST /acta.json
   def create
     @actum = Actum.new(params[:actum])
-
+    @actum.user_id = current_user.id
+        
     respond_to do |format|
       if @actum.save
         format.html { redirect_to @actum, notice: 'El Acta fue ingresada al sistema.' }

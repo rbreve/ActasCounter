@@ -1,5 +1,21 @@
-To set Unicorn on Heroku add this config var:
+ENV VARS:
+  To set Unicorn on Heroku add this config var:
 
-heroku config:set WEB_CONCURRENCY=6
+  heroku config:set WEB_CONCURRENCY=6
 
-Where the value is the number of concurrent unicorn workers for the web dyno
+-----
+Facebook app credentials:
+
+FOR PRODUCTION ON HEROKU:
+
+  heroku config:set FB_APP_ID=the_facebook_app_id
+  heroku config:set FB_APP_SECRET=the_facebook_app_secret
+
+FOR YOUR LOCAL DEVELOPMENT:
+
+  Add this file (not tracked for security) "/config/initializers/dev_environment.rb" with this content:
+
+  unless Rails.env.production?
+    ENV["FB_APP_ID"]="the_facebook_app_id"
+    ENV["FB_APP_SECRET"]="the_facebook_app_id"
+  end
