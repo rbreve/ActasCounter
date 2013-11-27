@@ -13,6 +13,7 @@
     <th>Blancos</th>
     <th>Nulos</th>
     <th>Ingresada por</th>
+    <th>Hora de ingreso</th>
     <th>Verificaciones</th>
     <th></th>
   </tr>
@@ -31,6 +32,8 @@
     <td><%= actum.blancos %></td>
     <td><%= actum.nulos %></td>
     <td><a href="http://facebook.com/<%=actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
+    <td><%=actum.created_at.strftime("%d/%b/%Y")%><br/>
+        <%=actum.created_at.strftime("%k:%M:%S")%></td>
     <td><%= actum.verified_count %> / <%=VERIFICATIONS%></td>
     <td>
 	   <%if actum.verified_count>=VERIFICATIONS or actum.user_id==current_user.id%>
@@ -54,6 +57,7 @@
    <td><b><%= @sumPinu %></b></td>
    <td><b><%= @sumBlancos %></b></td>
    <td><b><%= @sumNulos %></b></td>
+   <td></td>
    <td></td>
    <td><b><%= @sumVerified %></b></td>
    <td></td>
