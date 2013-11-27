@@ -89,7 +89,7 @@ class ActaController < ApplicationController
         
     respond_to do |format|
       if @actum.save
-        format.html { redirect_to @actum, notice: 'El Acta fue ingresada al sistema.' }
+        format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.' }
         format.json { render json: @actum, status: :created, location: @actum }
       else
         format.html { render action: "new" }
