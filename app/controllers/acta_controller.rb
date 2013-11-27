@@ -115,7 +115,10 @@ class ActaController < ApplicationController
           format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.' }
           format.json { render json: @actum, status: :created, location: @actum }
         else
-          format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.'  }
+          i=@actum.numero.to_i
+          @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
+          
+          format.html { render action: "new" }
           format.json { render json: @actum.errors, status: :unprocessable_entity }
         end
       end

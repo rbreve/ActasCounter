@@ -3,6 +3,18 @@
 	    <img src="<%=@imageUrl%>" style="width:100%">
   </div>
 <%= form_for(@verification) do |f| %>
+<% if @verification.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@verification.errors.count, "error") %> prohibited this actum from being saved:</h2>
+
+    <ul>
+    <% @verification.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
   <%= f.hidden_field :acta_id %>
   <%= f.hidden_field :is_valid %>
 
@@ -116,7 +128,7 @@
   </div>
 <%end%>
 
-<%if @actum.verified_count>0%>
+<%if Verification.where(:acta_id=>@actum.id).count>0%>
 <div style="float:left:width:100%;clear:both;padding-top:20px">
   <h2>Auditor&iacute;a de verificaciones</h2>
   <table>
@@ -150,11 +162,21 @@
 <%end%>
 
 <script>
-$('#show-form').click(function(){
-  $('#stored-data').hide();
-  $('#correct-buttons').hide();
-  $('#editable-data').show();
-  $('#incorrect-buttons').show();
-  $('#verification_is_valid').val(false);
+$(document).ready(function(){
+	$('#show-form').click(function(){
+	  $('#stored-data').hide();
+	  $('#correct-buttons').hide();
+	  $('#editable-data').show();
+	  $('#incorrect-buttons').show();
+	  $('#verification_is_valid').val(false);
+	})
+
+	<%if @trigger_verification%>
+	 $('#stored-data').hide();
+	 $('#correct-buttons').hide();
+	 $('#editable-data').show();
+	 $('#incorrect-buttons').show();
+	 $('#verification_is_valid').val(false);
+	<%end%>
 })
 </script>
