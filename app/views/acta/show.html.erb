@@ -73,10 +73,10 @@
     <%=@totalVotos%>
     </p>
 
-<% if @actum.verified%>
+<% if @actum.verified_count>0%>
 <p>
   <b>Verificado</b>
-  <%= @actum.verified %>
+  <%= @actum.verified_count %> veces
 </p>
 <%end%>
 
