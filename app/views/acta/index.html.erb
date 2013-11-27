@@ -19,7 +19,7 @@
 
 <% @acta.each do |actum| %>
   <tr>
-    <td><%= actum.numero %></td>
+    <td><%="%05d" % actum.numero %></td>
     <td><%= actum.liberal %></td>
     <td><%= actum.nacional %></td>
     <td><%= actum.libre %></td>
