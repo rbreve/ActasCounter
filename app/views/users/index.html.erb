@@ -2,9 +2,12 @@
 
 <table>
   <tr>
+    <th>FB</th>
     <th>Name</th>
     <th>Lastname</th>
     <th>Email</th>
+    <th>Actas</th>
+    <th>Is Admin?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,16 +15,15 @@
 
 <% @users.each do |user| %>
   <tr>
+    <td><a href="http://facebook.com/<%=current_user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"></a></td>
     <td><%= user.name %></td>
     <td><%= user.lastname %></td>
     <td><%= user.email %></td>
+    <td><%= user.actum.count %></td>
+    <td><%= user.is_admin %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>

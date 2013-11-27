@@ -67,3 +67,18 @@ div {
     list-style: square;
   }
 }
+
+table {  
+ tr {
+   td {
+      border:solid 1px #CCC;
+      padding: 10px;
+    }
+   th {
+      border:solid 1px #CCC;
+      padding: 10px;
+      background:#EFEFEF;
+      text-align:left;
+    }
+  }
+}

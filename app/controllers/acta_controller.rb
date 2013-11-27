@@ -14,7 +14,11 @@ class ActaController < ApplicationController
     @sumUD = Actum.sum('ud')
     @sumDC = Actum.sum('dc')
     @sumAlianza = Actum.sum('alianza')
-    
+    @sumPinu = Actum.sum('pinu')
+    @sumBlancos = Actum.sum('blancos')
+    @sumNulos = Actum.sum('nulos')
+    @sumVerified = Actum.sum('verified_count')
+           
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @acta }

@@ -20,8 +20,6 @@
     
     <th>Verificaciones</th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @acta.each do |actum| %>
@@ -40,8 +38,6 @@
       
     <td><%= actum.verified_count %></td>
     <td><%= link_to 'Show', actum %></td>
-    <td><%= link_to 'Edit', edit_actum_path(actum) %></td>
-    <td><%= link_to 'Destroy', actum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 
@@ -55,12 +51,9 @@
    <td><b><%= @sumDC %></b></td>
    <td><b><%= @sumAlianza %></b></td>
    <td><b><%= @sumPinu %></b></td>
-     <td><b><%= @sumBlancos %></b></td>
-     <td><b><%= @sumNulos %></b></td>
-     
-   <td> </td>
-   <td> </td>
-   <td> </td>
+   <td><b><%= @sumBlancos %></b></td>
+   <td><b><%= @sumNulos %></b></td>
+   <td><b><%= @sumVerified %></b></td>
    <td> </td>
  </tr>
 
