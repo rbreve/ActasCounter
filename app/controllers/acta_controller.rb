@@ -50,12 +50,8 @@ class ActaController < ApplicationController
   # GET /acta/new.json
   def new
     @invalid=true
-    begin
-      i = Actum.order("numero ASC").last.numero.to_i
-    rescue
-      i = 1
-    end
-    
+    i = begin Actum.order("numero ASC").last.numero.to_i rescue 0 end
+
     while(@invalid)
       i+=1    
       @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i

@@ -5,3 +5,4 @@ require File.expand_path('../application', __FILE__)
 ConteoActas::Application.initialize!
 
 VERIFICATIONS=3
+MAX_ACTAS=16135
