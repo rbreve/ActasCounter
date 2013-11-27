@@ -1,12 +1,12 @@
-<div style="float:right">
-    <img src="<%=@imageUrl%>">
-</div>
-
+<div style="width:100%;float:left">
+  <div style="float:right;width:80%">
+	    <img src="<%=@imageUrl%>" style="width:100%">
+  </div>
 <%= form_for(@verification) do |f| %>
   <%= f.hidden_field :acta_id %>
   <%= f.hidden_field :is_valid %>
 
-  <div style="float:left">	
+  <div style="float:left;width:20%">	
 	<table id="stored-data"style="float:left">
 		<tr>
 			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
@@ -101,9 +101,40 @@
 	    </div>
 	
 	  <%else%>
-	    <h2>Verificación completa</h2>
+	    <h3>Verificación completa</h3>
 	  <%end%>
   </div>
+<%end%>
+
+<%if @actum.verified_count>0%>
+<div style="float:left:width:100%;clear:both;padding-top:20px">
+  <h2>Auditor&iacute;a de verificaciones</h2>
+  <table>
+  <tr>
+	 <th>User</th>
+	 <th>Hora</th>
+	 <th>Vered&iacute;cto</th>
+	 <th>DC</th><th>AP</th><th>PL</th><th>PAC</th><th>LIB</th><th>UD</th><th>PINU</th><th>PN</th><th>Blancos</th><th>Nulos</th>
+  </tr>
+  <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
+    <tr>
+	  <td><%=verification.user_id%></td>
+	  <td><%=verification.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
+	  <td><%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%></td>
+	  <td><%=verification.dc%></td>
+	  <td><%=verification.alianza%></td>
+	  <td><%=verification.liberal%></td>
+	  <td><%=verification.pac%></td>
+	  <td><%=verification.libre%></td>
+	  <td><%=verification.ud%></td>
+	  <td><%=verification.pinu%></td>
+	  <td><%=verification.nacional%></td>
+	  <td><%=verification.blancos%></td>
+	  <td><%=verification.nulos%></td>
+    </tr>
+  <%end%>
+  </table>
+</div>
 <%end%>
 
 <script>

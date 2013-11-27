@@ -98,16 +98,20 @@ class ActaController < ApplicationController
   # POST /acta
   # POST /acta.json
   def create
-    @actum = Actum.new(params[:actum])
-    @actum.user_id = current_user.id
+    if @actum=Actum.find_by_numero(params[:actum][:numero])
+      redirect_to @actum, notice: 'Alguien ingreso esta acta antes. Puedes verificarla...'
+    else
+      @actum = Actum.new(params[:actum])
+      @actum.user_id = current_user.id
         
-    respond_to do |format|
-      if @actum.save
-        format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.' }
-        format.json { render json: @actum, status: :created, location: @actum }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @actum.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @actum.save
+          format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.' }
+          format.json { render json: @actum, status: :created, location: @actum }
+        else
+          format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.'  }
+          format.json { render json: @actum.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
