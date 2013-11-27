@@ -117,7 +117,13 @@
 		    </div>
 		<%else%>
 		   <%if current_user.id==@actum.user_id%>
-		     <h2>Esperando verificaci&oacute;n de otros</h2>
+			 <%if @trigger_verification%>
+		       <div id="incorrect-buttons" style="display:none">
+		        <h3><%= f.submit  "Registrar" %></button>
+		       </div>
+		     <%else%>
+		       <h2>Esperando verificaci&oacute;n de otros</h2>
+		     <%end%>
 		   <%else%>
 		     <h2>Ya has verificado esta acta</h2>
 		   <%end%>
@@ -144,7 +150,13 @@
 		<a href="http://facebook.com/<%=verification.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=verification.user.uid%>/picture?width=35&height=35" alt="<%=verification.user.shortname%>" title="<%=verification.user.shortname%>"></a>
 	  </td>
 	  <td><%=verification.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
-	  <td><%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%></td>
+	  <td>
+	     <%if verification.user_id==@actum.user_id%>
+	       Ingreso inicial de datos...
+	     <%else%>
+	       <%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%>
+	     <%end%>
+	  </td>
 	  <td><%=verification.dc%></td>
 	  <td><%=verification.alianza%></td>
 	  <td><%=verification.liberal%></td>

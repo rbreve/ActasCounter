@@ -58,6 +58,10 @@ class ActaController < ApplicationController
     @verification.acta_id=@actum.id
 
     @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
+    
+    if Verification.where(:acta_id=>@actum.id).count==0 and @actum.user_id==current_user.id
+      @trigger_verification=true
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -87,12 +91,11 @@ class ActaController < ApplicationController
     
     @actum = Actum.new
     @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+    @actum.user_id=current_user.id
     @actum.numero=i
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @actum }
-    end
+    @actum.save
+    
+    redirect_to @actum
   end
 
   # GET /acta/1/edit
