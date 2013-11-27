@@ -5,7 +5,7 @@ class ActaController < ApplicationController
   # GET /acta
   # GET /acta.json
   def index
-    @acta = Actum.order("created_at ASC").page(params[:page]).per_page(50)
+    @acta = Actum.where(:ready_for_review=>true).order("created_at ASC").page(params[:page]).per_page(50)
 
     @sumLiberal = Actum.sum('liberal')
     @sumLibre = Actum.sum('libre')
@@ -30,7 +30,7 @@ class ActaController < ApplicationController
   # GET /acta/1.json
   def show
     if(params[:id]=="random")
-      @actum= Actum.where(["user_id<>?",current_user.id]).order("RANDOM()").first
+      @actum= Actum.where(["user_id<>? AND ready_for_review=?",current_user.id,true]).order("RANDOM()").first
     else
       @actum = Actum.find(params[:id])
     end
@@ -93,6 +93,7 @@ class ActaController < ApplicationController
     @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
     @actum.user_id=current_user.id
     @actum.numero=i
+    @actum.ready_for_review=false
     @actum.save
     
     redirect_to @actum

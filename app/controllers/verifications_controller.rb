@@ -22,6 +22,7 @@ class VerificationsController < ApplicationController
           @actum.blancos=@log.blancos
           @actum.nulos=@log.nulos
         end
+        @actum.ready_for_review=true
         @actum.save
         
         format.html { redirect_to acta_path, notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado." }
