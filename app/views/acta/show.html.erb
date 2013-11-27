@@ -90,16 +90,23 @@
 
   <div style="float:left;margin-top:5px">
 	  <%if @actum.verified_count<VERIFICATIONS %>
-	    <h2>Verificación</h2>
+	    <%if @allow_verification%>
+		    <h2>Verificación</h2>
 	    
-	    <div id="correct-buttons">
-	      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
-	    </div>
+		    <div id="correct-buttons">
+		      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
+		    </div>
 	
-	    <div id="incorrect-buttons" style="display:none">
-	      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
-	    </div>
-	
+		    <div id="incorrect-buttons" style="display:none">
+		      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
+		    </div>
+		<%else%>
+		   <%if current_user.id==@actum.user_id%>
+		     <h2>Esperando verificaci&oacute;n de otros</h2>
+		   <%else%>
+		     <h2>Ya has verificado esta acta</h2>
+		   <%end%>
+		<%end%>	
 	  <%else%>
 	    <h3>Verificación completa</h3>
 	  <%end%>

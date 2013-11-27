@@ -27,7 +27,7 @@ class VerificationsController < ApplicationController
         format.html { redirect_to acta_path, notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado." }
         format.json { render json: @actum, status: :created, location: @actum }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to acta_path, notice: "Ya has verificado esta acta" }
         format.json { render json: @actum.errors, status: :unprocessable_entity }
       end
     end

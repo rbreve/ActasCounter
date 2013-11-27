@@ -53,6 +53,8 @@ class ActaController < ApplicationController
     @verification.nulos=@actum.nulos
     @verification.acta_id=@actum.id
 
+    @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @actum }
