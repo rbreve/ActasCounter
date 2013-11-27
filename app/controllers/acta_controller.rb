@@ -38,6 +38,20 @@ class ActaController < ApplicationController
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
     
     @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
+    
+    @verification=Verification.new
+    @verification.is_valid=true
+    @verification.liberal=@actum.liberal
+    @verification.nacional=@actum.nacional
+    @verification.libre=@actum.libre
+    @verification.pac=@actum.pac
+    @verification.ud=@actum.ud
+    @verification.dc=@actum.dc
+    @verification.alianza=@actum.alianza
+    @verification.pinu=@actum.pinu
+    @verification.blancos=@actum.blancos
+    @verification.nulos=@actum.nulos
+    @verification.acta_id=@actum.id
 
     respond_to do |format|
       format.html # show.html.erb
@@ -104,7 +118,7 @@ class ActaController < ApplicationController
     @actum = Actum.find(params[:id])
 
     respond_to do |format|
-      if @actum.update_attributes(params[:actum])
+      if @actum.update_attributes(params[:actum])        
         format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
         format.json { head :no_content }
       else
@@ -113,7 +127,7 @@ class ActaController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /acta/1
   # DELETE /acta/1.json
   def destroy
