@@ -1,4 +1,9 @@
 <h1>Listado de Actas</h1>
+
+<div class="pagination-centered" style="padding:20px 0px">
+  <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
+</div>
+
 <table>
   <tr>
     <th>Numero</th>
@@ -46,7 +51,7 @@
 <% end %>
 
 <tr>
-   <td>Totales </td>
+   <td>Totales</td>
    <td><b><%= @sumLiberal %></b></td>
    <td><b><%= @sumNacional %></b></td>
    <td><b><%= @sumLibre %></b></td>
@@ -64,4 +69,6 @@
  </tr>
 </table>
 
-
+<div class="pagination-centered" style="padding:20px 0px">
+  <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
+</div>

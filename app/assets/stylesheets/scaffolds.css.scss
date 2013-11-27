@@ -87,3 +87,30 @@ table {
     }
   }
 }
+
+.pagination{ 
+  padding: 10px;
+  font-size: 12px;
+  width: 90%;
+  margin: 0 auto;
+  text-align:center;
+  
+  a{
+    border:solid 1px #CCC;
+    padding:5px;
+    margin:0px;
+    margin-left:-4px;
+    text-align:center;
+    &:hover{
+      background:#EDEDED;
+    }
+  }
+  
+  .current{
+    border:solid 1px #CCC;
+    padding:6px 5px;
+    margin-left:-4px;
+    text-align:center;
+    background:#EDEDED;
+  }
+}

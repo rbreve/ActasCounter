@@ -31,6 +31,7 @@ gem 'rails_12factor', group: :production
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'will_paginate'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

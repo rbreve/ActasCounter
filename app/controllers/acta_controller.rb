@@ -5,7 +5,7 @@ class ActaController < ApplicationController
   # GET /acta
   # GET /acta.json
   def index
-    @acta = Actum.order("created_at ASC").all
+    @acta = Actum.order("created_at ASC").page(params[:page]).per_page(50)
 
     @sumLiberal = Actum.sum('liberal')
     @sumLibre = Actum.sum('libre')
