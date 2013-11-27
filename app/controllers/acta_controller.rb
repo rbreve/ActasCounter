@@ -5,6 +5,14 @@ class ActaController < ApplicationController
   def index
     @acta = Actum.all
 
+    @sumLiberal = Actum.sum('liberal')
+    @sumLibre = Actum.sum('libre')
+    @sumNacional = Actum.sum('nacional')
+    @sumPac = Actum.sum('pac')
+    @sumUD = Actum.sum('ud')
+    @sumDC = Actum.sum('dc')
+    @sumAlianza = Actum.sum('alianza')
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @acta }
