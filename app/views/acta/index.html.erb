@@ -1,5 +1,8 @@
-<h1>Listing acta</h1>
+<h1>Listado de Actas</h1>
 
+<p>
+<a href="acta/1?random=1"> Verificar Acta</a>
+</p>
 <table>
   <tr>
     <th>Numero</th>
@@ -11,7 +14,11 @@
     <th>Dc</th>
     <th>Alianza</th>
     <th>Pinu</th>
-    <th>Verified</th>
+    
+    <th>Blancos</th>
+    <th>Nulos</th>
+    
+    <th>Verificaciones</th>
     <th></th>
     <th></th>
     <th></th>
@@ -28,6 +35,9 @@
     <td><%= actum.dc %></td>
     <td><%= actum.alianza %></td>
     <td><%= actum.pinu %></td>
+      <td><%= actum.blancos %></td>
+      <td><%= actum.nulos %></td>
+      
     <td><%= actum.verified %></td>
     <td><%= link_to 'Show', actum %></td>
     <td><%= link_to 'Edit', edit_actum_path(actum) %></td>
@@ -38,4 +48,4 @@
 
 <br />
 
-<%= link_to 'New Actum', new_actum_path %>
+<%= link_to 'Registrar Acta', new_actum_path %>

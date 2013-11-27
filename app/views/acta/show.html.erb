@@ -1,5 +1,11 @@
 
+<div style="float:right">
+    <img src="<%=@imageUrl%>">
+</div>
+
 <p id="notice"><%= notice %></p>
+
+
 
 <p>
   <b>Numero:</b>
@@ -7,32 +13,7 @@
 </p>
 
 <p>
-  <b>Liberal:</b>
-  <%= @actum.liberal %>
-</p>
-
-<p>
-  <b>Nacional:</b>
-  <%= @actum.nacional %>
-</p>
-
-<p>
-  <b>Libre:</b>
-  <%= @actum.libre %>
-</p>
-
-<p>
-  <b>Pac:</b>
-  <%= @actum.pac %>
-</p>
-
-<p>
-  <b>Ud:</b>
-  <%= @actum.ud %>
-</p>
-
-<p>
-  <b>Dc:</b>
+  <b>DC</b>
   <%= @actum.dc %>
 </p>
 
@@ -42,15 +23,64 @@
 </p>
 
 <p>
+  <b>Liberal:</b>
+  <%= @actum.liberal %>
+</p>
+
+<p>
+  <b>PAC:</b>
+  <%= @actum.pac %>
+</p>
+
+<p>
+  <b>Libre:</b>
+  <%= @actum.libre %>
+</p>
+
+
+
+
+<p>
+  <b>UD:</b>
+  <%= @actum.ud %>
+</p>
+
+
+ 
+<p>
   <b>Pinu:</b>
   <%= @actum.pinu %>
 </p>
 
 <p>
-  <b>Verified:</b>
-  <%= @actum.verified %>
+  <b>Nacional:</b>
+  <%= @actum.nacional %>
+</p>
+
+<p>
+  <b>Blancos:</b>
+  <%= @actum.blancos %>
 </p>
 
 
+<p>
+  <b>Nulos:</b>
+  <%= @actum.nulos %>
+</p>
+
+<p>
+    <b> Total Votos:</b>
+    <%=@totalVotos%>
+    </p>
+
+<% if @actum.verified%>
+<p>
+  <b>Verificado</b>
+  <%= @actum.verified %>
+</p>
+<%end%>
+
+
 <%= link_to 'Edit', edit_actum_path(@actum) %> |
-<%= link_to 'Back', acta_path %>
+<%= link_to 'New', new_actum_path() %> | 
+<%= link_to 'Back', acta_path %> | Reportar Acta

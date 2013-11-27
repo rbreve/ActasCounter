@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131126233401) do
+ActiveRecord::Schema.define(:version => 20131127055629) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20131126233401) do
     t.integer  "verified"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "blancos"
+    t.integer  "nulos"
   end
 
 end

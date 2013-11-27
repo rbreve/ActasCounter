@@ -16,9 +16,18 @@ class ActaController < ApplicationController
   # GET /acta/1.json
   def show
     
-   
     
-    @actum = Actum.find(params[:id])
+    if(params[:random]=1)
+      @actum= Actum.order("RANDOM()").first
+    else
+      
+      @actum = Actum.find(params[:id])
+    
+    end
+    
+    @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
+    
+    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,14 +46,14 @@ class ActaController < ApplicationController
       
       while(@invalid)
          
-      i = Random.rand(100)
+      i = Random.rand(15000)
 
       @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
-      print @imageUrl
-       begin
+ 
+        begin
         open(@imageUrl)
        rescue OpenURI::HTTPError  
-         print "invalid " . e
+         print "invalid "  
        else
          print "valid"
          @invalid=false
@@ -63,7 +72,10 @@ class ActaController < ApplicationController
 
   # GET /acta/1/edit
   def edit
+    
     @actum = Actum.find(params[:id])
+    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
+    
   end
 
   # POST /acta
@@ -73,7 +85,7 @@ class ActaController < ApplicationController
 
     respond_to do |format|
       if @actum.save
-        format.html { redirect_to @actum, notice: 'Actum was successfully created.' }
+        format.html { redirect_to @actum, notice: 'El Acta fue ingresada al sistema.' }
         format.json { render json: @actum, status: :created, location: @actum }
       else
         format.html { render action: "new" }
