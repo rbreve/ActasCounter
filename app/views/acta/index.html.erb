@@ -1,0 +1,41 @@
+<h1>Listing acta</h1>
+
+<table>
+  <tr>
+    <th>Numero</th>
+    <th>Liberal</th>
+    <th>Nacional</th>
+    <th>Libre</th>
+    <th>Pac</th>
+    <th>Ud</th>
+    <th>Dc</th>
+    <th>Alianza</th>
+    <th>Pinu</th>
+    <th>Verified</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @acta.each do |actum| %>
+  <tr>
+    <td><%= actum.numero %></td>
+    <td><%= actum.liberal %></td>
+    <td><%= actum.nacional %></td>
+    <td><%= actum.libre %></td>
+    <td><%= actum.pac %></td>
+    <td><%= actum.ud %></td>
+    <td><%= actum.dc %></td>
+    <td><%= actum.alianza %></td>
+    <td><%= actum.pinu %></td>
+    <td><%= actum.verified %></td>
+    <td><%= link_to 'Show', actum %></td>
+    <td><%= link_to 'Edit', edit_actum_path(actum) %></td>
+    <td><%= link_to 'Destroy', actum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Actum', new_actum_path %>

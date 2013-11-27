@@ -1,0 +1,69 @@
+<%= form_for(@actum) do |f| %>
+  <% if @actum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@actum.errors.count, "error") %> prohibited this actum from being saved:</h2>
+
+      <ul>
+      <% @actum.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :numero %><br />
+    <%= f.text_field :numero %>
+  </div>
+  
+  <div class="field">
+     DC <br />
+      <%= f.number_field :dc %>
+    </div>  
+    
+    
+    <div class="field">
+      <%= f.label :alianza %><br />
+      <%= f.number_field :alianza %>
+    </div>
+  
+  <div class="field">
+    <%= f.label :liberal %><br />
+    <%= f.number_field :liberal %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :pac %><br />
+    <%= f.number_field :pac %>
+  </div>
+  
+  <div class="field">
+     <%= f.label :libre %><br />
+     <%= f.number_field :libre %>
+   </div>
+   
+   <div class="field">
+     UD<br />
+     <%= f.number_field :ud %>
+   </div>
+   
+   
+   <div class="field">
+     <%= f.label :pinu %><br />
+     <%= f.number_field :pinu %>
+   </div>
+   
+  <div class="field">
+    <%= f.label :nacional %><br />
+    <%= f.number_field :nacional %>
+  </div>
+ 
+
+
+  
+ 
+  
+  <div class="actions">
+    <%= f.submit  "Registrar Acta" %>
+  </div>
+<% end %>

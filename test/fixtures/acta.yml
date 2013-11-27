@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: MyString
+  liberal: 1
+  nacional: 1
+  libre: 1
+  pac: 1
+  ud: 1
+  dc: 1
+  alianza: 1
+  pinu: 1
+  verified: 1
+
+two:
+  numero: MyString
+  liberal: 1
+  nacional: 1
+  libre: 1
+  pac: 1
+  ud: 1
+  dc: 1
+  alianza: 1
+  pinu: 1
+  verified: 1
