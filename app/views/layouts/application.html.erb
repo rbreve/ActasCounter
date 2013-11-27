@@ -18,13 +18,12 @@
 	</div>
 	<div class="navbar-right">
 	 	<%if user_signed_in?%>
-	        
-		    <%if current_user.is_admin%>
-		      <a href="/users">User admin</a> | 
-		   <%end%>
+			<%if current_user.is_admin%>		
+			  <%=link_to users_path do%><button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-user"></span> User Admin</button><%end%><%end%>
+			
+		    <%= link_to(destroy_user_session_path, :method => :delete) do%><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-off"></span> Logout</button><%end%>
 		
 		    <img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"> 
-		    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 		  </div>
 		<%else%>
 		  <div style="float:right">
