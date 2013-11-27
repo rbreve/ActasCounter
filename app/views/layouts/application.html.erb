@@ -9,11 +9,11 @@
 <body>
 <nav class="navbar navbar-default" role="navigation" style="padding:10px">
 	<div class="navbar-left">
-		<a href="<%=acta_path%>"><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button></a>
+		<%=link_to acta_path do%><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button><%end%>
 
-		<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digital un acta</button></a>
+		<%=link_to new_actum_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digital un acta</button><%end%>
 
-		<a href="/acta/random"> <button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar un acta</button></a>
+		<%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar un acta</button><%end%>
 
 	</div>
 	<div class="navbar-right">
@@ -34,11 +34,12 @@
 	</div>
 </nav>
 
-<div class="content" style="width:90%;margin:auto">
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
-<%= yield %>
+<div class="content" style="width:90%;margin:auto;">
+ <%unless notice.blank?%>
+   <p class="notice"><%= notice %></p>
+ <%end%>
+ <p class="alert"><%= alert %></p>
+ <%= yield %>
 </div>
 
 </body>

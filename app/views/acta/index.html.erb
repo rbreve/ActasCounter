@@ -11,7 +11,9 @@ A&uacute;n tienes que completar estas actas:
   <tr>
     <td><%="%05d" % actum.numero %></td>
     <td><%=actum.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
-    <td><%= link_to 'Completar...', actum %></td>
+    <td>
+      <%= link_to actum do %><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span> Completar</button></a><%end%>
+	</td>
   </tr>
   <%end%>
  </table>
@@ -60,11 +62,14 @@ A&uacute;n tienes que completar estas actas:
         <%=actum.created_at.strftime("%k:%M:%S")%></td>
     <td><%= actum.verified_count %> / <%=VERIFICATIONS%></td>
     <td>
-	   <%if actum.verified_count>=VERIFICATIONS or actum.user_id==current_user.id%>
-         <%= link_to 'Ver', actum %>
-       <%else%>
-         <%= link_to 'Validar', actum %>
-       <%end%>
+	   
+      <%= link_to actum do %><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> 
+	  <%if actum.verified_count>=VERIFICATIONS or actum.user_id==current_user.id%>
+	     Ver
+	  <%else%>
+	     Validar
+	  <%end%>
+	  </button><%end%>
 	</td>
   </tr>
 <% end %>

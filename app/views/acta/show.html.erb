@@ -2,7 +2,7 @@
   <div style="float:right;width:80%">
 	    <img src="<%=@imageUrl%>" style="width:100%">
   </div>
-<%= form_for(@verification) do |f| %>
+<%= form_for(@verification, :html=>{:autocomplete=>:off}) do |f| %>
 <% if @verification.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@verification.errors.count, "error") %> prohibited this actum from being saved:</h2>
@@ -101,42 +101,44 @@
 			<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
 		</tr>
 	</table>
-  </div>
+ 
+   <div style="float:left;margin-top:10px">	
+   <%if @actum.verified_count<VERIFICATIONS %>
+     <%if @allow_verification%>
+	    <h2>Verificación</h2>
+    
+	    <div id="correct-buttons">
+	      <h3><%= f.submit  "Correcta!", :class=>"btn btn-success" %>  <button type="button" id="show-form" class="btn btn-danger"> Incorrecta</button>
+	    </div>
 
-  <div style="float:left;margin-top:5px">
-	  <%if @actum.verified_count<VERIFICATIONS %>
-	    <%if @allow_verification%>
-		    <h2>Verificación</h2>
-	    
-		    <div id="correct-buttons">
-		      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
-		    </div>
+	    <div id="incorrect-buttons" style="display:none">
+	      <h3><%= f.submit  "Enviar mis Correcciones", :class=>"btn btn-primary" %></button>
+	    </div>
+	 <%else%>
+	   <%if current_user.id==@actum.user_id%>
+		 <%if @trigger_verification%>
+	       <div id="incorrect-buttons" style="display:none">
+	        <%= f.submit  "Registrar", :class=>"btn btn-success" %>
+	       </div>
+	     <%else%>
+	       <h5><span class="glyphicon glyphicon-time"></span> Esperando verificaci&oacute;n de otros</h5>
+	     <%end%>
+	   <%else%>
+	     <h2></h2>
+	     <h5><span class="glyphicon glyphicon-ok"></span> Ya has verificado esta acta.</h5>
+	   <%end%>
+	 <%end%>	
+   <%else%>
+      <h4><span class="glyphicon glyphicon-ok-circle"></span> Verificaci&oacute;n completa</h4>
+   <%end%>
+   </div>
 	
-		    <div id="incorrect-buttons" style="display:none">
-		      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
-		    </div>
-		<%else%>
-		   <%if current_user.id==@actum.user_id%>
-			 <%if @trigger_verification%>
-		       <div id="incorrect-buttons" style="display:none">
-		        <h3><%= f.submit  "Registrar" %></button>
-		       </div>
-		     <%else%>
-		       <h2>Esperando verificaci&oacute;n de otros</h2>
-		     <%end%>
-		   <%else%>
-		     <h2>Ya has verificado esta acta</h2>
-		   <%end%>
-		<%end%>	
-	  <%else%>
-	    <h3>Verificación completa</h3>
-	  <%end%>
   </div>
 <%end%>
 
 <%if Verification.where(:acta_id=>@actum.id).count>0%>
-<div style="float:left:width:100%;clear:both;padding-top:20px">
-  <h2>Auditor&iacute;a de verificaciones</h2>
+<div style="float:left:width:100%;clear:both;padding-top:20px;padding-bottom:20px">
+  <h3><span class="glyphicon glyphicon-eye-open"></span> Auditor&iacute;a de verificaciones</h3>
   <table>
   <tr>
 	 <th>User</th>
