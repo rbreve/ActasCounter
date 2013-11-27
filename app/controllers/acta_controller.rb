@@ -18,6 +18,8 @@ class ActaController < ApplicationController
     @sumBlancos = Actum.sum('blancos')
     @sumNulos = Actum.sum('nulos')
     @sumVerified = Actum.sum('verified_count')
+    
+    @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
            
     respond_to do |format|
       format.html # index.html.erb
@@ -73,29 +75,35 @@ class ActaController < ApplicationController
   # GET /acta/new
   # GET /acta/new.json
   def new
-    @invalid=true
-    i = begin Actum.order("created_at DESC").limit(1).first.numero.to_i rescue 0 end
+    @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
 
-    while(@invalid)
-      i+=1    
-      @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
-      begin
-        open(@imageUrl)
-      rescue OpenURI::HTTPError  
-        print "invalid"
-      else
-        print "valid"
-        @invalid=false
+    if @pending_actas.length>0
+      @actum=@pending_actas.first
+    else
+      @invalid=true
+      i = begin Actum.order("created_at DESC").limit(1).first.numero.to_i rescue 0 end
+
+      while(@invalid)
+        i+=1    
+        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
+        begin
+          open(@imageUrl)
+        rescue OpenURI::HTTPError  
+          print "invalid"
+        else
+          print "valid"
+          @invalid=false
+        end
       end
+
+      @actum = Actum.new
+      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+      @actum.user_id=current_user.id
+      @actum.numero=i
+      @actum.ready_for_review=false
+      @actum.save
     end
-    
-    @actum = Actum.new
-    @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
-    @actum.user_id=current_user.id
-    @actum.numero=i
-    @actum.ready_for_review=false
-    @actum.save
-    
+
     redirect_to @actum
   end
 

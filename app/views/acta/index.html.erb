@@ -1,3 +1,22 @@
+<%if @pending_actas.length>0%>
+<h1>Actas pendientes de completar</h1>
+A&uacute;n tienes que completar estas actas:
+ <table>
+  <tr>
+    <th>Numero</th>
+    <th>Hora de ingreso</th>
+    <th></th>
+  </tr> 
+  <%@pending_actas.each do |actum|%>
+  <tr>
+    <td><%="%05d" % actum.numero %></td>
+    <td><%=actum.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
+    <td><%= link_to 'Completar...', actum %></td>
+  </tr>
+  <%end%>
+ </table>
+<%end%>
+
 <h1>Listado de Actas</h1>
 
 <div class="pagination-centered" style="padding:20px 0px">
