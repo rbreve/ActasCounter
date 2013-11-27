@@ -5,7 +5,7 @@ class ActaController < ApplicationController
   # GET /acta
   # GET /acta.json
   def index
-    @acta = Actum.all
+    @acta = Actum.order("created_at ASC").all
 
     @sumLiberal = Actum.sum('liberal')
     @sumLibre = Actum.sum('libre')
@@ -30,11 +30,15 @@ class ActaController < ApplicationController
   # GET /acta/1.json
   def show
     if(params[:id]=="random")
-      @actum= Actum.order("RANDOM()").first
+      @actum= Actum.where(["user_id<>?",current_user.id]).order("RANDOM()").first
     else
       @actum = Actum.find(params[:id])
     end
     
+    if @actum.nil?
+      redirect_to acta_path, :notice=> "No hay actas pendientes de verificacion ingresadas por otros usuarios..."
+      return
+    end
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
     
     @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
@@ -52,6 +56,8 @@ class ActaController < ApplicationController
     @verification.blancos=@actum.blancos
     @verification.nulos=@actum.nulos
     @verification.acta_id=@actum.id
+
+    @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
 
     respond_to do |format|
       format.html # show.html.erb

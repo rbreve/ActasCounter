@@ -12,62 +12,42 @@
     </div>
   <% end %>
 
-  <h2>Número: <%=@actum.numero%></h2>  
-  <div class="field">
-     DC <br />
-      <%= f.number_field :dc %>
-    </div>  
-    
-    
-    <div class="field">
-      <%= f.label :alianza %><br />
-      <%= f.number_field :alianza %>
-    </div>
-  
-  <div class="field">
-    <%= f.label :liberal %><br />
-    <%= f.number_field :liberal %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :pac %><br />
-    <%= f.number_field :pac %>
-  </div>
-  
-  <div class="field">
-     <%= f.label :libre %><br />
-     <%= f.number_field :libre %>
-   </div>
-   
-   <div class="field">
-     UD<br />
-     <%= f.number_field :ud %>
-   </div>
-   
-   
-   <div class="field">
-     <%= f.label :pinu %><br />
-     <%= f.number_field :pinu %>
-   </div>
-   
-  <div class="field">
-    <%= f.label :nacional %><br />
-    <%= f.number_field :nacional %>
-  </div>
- 
-  <div class="field">
-    <%= f.label :blancos %><br />
-    <%= f.number_field :blancos %>
-  </div>
-
-
-  
-  <div class="field">
-    <%= f.label :nulos %><br />
-    <%= f.number_field :nulos %>
-  </div>
- 
-  
+	<table id="editable-data">
+		<tr>
+			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
+		</tr>
+		<tr>
+			<td><b>DC:</b></td><td><%= f.number_field :dc%></td>
+		</tr>
+		<tr>
+			<td><b>Alianza Pat.</b></td><td><%= f.number_field :alianza %></td>
+		</tr>
+		<tr>
+			<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
+		</tr>
+		<tr>
+			<td><b>PAC:</b></td><td><%= f.number_field :pac %></td>
+		</tr>
+		<tr>
+			<td><b>Libre:</b></td><td><%= f.number_field :libre %></td>
+		</tr>
+		<tr>
+			<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
+		</tr>
+		<tr>
+			<td><b>Pinu:</b></td><td><%= f.number_field :pinu %></td>
+		</tr>
+		<tr>
+			<td><b>Nacional:</b></td><td><%= f.number_field :nacional %></td>
+		</tr>
+		<tr>
+			<td><b>Blancos:</b></td><td><%= f.number_field :blancos %></td>
+		</tr>
+		<tr>
+			<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
+		</tr>
+	</table>
+	  
   <div class="actions">
     <%= f.submit  "Registrar Acta" %>
   </div>

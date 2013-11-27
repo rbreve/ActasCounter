@@ -44,6 +44,9 @@
 		<tr>
 			<td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
 		</tr>
+		<tr>
+			<td><b>Ingresada por</b></td><td><a href="http://facebook.com/<%=@actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=@actum.user.uid%>/picture?width=35&height=35" alt="<%=@actum.user.shortname%>" title="<%=@actum.user.shortname%>"></a></td>
+		</tr>
 		<% if @actum.verified_count>0%>
 		<tr>
 			<td><b>Verificado:</b></td><td><%= @actum.verified_count %> veces</td>
@@ -90,16 +93,23 @@
 
   <div style="float:left;margin-top:5px">
 	  <%if @actum.verified_count<VERIFICATIONS %>
-	    <h2>Verificación</h2>
+	    <%if @allow_verification%>
+		    <h2>Verificación</h2>
 	    
-	    <div id="correct-buttons">
-	      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
-	    </div>
+		    <div id="correct-buttons">
+		      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
+		    </div>
 	
-	    <div id="incorrect-buttons" style="display:none">
-	      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
-	    </div>
-	
+		    <div id="incorrect-buttons" style="display:none">
+		      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
+		    </div>
+		<%else%>
+		   <%if current_user.id==@actum.user_id%>
+		     <h2>Esperando verificaci&oacute;n de otros</h2>
+		   <%else%>
+		     <h2>Ya has verificado esta acta</h2>
+		   <%end%>
+		<%end%>	
 	  <%else%>
 	    <h3>Verificación completa</h3>
 	  <%end%>
@@ -118,7 +128,9 @@
   </tr>
   <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
     <tr>
-	  <td><%=verification.user_id%></td>
+	  <td>
+		<a href="http://facebook.com/<%=verification.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=verification.user.uid%>/picture?width=35&height=35" alt="<%=verification.user.shortname%>" title="<%=verification.user.shortname%>"></a>
+	  </td>
 	  <td><%=verification.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
 	  <td><%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%></td>
 	  <td><%=verification.dc%></td>

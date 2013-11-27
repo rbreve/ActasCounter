@@ -10,10 +10,9 @@
     <th>Dc</th>
     <th>Alianza</th>
     <th>Pinu</th>
-    
     <th>Blancos</th>
     <th>Nulos</th>
-    
+    <th>Ingresada por</th>
     <th>Verificaciones</th>
     <th></th>
   </tr>
@@ -29,11 +28,17 @@
     <td><%= actum.dc %></td>
     <td><%= actum.alianza %></td>
     <td><%= actum.pinu %></td>
-      <td><%= actum.blancos %></td>
-      <td><%= actum.nulos %></td>
-      
+    <td><%= actum.blancos %></td>
+    <td><%= actum.nulos %></td>
+    <td><a href="http://facebook.com/<%=actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
     <td><%= actum.verified_count %> / <%=VERIFICATIONS%></td>
-    <td><%= link_to 'Validar', actum %></td>
+    <td>
+	   <%if actum.verified_count>=VERIFICATIONS or actum.user_id==current_user.id%>
+         <%= link_to 'Ver', actum %>
+       <%else%>
+         <%= link_to 'Validar', actum %>
+       <%end%>
+	</td>
   </tr>
 <% end %>
 
