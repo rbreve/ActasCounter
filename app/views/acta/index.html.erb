@@ -20,7 +20,7 @@ A&uacute;n tienes que completar estas actas:
 <%end%>
 
 <h1>Listado de Actas</h1>
-Actas procesadas: <%=Actum.count%> (<%=number_with_precision(Actum.count.to_f/MAX_ACTAS.to_f,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%>
+Actas procesadas: <%=Actum.count%> (<%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%>
 <div class="pagination-centered" style="padding:20px 0px">
   <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
 </div>
@@ -64,16 +64,16 @@ Actas procesadas: <%=Actum.count%> (<%=number_with_precision(Actum.count.to_f/MA
 </tr>
 <tr>
    <td>Porcentajes</td>
-   <td><b><%= number_with_precision((@sumLiberal.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumNacional.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumLibre.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumPac.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumUD.to_f/Actum.count.to_f),precision: 2)%>%</b></td>
-   <td><b><%= number_with_precision((@sumDC.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumAlianza.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumPinu.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumBlancos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumNulos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
    <td></td>
    <td></td>
    <td></td>
@@ -131,16 +131,16 @@ Actas procesadas: <%=Actum.count%> (<%=number_with_precision(Actum.count.to_f/MA
 </tr>
 <tr>
    <td>Porcentajes</td>
-   <td><b><%= number_with_precision((@sumLiberal.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumNacional.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumLibre.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumPac.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumUD.to_f/Actum.count.to_f),precision: 2)%>%</b></td>
-   <td><b><%= number_with_precision((@sumDC.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumAlianza.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumPinu.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumBlancos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
-   <td><b><%= number_with_precision((@sumNulos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
    <td></td>
    <td></td>
    <td></td>

@@ -19,6 +19,7 @@ class ActaController < ApplicationController
     @sumNulos = Actum.sum('nulos')
     @sumVerified = Actum.sum('verified_count')
     
+    @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
            
     respond_to do |format|
