@@ -55,7 +55,7 @@
 		
 	 	<%if user_signed_in?%>
 		<a href="#">Digitadas <span class="badge"><%=current_user.acta_count%></span></a>
-		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count%></span></a>
+		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count-current_user.acta_count%></span></a>
 		
 		
 			<%if current_user.is_admin%>		
