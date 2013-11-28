@@ -1,194 +1,24 @@
 <div class="container">
-<div class="jumbotron">
-<h1>Conteo y Validación de Actas</h1>
+  <div class="jumbotron">
+	<h1>Conteo y Validación de Actas</h1>
 
-<%if user_signed_in?%>
-<p>Colabora con una de estas tareas:</p> 
+	<div style="color:gray">
+	  <%if user_signed_in?%>
+		<p>Colabora con una de estas tareas:</p> 
 
-<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button></a>
+		<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button></a>
+	
+		<a href="/acta/random"> <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Validar  Acta</button></a>
+	  <%else%>
+		<p class="lead">Este es una aplicación web para reconteo y validación de actas presidenciales tomadas del TSE. 
+		Ayudanos a digitar y validar las actas para tener mayor transparencia en el proceso electoral.</p>
+		<p>
+		<a href="/auth/auth/facebook"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
+		</p>
+	  <%end%>
+	</div>
+  </div>
 
-<a href="/acta/random"> <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Validar  Acta</button></a>
-
-<%else%>
-<div style="color:gray">
-<p class="lead">Este es una aplicación web para reconteo y validación de actas presidenciales tomadas del TSE. 
-
-Ayudanos a digitar y validar las actas para tener mayor transparencia en el proceso electoral.</p>
-
-</div>
-<p>
-	<a href="/auth/auth/facebook"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
-</p>
-</div>
-<%end%>
-
-<h1 class="center">Resultados Actuales</h1>
-<table >
-    <tbody><tr><th></th><th>Candidato(a)</th><th>Votos</th><th colspan="2">Porcentaje</th></tr>
-      <tr>
-        <td><a href="https://www.facebook.com/100006563432074" target="_blank"><img src="https://graph.facebook.com/100006563432074/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/100006563432074" target="_blank">Orle Solís - DC</a></td>
-        <td style="text-align:right"><%= @results[:dc] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:dc].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:dc].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-
-      <tr>
-        <td><a href="https://www.facebook.com/146827225496682" target="_blank"><img src="https://graph.facebook.com/146827225496682/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/146827225496682" target="_blank">Romeo Vásquez - Alianza Patriotica</a></td>
-        <td style="text-align:right"><%=@results[:alianza] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:alianza].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:alianza].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-
-      </tr>
-
-
-
-      <tr>
-        <td><a href="https://www.facebook.com/273370379426498" target="_blank"><img src="https://graph.facebook.com/273370379426498/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/273370379426498" target="_blank">Mauricio Villeda - Liberal</a></td>
-        <td style="text-align:right"><%= @results[:liberal] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:liberal].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:liberal].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-      <tr>
-        <td><a href="https://www.facebook.com/177855442241534" target="_blank"><img src="https://graph.facebook.com/177855442241534/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/177855442241534" target="_blank">Salvador Nasralla - PAC</a></td>
-        <td style="text-align:right"><%= @results[:pac] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:pac].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:pac].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-
-      <tr>
-        <td><a href="https://www.facebook.com/299920016701445" target="_blank"><img src="https://graph.facebook.com/299920016701445/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/299920016701445" target="_blank">Xiomara Castro - LIBRE</a></td>
-        <td style="text-align:right"><%= @results[:libre] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:libre].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:libre].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-
-
-      <tr>
-        <td><a href="https://www.facebook.com/515961998433230" target="_blank"><img src="https://graph.facebook.com/515961998433230/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/515961998433230" target="_blank">Andres Pavón - UD/FAPER</a></td>
-        <td style="text-align:right"><%= @results[:ud] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:ud].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:ud].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-
-
-      <tr>
-        <td><a href="https://www.facebook.com/100000700117202" target="_blank"><img src="https://graph.facebook.com/100000700117202/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/100000700117202" target="_blank">Jorge Aguilar - PINU</a></td>
-        <td style="text-align:right"><%= @results[:pinu] %></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:pinu].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:pinu].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-
-      <tr>
-        <td><a href="https://www.facebook.com/124300620957187" target="_blank"><img src="https://graph.facebook.com/124300620957187/picture" class="img-circle"></a></td>
-        <td><a href="https://www.facebook.com/124300620957187" target="_blank">Juan Hernández - Nacional</a></td>
-        <td style="text-align:right"><%= @results[:nacional]%></td>
-
-        <td style="width:200px">
-          <div class="progress progress-striped active" style="background:#373">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:nacional].to_f/@results[:total].to_f*100.0).round(2) %>%">
-            </div>
-          </div>
-        </td>
-        <td style="text-align:right"><%= (@results[:nacional].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-        
-      </tr>
-
-
-    <tr>
-
-      <td><img src="http://images.zaazu.com/img/thinking-idea-animated-animation-smiley-emoticon-000339-large.gif" style="width:50px;"></td>
-      <td>Nulos</td>
-      <td style="text-align:right"><%= @results[:nulos] %></td>
-            
-      <td style="width:200px">
-        <div class="progress progress-striped active" style="background:#373">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:nulos].to_f/@results[:total].to_f*100.0).round(2) %>%">
-          </div>
-        </div>
-      </td>
-      <td style="text-align:right"><%= (@results[:nulos].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-      
-      </tr>
-
-    <tr>
-
-      <td><img src="http://images.zaazu.com/img/thinking-idea-animated-animation-smiley-emoticon-000339-large.gif" style="width:50px;"></td>
-      <td>Blancos</td>
-      <td style="text-align:right"><%= @results[:blancos] %></td>
-            
-      <td style="width:200px">
-        <div class="progress progress-striped active" style="background:#373">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:blancos].to_f/@results[:total].to_f*100.0).round(2)%> %">
-          </div>
-        </div>
-      </td>
-      <td style="text-align:right"><%= (@results[:blancos].to_f/@results[:total].to_f*100.0).round(2)%>%</td>
-      </tr>
-
-
-
-      <tr><th></th><th>Total</th><th style="text-align:right"><%= @results[:total] %></th><th colspan="2"></th></tr>
-  </tbody></table>
+  <%=render "results_table"%>
 </div>
  
