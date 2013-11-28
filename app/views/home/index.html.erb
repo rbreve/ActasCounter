@@ -1,26 +1,24 @@
 <div class="container">
-<div class="jumbotron">
-<h1>Conteo y Validación de Actas</h1>
+  <div class="jumbotron">
+	<h1>Conteo y Validación de Actas</h1>
 
-<%if user_signed_in?%>
-<p>Colabora con una de estas tareas:</p> 
+	<div style="color:gray">
+	  <%if user_signed_in?%>
+		<p>Colabora con una de estas tareas:</p> 
 
-<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button></a>
-
-<a href="/acta/random"> <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Validar  Acta</button></a>
-
-<%else%>
-<div style="color:gray">
-<p class="lead">Este es una aplicación web para reconteo y validación de actas presidenciales tomadas del TSE. 
-
-Ayudanos a digitar y validar las actas para tener mayor transparencia en el proceso electoral.</p>
-
-</div>
-<p>
+		<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button></a>
 	
-	<a href="/auth/auth/facebook"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
-</p>
-</div>
-<%end%>
+		<a href="/acta/random"> <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Validar  Acta</button></a>
+	  <%else%>
+		<p class="lead">Este es una aplicación web para reconteo y validación de actas presidenciales tomadas del TSE. 
+		Ayudanos a digitar y validar las actas para tener mayor transparencia en el proceso electoral.</p>
+		<p>
+		<a href="/auth/auth/facebook"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
+		</p>
+	  <%end%>
+	</div>
+  </div>
+
+  <%=render "results_table"%>
 </div>
  

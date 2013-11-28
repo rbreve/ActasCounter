@@ -1,11 +1,10 @@
 ConteoActas::Application.routes.draw do
- 
-  resources :users, :except=>[:destroy]
-  resources :verifications, :except=>[:destroy]
-  resources :acta, :except=>[:destroy]
+  resources :users, :except=>[:destroy, :new]
+  resources :verifications, :except=>[:edit,:destroy,:update,:new]
+  resources :acta, :except=>[:edit,:update,:destroy]
   resources :user_profile
-
-   devise_for :users, :path => "auth", :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  
+  devise_for :users, :path => "auth", :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

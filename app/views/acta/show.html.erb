@@ -121,7 +121,7 @@
 	    </div>
 
 	    <div id="incorrect-buttons" style="display:none">
-	      <h3><%= f.submit  "Enviar mis Correcciones", :class=>"btn btn-primary" %></button>
+	      <h3><%= f.submit  "Enviar mis Correcciones", :class=>"btn btn-primary" %>
 	    </div>
 	 <%else%>
 	   <%if current_user.id==@actum.user_id%>
@@ -138,7 +138,7 @@
 	   <%end%>
 	 <%end%>	
    <%else%>
-      <h4><span class="glyphicon glyphicon-ok-circle"></span> Validaci&oacute;n completa,  <a href="<%=new_actum_path%>">Validar Otra? >/a></h4>
+      <h4><span class="glyphicon glyphicon-ok-circle"></span> Validaci&oacute;n completa  <a href="/acta/random"><button type="button" class="btn btn-primary" style="margin:10px">Validar Otra?</button></a></h4>
    <%end%>
    </div>
 	

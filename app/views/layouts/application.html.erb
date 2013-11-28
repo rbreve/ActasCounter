@@ -47,17 +47,12 @@
 	<div class="navbar-left" style="padding-top:6px;padding-left:10px">
 		<div class="fb-share-button" data-href="http://conteo.votosocial.org" data-type="button_count"></div>
 	</div>
-	
-	
-	
+
 	<div class="navbar-right">
-		
-		
 	 	<%if user_signed_in?%>
 		<a href="#">Digitadas <span class="badge"><%=current_user.acta_count%></span></a>
-		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count-current_user.acta_count%></span></a>
-		
-		
+ 		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count-current_user.acta_count%></span></a>
+	 
 			<%if current_user.is_admin%>		
 			  <%=link_to users_path do%><button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-user"></span> User Admin</button><%end%><%end%>
 			
@@ -66,7 +61,7 @@
 		    <img src="https://graph.facebook.com/<%=current_user.uid%>/picture?width=35&height=35"> 
 		  </div>
 		<%else%>
-		  <div style="float:right">
+		  <div style="float:right;display:none">
 			  <ul class="nav nav-pills pull-right">
 			           <li class="active"><a href="#">Home</a></li>
 			           <li><a href="#">About</a></li>
