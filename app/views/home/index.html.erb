@@ -23,6 +23,9 @@ Ayudanos a digitar y validar las actas para tener mayor transparencia en el proc
 <%end%>
 
 <h1 class="center">Resultados Actuales</h1>
+  <h5>
+  Actas procesadas: <%=Actum.count%> (<%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%>
+  </h5>
 <table >
     <tbody><tr><th></th><th>Candidato(a)</th><th>Votos</th><th colspan="2">Porcentaje</th></tr>
       <tr>
