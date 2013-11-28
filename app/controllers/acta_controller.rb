@@ -35,7 +35,7 @@ class ActaController < ApplicationController
     if(params[:id]=="random")
       @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
     else
-      @actum = Actum.find(params[:id])
+      @actum = Actum.find_by_numero(params[:id].to_s)
     end
     
     if @actum.nil?

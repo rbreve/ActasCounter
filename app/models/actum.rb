@@ -16,6 +16,10 @@ class Actum < ActiveRecord::Base
   def percentage(party)
     Actum.sum(party)/total_votes*100
   end
+  
+  def to_param  # overridden
+    numero
+  end
 
   def self.count_all_votes
     Actum.all.map{|a| a.total_votes }.inject(:+)
