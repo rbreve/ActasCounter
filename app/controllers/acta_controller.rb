@@ -73,47 +73,49 @@ class ActaController < ApplicationController
   end
 
 
-  def newBreve
-     
-    #new RANDOM arreglar el algoritmo al final tomara mucho tiempo 
-     @invalid=true
+  def new
+    @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
+
+    if @pending_actas.length>0
+      @actum=@pending_actas.first
+    else
+      #new RANDOM arreglar el algoritmo al final tomara mucho tiempo 
+       @invalid=true
+       @numero=0 
+       while(@invalid)   
+        i = Random.rand(15000)
+        #TODO
+        #METER EN UN ARREGLO TODOS LO NUMEROS DE ACTAS 
+        #SI i ESTA EN ESE ARREGLO VOLVER A SACAR RANDOM
       
-      while(@invalid)
-         
-      i = Random.rand(15000)
-       
-      #TODO
-      #METER EN UN ARREGLO TODOS LO NUMEROS DE ACTAS 
-      #SI i ESTA EN ESE ARREGLO VOLVER A SACAR RANDOM
-      
-      @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
+        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
  
         begin
-        open(@imageUrl)
-       rescue OpenURI::HTTPError  
-         print "invalid "  
-       else
-         print "valid"
-        
-         if(!Actum.exists?(numero: i.to_s))
-           @invalid=false
-         end
-       end
-       
-    end
+          open(@imageUrl)
+        rescue OpenURI::HTTPError  
+           print "invalid "  
+        else
+           print "valid"  
+           if(!Actum.exists?(numero: i.to_s))
+             @invalid=false
+           end
+        end
+        @numero=i
+      end
     
-     @actum = Actum.new
-    @actum.numero=i 
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @actum }
+      @actum = Actum.new
+      @actum.numero=@numero
+      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+      @actum.user_id=current_user.id
+      @actum.ready_for_review=false
+      @actum.save
     end
+    redirect_to @actum
   end
   
   # GET /acta/new
   # GET /acta/new.json
-  def new
+  def newCorp
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
 
     if @pending_actas.length>0
@@ -127,6 +129,7 @@ class ActaController < ApplicationController
         @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
         begin
           open(@imageUrl)
+          @invalid=false
         rescue OpenURI::HTTPError  
           print "invalid"
         else
