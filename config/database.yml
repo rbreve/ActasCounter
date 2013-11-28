@@ -2,7 +2,8 @@ development:
   adapter: postgresql
   database: actashn
   host: localhost
- 
+  username: postgres
+  password: postgres
   
 production:
   adapter: postgresql

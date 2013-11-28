@@ -16,3 +16,4 @@
 
 #Secret tokens... you have to set these directly on the Heroku Config Vars
 /config/initializers/dev_environment.rb
+/config/database.yml
