@@ -12,7 +12,11 @@ class User < ActiveRecord::Base
   has_many :verifications
   
   def shortname
-    "#{name} #{lastname[0]}"
+    if lastname
+      "#{name} #{lastname[0]}"
+    else
+      name
+    end
   end
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
