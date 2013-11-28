@@ -2,11 +2,11 @@
 
 <table>
 	<tr>
-		<td><b>Usuario</b></td>
+		<td colspan="2"><b>Usuario</b></td>
 		<td><b>Actas Digitadas</b></td>
 		<td><b>Actas Validadas</b></td>
 	</tr>
 <% @users.each do |user| %>
-<tr><td><%=user.name%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
+<tr><td><a href="<%=user_profile_path(user.id)%>"><img src="https://graph.facebook.com/<%=user.uid%>/picture?width=35&height=35" alt="<%=user.shortname%>" title="<%=user.shortname%>" width="35"></a></td><td><%=user.shortname%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
 <%end%>
 </table>
