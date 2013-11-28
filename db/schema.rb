@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20131128160245) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
+    t.integer  "acta_count"
+    t.integer  "verifications_count"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
