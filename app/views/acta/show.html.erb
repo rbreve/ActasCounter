@@ -57,6 +57,9 @@
 			<td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
 		</tr>
 		<tr>
+			<td><b>Suma Correcta?:</b></td><td><%=@actum.is_sum_ok ? "Si" : "No"%></td>
+		</tr>
+		<tr>
 			<td><b>Ingresada por</b></td><td><a href="http://facebook.com/<%=@actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=@actum.user.uid%>/picture?width=35&height=35" alt="<%=@actum.user.shortname%>" title="<%=@actum.user.shortname%>"></a></td>
 		</tr>
 		<% if @actum.verified_count>0%>
@@ -99,6 +102,12 @@
 		</tr>
 		<tr>
 			<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
+		</tr>
+		<tr>
+			<td><b>Suma:</b></td><td class="total-sum"><span id="vote-sum" ><%=@totalVotos%></span></td>
+		</tr>
+		<tr>
+			<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> La suma es correcta?</b></td>
 		</tr>
 	</table>
  
@@ -144,7 +153,7 @@
 	 <th>User</th>
 	 <th>Hora</th>
 	 <th>Info</th>
-	 <th>DC</th><th>AP</th><th>PL</th><th>PAC</th><th>LIB</th><th>UD</th><th>PINU</th><th>PN</th><th>Blancos</th><th>Nulos</th>
+	 <th>DC</th><th>AP</th><th>PL</th><th>PAC</th><th>LIB</th><th>UD</th><th>PINU</th><th>PN</th><th>Blancos</th><th>Nulos</th><th>Suma Correcta?</th>
   </tr>
   <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
     <tr>
@@ -169,6 +178,7 @@
 	  <td><%=verification.nacional%></td>
 	  <td><%=verification.blancos%></td>
 	  <td><%=verification.nulos%></td>
+	  <td><%=verification.is_sum_ok ? "Si" : "No"%></td>
     </tr>
   <%end%>
   </table>
@@ -177,6 +187,28 @@
 
 <script>
 $(document).ready(function(){
+	function calculate_sum(){
+		vote_sum=0;
+		vote_sum+=parseInt($("#verification_dc").val());
+		vote_sum+=parseInt($("#verification_alianza").val());
+		vote_sum+=parseInt($("#verification_liberal").val());
+		vote_sum+=parseInt($("#verification_pac").val());
+		vote_sum+=parseInt($("#verification_libre").val());
+		vote_sum+=parseInt($("#verification_ud").val());
+		vote_sum+=parseInt($("#verification_pinu").val());
+		vote_sum+=parseInt($("#verification_nacional").val());
+		vote_sum+=parseInt($("#verification_blancos").val());
+		vote_sum+=parseInt($("#verification_nulos").val());
+		$("#vote-sum").html(vote_sum);
+	}
+	$("input").change(function() {
+		calculate_sum();
+	});
+	
+	$("input").keyup(function() {
+		calculate_sum();
+	});
+		
 	$('#show-form').click(function(){
 	  $('#stored-data').hide();
 	  $('#correct-buttons').hide();

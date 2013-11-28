@@ -38,6 +38,7 @@ A&uacute;n tienes que completar estas actas:
     <th>Pinu</th>
     <th>Blancos</th>
     <th>Nulos</th>
+    <th>Suma Correcta?</th>
     <th>Ingresada por</th>
     <th>Hora de ingreso</th>
     <th>Verificaciones</th>
@@ -57,6 +58,7 @@ A&uacute;n tienes que completar estas actas:
     <td><%= actum.pinu %></td>
     <td><%= actum.blancos %></td>
     <td><%= actum.nulos %></td>
+    <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
     <td><a href="http://facebook.com/<%=actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
     <td><%=actum.created_at.strftime("%d/%b/%Y")%><br/>
         <%=actum.created_at.strftime("%k:%M:%S")%></td>
