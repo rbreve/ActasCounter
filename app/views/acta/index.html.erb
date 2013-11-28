@@ -20,12 +20,12 @@ A&uacute;n tienes que completar estas actas:
 <%end%>
 
 <h1>Listado de Actas</h1>
-
+Actas procesadas: <%=Actum.count%> (<%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%>
 <div class="pagination-centered" style="padding:20px 0px">
   <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
 </div>
 
-<table>
+<table class="stats-table">
   <tr>
     <th>Numero</th>
     <th>Liberal</th>
@@ -38,12 +38,48 @@ A&uacute;n tienes que completar estas actas:
     <th>Pinu</th>
     <th>Blancos</th>
     <th>Nulos</th>
+    <th>Suma Correcta?</th>
     <th>Ingresada por</th>
     <th>Hora de ingreso</th>
     <th>Verificaciones</th>
     <th></th>
   </tr>
-
+<tr>
+   <td>Totales</td>
+   <td><b><%= @sumLiberal %></b></td>
+   <td><b><%= @sumNacional %></b></td>
+   <td><b><%= @sumLibre %></b></td>
+   <td><b><%= @sumPac %></b></td>
+   <td><b><%= @sumUD%></b></td>
+   <td><b><%= @sumDC %></b></td>
+   <td><b><%= @sumAlianza %></b></td>
+   <td><b><%= @sumPinu %></b></td>
+   <td><b><%= @sumBlancos %></b></td>
+   <td><b><%= @sumNulos %></b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
+<tr>
+   <td>Porcentajes</td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
 <% @acta.each do |actum| %>
   <tr>
     <td><%="%05d" % actum.numero %></td>
@@ -57,6 +93,7 @@ A&uacute;n tienes que completar estas actas:
     <td><%= actum.pinu %></td>
     <td><%= actum.blancos %></td>
     <td><%= actum.nulos %></td>
+    <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
     <td><a href="http://facebook.com/<%=actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
     <td><%=actum.created_at.strftime("%d/%b/%Y")%><br/>
         <%=actum.created_at.strftime("%k:%M:%S")%></td>
@@ -88,9 +125,28 @@ A&uacute;n tienes que completar estas actas:
    <td><b><%= @sumNulos %></b></td>
    <td></td>
    <td></td>
-   <td><b><%= @sumVerified %></b></td>
    <td></td>
- </tr>
+   <td></td>
+   <td></td>
+</tr>
+<tr>
+   <td>Porcentajes</td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
 </table>
 
 <div class="pagination-centered" style="padding:20px 0px">

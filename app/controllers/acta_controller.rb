@@ -19,6 +19,7 @@ class ActaController < ApplicationController
     @sumNulos = Actum.sum('nulos')
     @sumVerified = Actum.sum('verified_count')
     
+    @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
            
     respond_to do |format|
@@ -57,11 +58,12 @@ class ActaController < ApplicationController
     @verification.pinu=@actum.pinu
     @verification.blancos=@actum.blancos
     @verification.nulos=@actum.nulos
+    @verification.is_sum_ok=@actum.is_sum_ok
     @verification.acta_id=@actum.id
 
     @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
     
-    if Verification.where(:acta_id=>@actum.id).count==0 and @actum.user_id==current_user.id
+    if @actum.verifications.count==0 and @actum.user_id==current_user.id
       @trigger_verification=true
     end
 
@@ -73,47 +75,48 @@ class ActaController < ApplicationController
   end
 
 
-  def newBreve
-     
-    #new RANDOM arreglar el algoritmo al final tomara mucho tiempo 
-     @invalid=true
+  def new
+    @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
+    if @pending_actas.length>0
+      @actum=@pending_actas.first
+    else
+      #new RANDOM arreglar el algoritmo al final tomara mucho tiempo --- aun falta mejorar
+       @invalid=true
+       @numero=0 
+       while(@invalid)   
+        i = Random.rand(15000)
+        #TODO
+        #METER EN UN ARREGLO TODOS LO NUMEROS DE ACTAS 
+        #SI i ESTA EN ESE ARREGLO VOLVER A SACAR RANDOM
       
-      while(@invalid)
-         
-      i = Random.rand(15000)
-       
-      #TODO
-      #METER EN UN ARREGLO TODOS LO NUMEROS DE ACTAS 
-      #SI i ESTA EN ESE ARREGLO VOLVER A SACAR RANDOM
-      
-      @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
+        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
  
         begin
-        open(@imageUrl)
-       rescue OpenURI::HTTPError  
-         print "invalid "  
-       else
-         print "valid"
-        
-         if(!Actum.exists?(numero: i.to_s))
-           @invalid=false
-         end
-       end
-       
-    end
+          open(@imageUrl)
+        rescue OpenURI::HTTPError  
+           print "invalid "  
+        else
+           print "valid"  
+           if(!Actum.exists?(numero: i.to_s))
+             @invalid=false
+           end
+        end
+        @numero=i
+      end
     
-     @actum = Actum.new
-    @actum.numero=i 
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @actum }
+      @actum = Actum.new
+      @actum.numero=@numero
+      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+      @actum.user_id=current_user.id
+      @actum.ready_for_review=false
+      @actum.save
     end
+    redirect_to @actum
   end
   
   # GET /acta/new
   # GET /acta/new.json
-  def new
+  def newCorp
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
 
     if @pending_actas.length>0
@@ -127,6 +130,7 @@ class ActaController < ApplicationController
         @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
         begin
           open(@imageUrl)
+          @invalid=false
         rescue OpenURI::HTTPError  
           print "invalid"
         else
@@ -182,21 +186,21 @@ class ActaController < ApplicationController
     @actum = Actum.find(params[:id])
 
     respond_to do |format|
-      if @actum.update_attributes(params[:actum])        
+      #if @actum.update_attributes(params[:actum])        
         format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @actum.errors, status: :unprocessable_entity }
-      end
+      #  format.json { head :no_content }
+      #else
+      #  format.html { render action: "edit" }
+      #  format.json { render json: @actum.errors, status: :unprocessable_entity }
+      #end
     end
   end
   
   # DELETE /acta/1
   # DELETE /acta/1.json
   def destroy
-    @actum = Actum.find(params[:id])
-    @actum.destroy
+    #@actum = Actum.find(params[:id])
+    #@actum.destroy
 
     respond_to do |format|
       format.html { redirect_to acta_url }
