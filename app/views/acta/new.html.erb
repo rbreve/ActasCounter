@@ -1,9 +1,10 @@
-<h1>Ingresar Acta </h1>  
+<h1>Digitacion de Actas - Temporalmente deshabilidata </h1>  
 
-<div style="float:right">
-<img src="<%=@imageUrl%>">
-</div>
+<p>
+	<h2>Casi hemos digitalizado todas las actas!</h2>
+	Por el momento la digitacion de actas se encuentra deshabilitado... 
+</p>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', acta_path %>
+<p>Por el momento puede ayudarnos a <%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Actas</button><%end%> que ya han sido ingresadas.
+	
+</p>

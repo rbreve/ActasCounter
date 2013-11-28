@@ -74,8 +74,11 @@ class ActaController < ApplicationController
  
   end
 
-
+  #--- Temporarily disable adding new actas
   def new
+  end
+  
+  def new_inactive
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
     if @pending_actas.length>0
       @actum=@pending_actas.first
