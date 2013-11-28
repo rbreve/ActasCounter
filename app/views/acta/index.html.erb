@@ -20,12 +20,12 @@ A&uacute;n tienes que completar estas actas:
 <%end%>
 
 <h1>Listado de Actas</h1>
-
+Actas procesadas: <%=Actum.count%> (<%=number_with_precision(Actum.count.to_f/MAX_ACTAS.to_f,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%>
 <div class="pagination-centered" style="padding:20px 0px">
   <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
 </div>
 
-<table>
+<table class="stats-table">
   <tr>
     <th>Numero</th>
     <th>Liberal</th>
@@ -44,7 +44,42 @@ A&uacute;n tienes que completar estas actas:
     <th>Verificaciones</th>
     <th></th>
   </tr>
-
+<tr>
+   <td>Totales</td>
+   <td><b><%= @sumLiberal %></b></td>
+   <td><b><%= @sumNacional %></b></td>
+   <td><b><%= @sumLibre %></b></td>
+   <td><b><%= @sumPac %></b></td>
+   <td><b><%= @sumUD%></b></td>
+   <td><b><%= @sumDC %></b></td>
+   <td><b><%= @sumAlianza %></b></td>
+   <td><b><%= @sumPinu %></b></td>
+   <td><b><%= @sumBlancos %></b></td>
+   <td><b><%= @sumNulos %></b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
+<tr>
+   <td>Porcentajes</td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/Actum.count.to_f),precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
 <% @acta.each do |actum| %>
   <tr>
     <td><%="%05d" % actum.numero %></td>
@@ -91,9 +126,27 @@ A&uacute;n tienes que completar estas actas:
    <td></td>
    <td></td>
    <td></td>
-   <td><b><%= @sumVerified %></b></td>
    <td></td>
- </tr>
+   <td></td>
+</tr>
+<tr>
+   <td>Porcentajes</td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/Actum.count.to_f),precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/Actum.count.to_f),precision: 2) %>%</b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
 </table>
 
 <div class="pagination-centered" style="padding:20px 0px">
