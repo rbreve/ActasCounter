@@ -19,6 +19,7 @@ class ActaController < ApplicationController
     @sumNulos = Actum.sum('nulos')
     @sumVerified = Actum.sum('verified_count')
     
+    @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
            
     respond_to do |format|
@@ -57,11 +58,12 @@ class ActaController < ApplicationController
     @verification.pinu=@actum.pinu
     @verification.blancos=@actum.blancos
     @verification.nulos=@actum.nulos
+    @verification.is_sum_ok=@actum.is_sum_ok
     @verification.acta_id=@actum.id
 
     @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
     
-    if Verification.where(:acta_id=>@actum.id).count==0 and @actum.user_id==current_user.id
+    if @actum.verifications.count==0 and @actum.user_id==current_user.id
       @trigger_verification=true
     end
 
@@ -78,21 +80,30 @@ class ActaController < ApplicationController
     if @pending_actas.length>0
       @actum=@pending_actas.first
     else
-      #new RANDOM arreglar el algoritmo al final tomara mucho tiempo --- aun falta mejorar
        @invalid=true
-       @numero=0 
-       while(@invalid)   
-        i = Random.rand(15000)
-        #TODO
-        #METER EN UN ARREGLO TODOS LO NUMEROS DE ACTAS 
-        #SI i ESTA EN ESE ARREGLO VOLVER A SACAR RANDOM
-      
+       @numero=0
+       
+       while(@invalid)
+        begin
+          @next_available = AvailableNumber.where(:has_valid_image=>true, :already_assigned=>false).order("RANDOM()").reload.first
+        rescue
+          @next_available = nil
+        end
+        #--- we use .reload to force the query to run again and not from sql cache...
+        
+        if @next_available
+          i = @next_available.numero.to_i
+        else
+          i = Random.rand(15000)
+        end
+
         @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
  
         begin
           open(@imageUrl)
         rescue OpenURI::HTTPError  
-           print "invalid "  
+           print "invalid "
+           @next_available.update_attribute(:has_valid_image,false) if @next_available
         else
            print "valid"  
            if(!Actum.exists?(numero: i.to_s))
@@ -108,6 +119,8 @@ class ActaController < ApplicationController
       @actum.user_id=current_user.id
       @actum.ready_for_review=false
       @actum.save
+     
+      @next_available.update_attribute(:already_assigned,true) if @next_available
     end
     redirect_to @actum
   end
@@ -184,21 +197,21 @@ class ActaController < ApplicationController
     @actum = Actum.find(params[:id])
 
     respond_to do |format|
-      if @actum.update_attributes(params[:actum])        
+      #if @actum.update_attributes(params[:actum])        
         format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @actum.errors, status: :unprocessable_entity }
-      end
+      #  format.json { head :no_content }
+      #else
+      #  format.html { render action: "edit" }
+      #  format.json { render json: @actum.errors, status: :unprocessable_entity }
+      #end
     end
   end
   
   # DELETE /acta/1
   # DELETE /acta/1.json
   def destroy
-    @actum = Actum.find(params[:id])
-    @actum.destroy
+    #@actum = Actum.find(params[:id])
+    #@actum.destroy
 
     respond_to do |format|
       format.html { redirect_to acta_url }

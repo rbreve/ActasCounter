@@ -123,3 +123,16 @@ table {
 -moz-border-radius: 5px;
 border-radius: 5px;
 }
+
+.total-sum{
+  font-weight:bold;background:#FFF36B;font-size: 16px;text-align:center;
+}
+
+.stats-table{
+   font-size:12px;
+   tr{
+    font-size:12px;
+    th{font-size:11px;}
+    td{font-size:11px;}
+   }
+}

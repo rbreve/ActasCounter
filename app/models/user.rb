@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :lastname, :name, :password, :password_confirmation, :remember_me,:provider, :uid, :is_admin
   
-  has_many :actum
+  has_many :acta
   has_many :verifications
   
   def shortname
@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
     end
     user
   end
+  
+ 
   
   
 end

@@ -7,22 +7,53 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-3164515-26', 'votosocial.org');
+	  ga('send', 'pageview');
+
+	</script>
+	
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1417714841794203";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	
 <nav class="navbar navbar-default" role="navigation" style="padding:10px">
-	<%if user_signed_in?%>
 	<div class="navbar-left">
+	<%if user_signed_in?%>
 		<%=link_to acta_path do%><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button><%end%>
 
 		<%=link_to new_actum_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button><%end%>
 
 		<%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Acta</button><%end%>
-
-	</div>
 	<%else%>
-	<h4 class="text-muted">
-	Sistema de Conteo de Actas</h4>
-		<%end%>
+	  <h4 class="text-muted">Sistema de Conteo de Actas</h4>
+	<%end%>
+	</div>
+	<div class="navbar-left" style="padding-top:6px;padding-left:10px">
+		<div class="fb-share-button" data-href="http://conteo.votosocial.org" data-type="button_count"></div>
+	</div>
+	
+	
+	
 	<div class="navbar-right">
+		
+		
 	 	<%if user_signed_in?%>
+		<a href="#">Digitadas <span class="badge"><%=current_user.acta_count%></span></a>
+		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count%></span></a>
+		
+		
 			<%if current_user.is_admin%>		
 			  <%=link_to users_path do%><button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-user"></span> User Admin</button><%end%><%end%>
 			
@@ -42,7 +73,7 @@
 	</div>
 </nav>
 
-<div class="content" style="width:90%;margin:auto;">
+<div class="content" style="width:95%;margin:auto;margin-top:-30px">
  <%unless notice.blank?%>
  <div class="alert alert-success"><%= notice %></div>
   

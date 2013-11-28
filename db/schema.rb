@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131127200600) do
+ActiveRecord::Schema.define(:version => 20131128160245) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(:version => 20131127200600) do
     t.integer  "user_id"
     t.integer  "verified_count",   :default => 0
     t.boolean  "ready_for_review", :default => true
+    t.boolean  "is_sum_ok",        :default => true
+  end
+
+  create_table "available_numbers", :force => true do |t|
+    t.string   "numero"
+    t.boolean  "has_valid_image",  :default => true
+    t.boolean  "already_assigned", :default => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -50,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20131127200600) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
+    t.integer  "acta_count"
+    t.integer  "verifications_count"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -69,8 +80,9 @@ ActiveRecord::Schema.define(:version => 20131127200600) do
     t.boolean  "is_valid"
     t.integer  "acta_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "is_sum_ok",  :default => true
   end
 
 end
