@@ -125,47 +125,11 @@ class ActaController < ApplicationController
     redirect_to @actum
   end
   
-  # GET /acta/new
-  # GET /acta/new.json
-  def newCorp
-    @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
-
-    if @pending_actas.length>0
-      @actum=@pending_actas.first
-    else
-      @invalid=true
-      i = begin Actum.order("created_at DESC").limit(1).first.numero.to_i rescue 0 end
-
-      while(@invalid)
-        i+=1    
-        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
-        begin
-          open(@imageUrl)
-          @invalid=false
-        rescue OpenURI::HTTPError  
-          print "invalid"
-        else
-          print "valid"
-          @invalid=false
-        end
-      end
-
-      @actum = Actum.new
-      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
-      @actum.user_id=current_user.id
-      @actum.numero=i
-      @actum.ready_for_review=false
-      @actum.save
-    end
-
-    redirect_to @actum
-  end
-
   # GET /acta/1/edit
-  def edit
-    @actum = Actum.find(params[:id])
-    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
-  end
+  # def edit
+  #   @actum = Actum.find(params[:id])
+  #   @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
+  # end
 
   # POST /acta
   # POST /acta.json
@@ -193,29 +157,27 @@ class ActaController < ApplicationController
 
   # PUT /acta/1
   # PUT /acta/1.json
-  def update
-    @actum = Actum.find(params[:id])
-
-    respond_to do |format|
-      #if @actum.update_attributes(params[:actum])        
-        format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
-      #  format.json { head :no_content }
-      #else
-      #  format.html { render action: "edit" }
-      #  format.json { render json: @actum.errors, status: :unprocessable_entity }
-      #end
-    end
-  end
+  # def update
+  #   @actum = Actum.find(params[:id])
+  #   respond_to do |format|
+  #     if @actum.update_attributes(params[:actum])        
+  #       format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @actum.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
   
   # DELETE /acta/1
   # DELETE /acta/1.json
-  def destroy
-    #@actum = Actum.find(params[:id])
-    #@actum.destroy
-
-    respond_to do |format|
-      format.html { redirect_to acta_url }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @actum = Actum.find(params[:id])
+  #   @actum.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to acta_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end
