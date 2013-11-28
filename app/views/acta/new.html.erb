@@ -5,6 +5,13 @@
 		Por el momento la digitaci&oacute;n de actas se encuentra deshabilitado... 
 	</p>
 
+    <p>Sólo <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%> de las <%=Actum.count%> actas digitadas han sido completamente verificadas (<%= (Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f*100.0).round(2) %>%)
+	
+    <div class="progress progress-striped active" style="background:#373">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f*100.0).round(2) %>%"> 
+      </div>
+    </div>
+    </p>
 	<p>A&uacute;n puedes ayudarnos a <%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Actas</button><%end%> que ya han sido ingresadas.
 
 	</p>
