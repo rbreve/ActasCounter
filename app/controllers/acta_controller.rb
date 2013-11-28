@@ -63,7 +63,7 @@ class ActaController < ApplicationController
 
     @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
     
-    if Verification.where(:acta_id=>@actum.id).count==0 and @actum.user_id==current_user.id
+    if @actum.verifications.count==0 and @actum.user_id==current_user.id
       @trigger_verification=true
     end
 

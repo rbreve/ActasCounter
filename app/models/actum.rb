@@ -6,5 +6,5 @@ class Actum < ActiveRecord::Base
   validates :alianza, :dc, :liberal, :libre, :nacional, :pac, :pinu, :ud, :nulos, :blancos, :numericality => { :greater_than_or_equal_to=>0, :less_than_or_equal_to => 400 }, :presence => true
   
   belongs_to :user
-  has_many :verifications
+  has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
 end

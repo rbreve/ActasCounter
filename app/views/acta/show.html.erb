@@ -145,7 +145,7 @@
   </div>
 <%end%>
 
-<%if Verification.where(:acta_id=>@actum.id).count>0%>
+<%if @actum.verifications.count>0%>
 <div style="float:left:width:100%;clear:both;padding-top:20px;padding-bottom:20px">
   <h3><span class="glyphicon glyphicon-eye-open"></span> Auditor&iacute;a de verificaciones</h3>
   <table>
@@ -155,7 +155,7 @@
 	 <th>Info</th>
 	 <th>DC</th><th>AP</th><th>PL</th><th>PAC</th><th>LIB</th><th>UD</th><th>PINU</th><th>PN</th><th>Blancos</th><th>Nulos</th><th>Suma Correcta?</th>
   </tr>
-  <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
+  <%@actum.verifications.order("created_at ASC").each do |verification|%>
     <tr>
 	  <td>
 		<a href="http://facebook.com/<%=verification.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=verification.user.uid%>/picture?width=35&height=35" alt="<%=verification.user.shortname%>" title="<%=verification.user.shortname%>"></a>
