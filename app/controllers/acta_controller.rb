@@ -72,9 +72,48 @@ class ActaController < ApplicationController
  
   end
 
+
+  def new
+     
+    #new RANDOM arreglar el algoritmo al final tomara mucho tiempo 
+     @invalid=true
+      
+      while(@invalid)
+         
+      i = Random.rand(15000)
+       
+      #TODO
+      #METER EN UN ARREGLO TODOS LO NUMEROS DE ACTAS 
+      #SI i ESTA EN ESE ARREGLO VOLVER A SACAR RANDOM
+      
+      @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % i
+ 
+        begin
+        open(@imageUrl)
+       rescue OpenURI::HTTPError  
+         print "invalid "  
+       else
+         print "valid"
+        
+         if(!Actum.exists?(numero: i.to_s))
+           @invalid=false
+         end
+       end
+       
+    end
+    
+     @actum = Actum.new
+    @actum.numero=i 
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @actum }
+    end
+  end
+  
   # GET /acta/new
   # GET /acta/new.json
-  def new
+  def newCorp
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
 
     if @pending_actas.length>0

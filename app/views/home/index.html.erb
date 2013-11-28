@@ -1,13 +1,26 @@
-<h1>Verificación de Actas - Elecciones Honduras</h1>
+<div class="container">
+<div class="jumbotron">
+<h1>Conteo y Validación de Actas</h1>
 
 <%if user_signed_in?%>
-<p>Colabora con una de estas tareas:</p>
+<p>Colabora con una de estas tareas:</p> 
 
-<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-pencil"></span> Digital un acta</button></a>
+<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button></a>
 
-<a href="/acta/random"> <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Validar un acta</button></a>
+<a href="/acta/random"> <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Validar  Acta</button></a>
 
 <%else%>
-<p>Colabora, ingresa con su cuenta de facebook.</p>
-<p><%= link_to "Comenzar...", user_omniauth_authorize_path(:facebook) %></p>
+<div style="color:gray">
+<p class="lead">Este es una aplicación web para reconteo y validación de actas presidenciales tomadas del TSE. 
+
+Ayudanos a digitar y validar las actas para tener mayor transparencia en el proceso electoral.</p>
+
+</div>
+<p>
+	
+	<a href="/auth/auth/facebook"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
+</p>
+</div>
 <%end%>
+</div>
+ 

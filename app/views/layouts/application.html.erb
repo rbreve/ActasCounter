@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ConteoActas</title>
+  <title>Conteo de Actas</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation" style="padding:10px">
+	<%if user_signed_in?%>
 	<div class="navbar-left">
 		<%=link_to acta_path do%><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button><%end%>
 
-		<%=link_to new_actum_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digital un acta</button><%end%>
+		<%=link_to new_actum_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button><%end%>
 
-		<%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar un acta</button><%end%>
+		<%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Acta</button><%end%>
 
 	</div>
+	<%else%>
+	<h4 class="text-muted">
+	Sistema de Conteo de Actas</h4>
+		<%end%>
 	<div class="navbar-right">
 	 	<%if user_signed_in?%>
 			<%if current_user.is_admin%>		
@@ -27,15 +32,20 @@
 		  </div>
 		<%else%>
 		  <div style="float:right">
-		    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
-		  </div>
+			  <ul class="nav nav-pills pull-right">
+			           <li class="active"><a href="#">Home</a></li>
+			           <li><a href="#">About</a></li>
+			           <li><a href="#">Contact</a></li>
+			         </ul>
+ 		  </div>
 		<%end%>
 	</div>
 </nav>
 
 <div class="content" style="width:90%;margin:auto;">
  <%unless notice.blank?%>
-   <p class="notice"><%= notice %></p>
+ <div class="alert alert-success"><%= notice %></div>
+  
  <%end%>
  <p class="alert"><%= alert %></p>
  <%= yield %>
