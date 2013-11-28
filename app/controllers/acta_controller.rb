@@ -149,10 +149,10 @@ class ActaController < ApplicationController
   end
 
   # GET /acta/1/edit
-  def edit
-    @actum = Actum.find(params[:id])
-    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
-  end
+  # def edit
+  #   @actum = Actum.find(params[:id])
+  #   @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/1/%05d.jpg" % @actum.numero
+  # end
 
   # POST /acta
   # POST /acta.json
@@ -180,29 +180,29 @@ class ActaController < ApplicationController
 
   # PUT /acta/1
   # PUT /acta/1.json
-  def update
-    @actum = Actum.find(params[:id])
+  # def update
+  #   @actum = Actum.find(params[:id])
 
-    respond_to do |format|
-      if @actum.update_attributes(params[:actum])        
-        format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @actum.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @actum.update_attributes(params[:actum])        
+  #       format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @actum.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
   
   # DELETE /acta/1
   # DELETE /acta/1.json
-  def destroy
-    @actum = Actum.find(params[:id])
-    @actum.destroy
+  # def destroy
+  #   @actum = Actum.find(params[:id])
+  #   @actum.destroy
 
-    respond_to do |format|
-      format.html { redirect_to acta_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to acta_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end
