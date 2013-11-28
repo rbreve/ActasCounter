@@ -21,6 +21,7 @@ class VerificationsController < ApplicationController
           @actum.pinu=@log.pinu
           @actum.blancos=@log.blancos
           @actum.nulos=@log.nulos
+          @actum.is_sum_ok=@log.is_sum_ok
         end
         @actum.ready_for_review=true
         @actum.save
