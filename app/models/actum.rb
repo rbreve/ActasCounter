@@ -8,4 +8,14 @@ class Actum < ActiveRecord::Base
  
   belongs_to :user, counter_cache: true
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
+  
+  
+  after_save :update_counters
+  
+  private
+    def update_counters
+      user = User.find self.user_id
+      user.acta_count = user.actum.count
+      user.save
+    end
 end

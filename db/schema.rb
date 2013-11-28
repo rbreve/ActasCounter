@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128040735) do
+ActiveRecord::Schema.define(:version => 20131128160151) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(:version => 20131128040735) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
+    t.integer  "acta_count"
+    t.integer  "verifications_count"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

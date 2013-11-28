@@ -94,7 +94,7 @@ Actas procesadas: <%=Actum.count%> (<%=number_with_precision((Actum.count.to_f/M
     <td><%= actum.blancos %></td>
     <td><%= actum.nulos %></td>
     <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
-    <td><a href="http://facebook.com/<%=actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
+    <td><a href="<%=user_profile_path(actum.user.id)%>" target="_blank"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
     <td><%=actum.created_at.strftime("%d/%b/%Y")%><br/>
         <%=actum.created_at.strftime("%k:%M:%S")%></td>
     <td><%= actum.verified_count %> / <%=VERIFICATIONS%></td>

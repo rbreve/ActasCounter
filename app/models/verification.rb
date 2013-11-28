@@ -8,4 +8,13 @@ class Verification < ActiveRecord::Base
   
   validates :alianza, :dc, :liberal, :libre, :nacional, :pac, :pinu, :ud, :nulos, :blancos, :numericality => { :greater_than_or_equal_to=>0, :less_than_or_equal_to => 400 }, :presence => true
     
+  after_save :update_counters
+  
+  private
+    def update_counters
+      user = User.find self.user_id
+      user.verifications_count = user.verifications.count
+      user.save
+    end
+    
 end
