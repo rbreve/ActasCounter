@@ -58,6 +58,7 @@ class ActaController < ApplicationController
     @verification.pinu=@actum.pinu
     @verification.blancos=@actum.blancos
     @verification.nulos=@actum.nulos
+    @verification.is_sum_ok=@actum.is_sum_ok
     @verification.acta_id=@actum.id
 
     @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
