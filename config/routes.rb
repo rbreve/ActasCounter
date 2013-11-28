@@ -1,7 +1,7 @@
 ConteoActas::Application.routes.draw do
-  resources :users
-  resources :verifications
-  resources :acta
+  resources :users, :except=>[:destroy]
+  resources :verifications, :except=>[:destroy]
+  resources :acta, :except=>[:destroy]
 
   devise_for :users, :path => "auth", :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 

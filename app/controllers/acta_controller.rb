@@ -186,21 +186,21 @@ class ActaController < ApplicationController
     @actum = Actum.find(params[:id])
 
     respond_to do |format|
-      if @actum.update_attributes(params[:actum])        
+      #if @actum.update_attributes(params[:actum])        
         format.html { redirect_to @actum, notice: 'Actum was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @actum.errors, status: :unprocessable_entity }
-      end
+      #  format.json { head :no_content }
+      #else
+      #  format.html { render action: "edit" }
+      #  format.json { render json: @actum.errors, status: :unprocessable_entity }
+      #end
     end
   end
   
   # DELETE /acta/1
   # DELETE /acta/1.json
   def destroy
-    @actum = Actum.find(params[:id])
-    @actum.destroy
+    #@actum = Actum.find(params[:id])
+    #@actum.destroy
 
     respond_to do |format|
       format.html { redirect_to acta_url }
