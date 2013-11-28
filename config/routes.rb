@@ -2,7 +2,8 @@ ConteoActas::Application.routes.draw do
   resources :users
   resources :verifications
   resources :acta
-
+  resources :user_profile
+  
   devise_for :users, :path => "auth", :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   # The priority is based upon order of creation:
