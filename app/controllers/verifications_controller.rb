@@ -26,7 +26,7 @@ class VerificationsController < ApplicationController
         @actum.ready_for_review=true
         @actum.save
         
-        format.html { redirect_to @actum, notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado. " }
+        format.html { redirect_to "/acta/random", notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado. " }
         format.json { render json: @actum, status: :created, location: @actum }
       else
         @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
