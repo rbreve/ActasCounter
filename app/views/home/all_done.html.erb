@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="jumbotron">
+   <h2>Muchas gracias! Hemos digitado todas las actas a que tenemos acceso</h2>
+
+    <p>Pero la tarea no termina aquí. <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%> de las <%=Actum.count%> actas digitadas han sido completamente verificadas (<%= (Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f*100.0).round(2) %>%)
+	
+    <div class="progress progress-striped active" style="background:#373">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: <%= (Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f*100.0).round(2) %>%"> 
+      </div>
+    </div>
+    </p>
+	<p>A&uacute;n puedes ayudarnos a <%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Actas</button><%end%> que ya han sido ingresadas.
+
+	</p>
+  </div>
+
+	<p><b>Porqué?:</b> Estamos trabajando en obtener los archivos de actas restantes para que puedan seguir ayudando con la digitación. Sin embargo, sólo <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%> de las <%=Actum.count%> actas digitadas han sido completamente verificadas. <%=link_to "Ayudanos con la verificación","/acta/random"%>.
+
+	</p>
+</div>

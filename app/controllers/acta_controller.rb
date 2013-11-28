@@ -44,7 +44,7 @@ class ActaController < ApplicationController
     end
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
     
-    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/2/%05d.jpg" % @actum.numero
+    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % @actum.numero
     
     @verification=Verification.new
     @verification.is_valid=true
@@ -74,11 +74,33 @@ class ActaController < ApplicationController
  
   end
 
-  #--- Temporarily disable adding new actas
   def new
+    begin
+      @next_available = AvailableNumber.where(:has_valid_image=>true, :already_assigned=>false).order("RANDOM()").reload.first
+    rescue
+      @next_available = nil
+    end
+    
+    if @next_available.nil?
+       redirect_to all_done_path
+       return
+    else
+      @numero = @next_available.numero.to_i
+      @actum = Actum.new
+      @actum.numero=@numero
+      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+      @actum.user_id=current_user.id
+      @actum.ready_for_review=false
+      @actum.save
+      @next_available.update_attribute(:already_assigned,true) if @next_available
+      
+      redirect_to @actum
+      return
+    end
   end
-  
-  def new_inactive
+
+
+  def new_old_version
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
     if @pending_actas.length>0
       @actum=@pending_actas.first
@@ -100,7 +122,7 @@ class ActaController < ApplicationController
           i = Random.rand(15000)
         end
 
-        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/2/%05d.jpg" % i
+        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % i
  
         begin
           open(@imageUrl)
@@ -149,7 +171,7 @@ class ActaController < ApplicationController
           format.json { render json: @actum, status: :created, location: @actum }
         else
           i=@actum.numero.to_i
-          @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/2/%05d.jpg" % i
+          @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % i
           
           format.html { render action: "new" }
           format.json { render json: @actum.errors, status: :unprocessable_entity }
