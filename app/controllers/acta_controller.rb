@@ -75,11 +75,10 @@ class ActaController < ApplicationController
 
   def new
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
-
     if @pending_actas.length>0
       @actum=@pending_actas.first
     else
-      #new RANDOM arreglar el algoritmo al final tomara mucho tiempo 
+      #new RANDOM arreglar el algoritmo al final tomara mucho tiempo --- aun falta mejorar
        @invalid=true
        @numero=0 
        while(@invalid)   
