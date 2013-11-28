@@ -73,7 +73,7 @@ class ActaController < ApplicationController
   end
 
 
-  def new
+  def newBreve
      
     #new RANDOM arreglar el algoritmo al final tomara mucho tiempo 
      @invalid=true
@@ -113,7 +113,7 @@ class ActaController < ApplicationController
   
   # GET /acta/new
   # GET /acta/new.json
-  def newCorp
+  def new
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
 
     if @pending_actas.length>0
