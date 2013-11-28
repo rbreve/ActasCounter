@@ -84,7 +84,11 @@ class ActaController < ApplicationController
        @numero=0
        
        while(@invalid)
-        @next_available = AvailableNumber.where(:has_valid_image=>true, :already_assigned=>false).order("RANDOM()").reload.first
+        begin
+          @next_available = AvailableNumber.where(:has_valid_image=>true, :already_assigned=>false).order("RANDOM()").reload.first
+        rescue
+          @next_available = nil
+        end
         #--- we use .reload to force the query to run again and not from sql cache...
         
         if @next_available
