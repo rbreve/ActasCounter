@@ -13,7 +13,7 @@ class Verification < ActiveRecord::Base
   private
     def update_counters
       user = User.find self.user_id
-      user.verifications_count = user.verifications.count
+      user.verifications_count = User.verifications.count
       user.save
     end
     

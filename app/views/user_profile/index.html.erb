@@ -1,7 +1,12 @@
 <h2>Mejores contribuidores</h2>
 
 <table>
+	<tr>
+		<td><b>Usuario</b></td>
+		<td><b>Actas Digitadas</b></td>
+		<td><b>Actas Validadas</b></td>
+	</tr>
 <% @users.each do |user| %>
-<tr><td><%=user.name%></td><td> <%=user.acta_count%></td>
+<tr><td><%=user.name%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
 <%end%>
 </table>
