@@ -37,14 +37,17 @@ class ActaController < ApplicationController
     
     if(params[:numero])
        @actum= Actum.where(numero: params[:numero].to_s).first
+       notice_msg="Acta no encontrada..."
     elsif(params[:id]=="random")
       @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
+      notice_msg="No hay actas pendientes de verificacion ingresadas por otros usuarios..."
     else
       @actum = Actum.find_by_numero(params[:id].to_s)
+      notice_msg="Acta no encontrada..."
     end
     
     if @actum.nil?
-      redirect_to acta_path, :notice=> "No hay actas pendientes de verificacion ingresadas por otros usuarios..."
+      redirect_to acta_path, :notice=>notice_msg
       return
     end
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
