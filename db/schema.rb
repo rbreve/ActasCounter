@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131129142025) do
+ActiveRecord::Schema.define(:version => 20131129180536) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20131129142025) do
     t.integer  "verified_count",   :default => 0
     t.boolean  "ready_for_review", :default => true
     t.boolean  "is_sum_ok",        :default => true
+    t.string   "actum_type",       :default => "p"
   end
 
   add_index "acta", ["liberal", "nacional", "libre", "pac", "ud", "dc", "alianza", "pinu", "blancos", "nulos"], :name => "acta_counts_index"
@@ -72,8 +73,8 @@ ActiveRecord::Schema.define(:version => 20131129142025) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
-    t.integer  "acta_count"
-    t.integer  "verifications_count"
+    t.integer  "acta_count",             :default => 0
+    t.integer  "verifications_count",    :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

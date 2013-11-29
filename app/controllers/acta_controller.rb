@@ -31,28 +31,31 @@ class ActaController < ApplicationController
     
   end
 
+  def random
+    @actum = Actum.random(current_user)
+
+    if @actum.nil?
+      redirect_to(acta_path, :notice=>notice_msg) and return
+    else
+      redirect_to(actum_type_path(@actum.full_type, @actum.numero))
+    end
+  end
+
   # GET /acta/1
   # GET /acta/1.json
   def show
-    
-    if(params[:numero])
-       @actum= Actum.where(numero: params[:numero].to_s).first
-       notice_msg="Acta no encontrada..."
-    elsif(params[:id]=="random")
-      @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
-      notice_msg="No hay actas pendientes de verificacion ingresadas por otros usuarios..."
-    else
-      @actum = Actum.find_by_numero(params[:id].to_s)
-      notice_msg="Acta no encontrada..."
-    end
-    
+    (redirect_to(actum_type_path("presidente", params[:id])) and return) if not params[:type]
+
+    @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(params[:type]))
+    notice_msg="Acta no encontrada..."
+
     if @actum.nil?
       redirect_to acta_path, :notice=>notice_msg
       return
     end
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
     
-    @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % @actum.numero
+    @imageUrl = @actum.image
     
     @verification=Verification.new
     @verification.is_valid=true

@@ -1,7 +1,7 @@
 class Actum < ActiveRecord::Base
-  attr_accessible :alianza, :dc, :liberal, :libre, :nacional, :numero, :pac, :pinu, :ud, :nulos, :blancos, :user_id, :ready_for_review,:is_sum_ok
+  attr_accessible :alianza, :dc, :liberal, :libre, :nacional, :numero, :pac, :pinu, :ud, :nulos, :blancos, :user_id, :ready_for_review, :is_sum_ok, :actum_type
 
-  validates :numero, :uniqueness=>true
+  validates :numero, :uniqueness=> {:scope => :actum_type}
   
   validates :alianza, :dc, :liberal, :libre, :nacional, :pac, :pinu, :ud, :nulos, :blancos, :numericality => { :greater_than_or_equal_to=>0, :less_than_or_equal_to => 400 }, :presence => true
 
@@ -9,6 +9,18 @@ class Actum < ActiveRecord::Base
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
   has_many :reportes
   after_save :update_counters
+
+  ACTUM_TYPE_FULL = {
+    "p" => "presidente",
+    "a" => "alcalde",
+    "d" => "diputados"
+  }
+
+  ACTUM_TYPE_SHORT = {
+    "presidente" => "p",
+    "alcalde" => "a",
+    "diputados" => "d"
+  }
   
   def total_votes
     self.nacional.to_i+self.liberal.to_i+self.libre.to_i+self.ud.to_i+self.alianza.to_i+self.pinu.to_i+self.blancos.to_i+self.pac.to_i+self.nulos.to_i+self.dc.to_i
@@ -40,6 +52,33 @@ class Actum < ActiveRecord::Base
       nulos: Actum.sum("nulos"),
       blancos: Actum.sum("blancos")
     }
+  end
+
+  def self.random(current_user)
+    Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
+  end
+
+  def self.short_type(type)
+    ACTUM_TYPE_SHORT[type]
+  end
+
+  def full_type
+    ACTUM_TYPE_FULL[self.actum_type]
+  end
+
+  def folder_number
+    case self.actum_type
+    when "p"
+      return 3
+    when "a"
+      return 1
+    when "d"
+      return 1
+    end
+  end
+
+  def image
+    "http://s3-us-west-2.amazonaws.com/actashn/#{self.full_type}/#{self.folder_number}/%05d.jpg" % self.numero
   end
   
   private
