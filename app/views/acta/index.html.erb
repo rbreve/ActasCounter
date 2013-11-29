@@ -1,3 +1,16 @@
+<div class="row">
+	<form action="/acta/1">
+	    <div class="col-md-6">
+		<input type="text" class="form-control" placeholder="Número de Acta" name="numero">
+	</div>
+	
+    <div class="col-md-6">
+	
+	    <button type="submit" class="btn btn-primary btn-normal">  <span class="glyphicon glyphicon-search"> </span> Buscar</button>
+	</div>
+	</form>
+</div>
+
 <%if @pending_actas.length>0%>
 <h1>Actas pendientes de completar</h1>
 A&uacute;n tienes que completar estas actas:
@@ -19,88 +32,89 @@ A&uacute;n tienes que completar estas actas:
  </table>
 <%end%>
 
-<%cache "acta-list-#{params[:page]}", :expires_in => 1.minutes do %>
+<%cache "acta-stats-for-list", :expires_in => 1.minutes do %>
 	<h1>Listado de Actas</h1>
 	Actas procesadas: <%=Actum.count%> (<%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%>
-	<div class="pagination-centered" style="padding:20px 0px">
-	  <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
-	</div>
+<%end%>
 
-	<table class="stats-table">
-	  <tr>
-	    <th>Numero</th>
-	    <th>Liberal</th>
-	    <th>Nacional</th>
-	    <th>Libre</th>
-	    <th>Pac</th>
-	    <th>Ud</th>
-	    <th>Dc</th>
-	    <th>Alianza</th>
-	    <th>Pinu</th>
-	    <th>Blancos</th>
-	    <th>Nulos</th>
-	    <th>Suma Correcta?</th>
-	    <th>Ingresada por</th>
-	    <th>Hora de ingreso</th>
-	    <th>Verificaciones</th>
-	    <th></th>
-	  </tr>
-	<tr>
-	   <td>Totales</td>
-	   <td><b><%= @sumLiberal %></b></td>
-	   <td><b><%= @sumNacional %></b></td>
-	   <td><b><%= @sumLibre %></b></td>
-	   <td><b><%= @sumPac %></b></td>
-	   <td><b><%= @sumUD%></b></td>
-	   <td><b><%= @sumDC %></b></td>
-	   <td><b><%= @sumAlianza %></b></td>
-	   <td><b><%= @sumPinu %></b></td>
-	   <td><b><%= @sumBlancos %></b></td>
-	   <td><b><%= @sumNulos %></b></td>
-	   <td></td>
-	   <td></td>
-	   <td></td>
-	   <td></td>
-	   <td></td>
-	</tr>
-	<tr>
-	   <td>Porcentajes</td>
-	   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
-	   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td></td>
-	   <td></td>
-	   <td></td>
-	   <td></td>
-	   <td></td>
-	</tr>
-	<% @acta.each do |actum| %>
-	  <tr>
-	    <td><%="%05d" % actum.numero %></td>
-	    <td><%= actum.liberal %></td>
-	    <td><%= actum.nacional %></td>
-	    <td><%= actum.libre %></td>
-	    <td><%= actum.pac %></td>
-	    <td><%= actum.ud %></td>
-	    <td><%= actum.dc %></td>
-	    <td><%= actum.alianza %></td>
-	    <td><%= actum.pinu %></td>
-	    <td><%= actum.blancos %></td>
-	    <td><%= actum.nulos %></td>
-	    <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
-	    <td><a href="<%=user_profile_path(actum.user.id)%>"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
-	    <td><%=actum.created_at.strftime("%d/%b/%Y")%><br/>
-	        <%=actum.created_at.strftime("%k:%M:%S")%></td>
-	    <td><%= actum.verified_count %> / <%=VERIFICATIONS%></td>
-	    <td>
-	   
+<%cache "acta-list-#{params[:page]}", :expires_in => 2.minutes do %>
+<div class="pagination-centered" style="padding:20px 0px">
+  <%= will_paginate @acta, :inner_window=>6, :outer_window=>6%>
+</div>	
+<table class="stats-table">
+  <tr>
+    <th>Numero</th>
+    <th>Liberal</th>
+    <th>Nacional</th>
+    <th>Libre</th>
+    <th>Pac</th>
+    <th>Ud</th>
+    <th>Dc</th>
+    <th>Alianza</th>
+    <th>Pinu</th>
+    <th>Blancos</th>
+    <th>Nulos</th>
+    <th>Suma Coincide?</th>
+    <th>Ingresada por</th>
+    <th>Hora de ingreso</th>
+    <th>Verificaciones</th>
+    <th></th>
+  </tr>
+<tr>
+   <td>Totales</td>
+   <td><b><%= @sumLiberal %></b></td>
+   <td><b><%= @sumNacional %></b></td>
+   <td><b><%= @sumLibre %></b></td>
+   <td><b><%= @sumPac %></b></td>
+   <td><b><%= @sumUD%></b></td>
+   <td><b><%= @sumDC %></b></td>
+   <td><b><%= @sumAlianza %></b></td>
+   <td><b><%= @sumPinu %></b></td>
+   <td><b><%= @sumBlancos %></b></td>
+   <td><b><%= @sumNulos %></b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
+<tr>
+   <td>Porcentajes</td>
+   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
+   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
+<% @acta.each do |actum| %>
+  <tr>
+    <td><%="%05d" % actum.numero %></td>
+    <td><%= actum.liberal %></td>
+    <td><%= actum.nacional %></td>
+    <td><%= actum.libre %></td>
+    <td><%= actum.pac %></td>
+    <td><%= actum.ud %></td>
+    <td><%= actum.dc %></td>
+    <td><%= actum.alianza %></td>
+    <td><%= actum.pinu %></td>
+    <td><%= actum.blancos %></td>
+    <td><%= actum.nulos %></td>
+    <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
+    <td><a href="<%=user_profile_path(actum.user.id)%>"><img src="https://graph.facebook.com/<%=actum.user.uid%>/picture?width=35&height=35" alt="<%=actum.user.shortname%>" title="<%=actum.user.shortname%>"></a></td>
+    <td><%=actum.created_at.strftime("%d/%b/%Y")%><br/>
+        <%=actum.created_at.strftime("%k:%M:%S")%></td>
+    <td><%= actum.verified_count %> / <%=VERIFICATIONS%></td>
+    <td>
 	      <%= link_to actum do %><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> 
 		  <%if actum.verified_count>=VERIFICATIONS or actum.user_id==current_user.id%>
 		     Ver

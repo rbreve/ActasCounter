@@ -49,10 +49,18 @@
 	</div>
 	<div class="navbar-left" style="padding-top:6px;padding-left:10px">
 		<div class="fb-share-button" data-href="http://conteo.votosocial.org" data-type="button_count"></div>
+		
+		
 	</div>
+	
 
 	<div class="navbar-right">
+		
+		
 	 	<%if user_signed_in?%>
+
+		
+		
 		<a href="#">Digitadas <span class="badge"><%=current_user.acta_count%></span></a>
  		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count-current_user.acta_count%></span></a>
 	 

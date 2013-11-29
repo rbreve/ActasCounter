@@ -5,19 +5,21 @@ class ActaController < ApplicationController
   # GET /acta
   # GET /acta.json
   def index
+    exp_sums=90
+    
     @acta = Actum.where(:ready_for_review=>true).order("created_at ASC").page(params[:page]).per_page(25)
 
-    @sumLiberal = Actum.sum('liberal')
-    @sumLibre = Actum.sum('libre')
-    @sumNacional = Actum.sum('nacional')
-    @sumPac = Actum.sum('pac')
-    @sumUD = Actum.sum('ud')
-    @sumDC = Actum.sum('dc')
-    @sumAlianza = Actum.sum('alianza')
-    @sumPinu = Actum.sum('pinu')
-    @sumBlancos = Actum.sum('blancos')
-    @sumNulos = Actum.sum('nulos')
-    @sumVerified = Actum.sum('verified_count')
+    @sumLiberal = Rails.cache.fetch("sum-liberal", :expires_in=>exp_sums.seconds) {Actum.sum('liberal')}
+    @sumLibre = Rails.cache.fetch("sum-libre", :expires_in=>exp_sums.seconds) {Actum.sum('libre')}
+    @sumNacional = Rails.cache.fetch("sum-nacional", :expires_in=>exp_sums.seconds) {Actum.sum('nacional')}
+    @sumPac = Rails.cache.fetch("sum-pac", :expires_in=>exp_sums.seconds) {Actum.sum('pac')}
+    @sumUD = Rails.cache.fetch("sum-ud", :expires_in=>exp_sums.seconds) {Actum.sum('ud')}
+    @sumDC = Rails.cache.fetch("sum-dc", :expires_in=>exp_sums.seconds) {Actum.sum('dc')}
+    @sumAlianza = Rails.cache.fetch("sum-alianza", :expires_in=>exp_sums.seconds) {Actum.sum('alianza')}
+    @sumPinu = Rails.cache.fetch("sum-pinu", :expires_in=>exp_sums.seconds) {Actum.sum('pinu')}
+    @sumBlancos = Rails.cache.fetch("sum-blancos", :expires_in=>exp_sums.seconds) {Actum.sum('blancos')}
+    @sumNulos = Rails.cache.fetch("sum-nulos", :expires_in=>exp_sums.seconds) {Actum.sum('nulos')}
+    @sumVerified = ARails.cache.fetch("sum-verified", :expires_in=>exp_sums.seconds) {ctum.sum('verified_count')}
     
     @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
@@ -32,7 +34,10 @@ class ActaController < ApplicationController
   # GET /acta/1
   # GET /acta/1.json
   def show
-    if(params[:id]=="random")
+    
+    if(params[:numero])
+       @actum= Actum.where(numero: params[:numero].to_i).first
+    elsif(params[:id]=="random")
       @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
     else
       @actum = Actum.find_by_numero(params[:id].to_s)
