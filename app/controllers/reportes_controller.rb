@@ -2,7 +2,7 @@ class ReportesController < ApplicationController
   # GET /reportes
   # GET /reportes.json
   def index
-    @reportes = Reporte.all
+    @reportes = Reporte.order("created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb

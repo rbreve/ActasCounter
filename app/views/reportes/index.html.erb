@@ -2,16 +2,16 @@
 
 <table>
   <tr>
+	<th>Usuario</th>
     <th>Mensaje</th>
-    <th>Usuario</th>
     <th>Acta</th>
     <th>Date</th>
   </tr>
 
 <% @reportes.each do |reporte| %>
   <tr>
+    <td><a href="<%=user_profile_path(reporte.user.id)%>"><img src="https://graph.facebook.com/<%=reporte.user.uid%>/picture?width=35&height=35" alt="<%=reporte.user.shortname%>" title="<%=reporte.user.shortname%>"></a></td>
     <td><%= reporte.body %></td>
-    <td><%= reporte.user_id %></td>
     <td><%= link_to "%05d" % reporte.actum.numero, reporte.actum %></td>
     <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
   </tr>
