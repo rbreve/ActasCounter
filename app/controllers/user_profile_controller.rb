@@ -1,6 +1,8 @@
 class UserProfileController < ApplicationController
   def index
-    @users = User.order("acta_count DESC").limit(20)
+    @users = User.order("acta_count DESC").limit(50)
+    @usersV = User.order("verifications_count DESC").limit(50)
+    
   end
 
   def show

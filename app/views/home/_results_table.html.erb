@@ -19,7 +19,6 @@
 			  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f)*100,precision: 2)%>%">
 			    <span class="sr-only"><%=number_with_precision((Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f)*100, precision:2)%> % Complete (success)</span>
 			  </div>
-		 
 			</div>
 		
 	<table class="table" >

@@ -1,0 +1,22 @@
+<h1>Listing reportes</h1>
+
+<table>
+  <tr>
+    <th>Mensaje</th>
+    <th>Usuario</th>
+    <th>Acta</th>
+    <th>Date</th>
+  </tr>
+
+<% @reportes.each do |reporte| %>
+  <tr>
+    <td><%= reporte.body %></td>
+    <td><%= reporte.user_id %></td>
+    <td><%= link_to "%05d" % reporte.actum.numero, reporte.actum %></td>
+    <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
+  </tr>
+<% end %>
+</table>
+
+ 
+ 

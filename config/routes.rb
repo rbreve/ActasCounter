@@ -1,4 +1,7 @@
 ConteoActas::Application.routes.draw do
+  resources :reportes
+
+
   resources :users, :except=>[:destroy, :new]
   resources :verifications, :except=>[:edit,:destroy,:update,:new]
   resources :acta, :except=>[:edit,:update,:destroy]

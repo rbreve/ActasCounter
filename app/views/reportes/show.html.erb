@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Body:</b>
+  <%= @reporte.body %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @reporte.user_id %>
+</p>
+
+<p>
+  <b>Acta:</b>
+  <%= @reporte.acta_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @reporte.date %>
+</p>
+
+
+<%= link_to 'Edit', edit_reporte_path(@reporte) %> |
+<%= link_to 'Back', reportes_path %>
