@@ -1,32 +1,34 @@
-<h2>Mejores contribuidores</h2>
+<%cache "top-users", :expires_in => 5.minutes do %>
+	<h2>Mejores contribuidores</h2>
 
-<div class="row">
- <div class="col-md-6">
-	 <h4>Digitadores</h4>
-<table>
-	<tr>
-		<td colspan="2"><b>Usuario</b></td>
-		<td><b>Actas Digitadas</b></td>
-		<td><b>Actas Validadas</b></td>
-	</tr>
-<% @users.each do |user| %>
- <tr><td><a href="<%=user_profile_path(user.id)%>"><img src="https://graph.facebook.com/<%=user.uid%>/picture?width=35&height=35" alt="<%=user.shortname%>" title="<%=user.shortname%>" width="35"></a></td><td><%=user.shortname%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
- <%end%>
-</table>
+	<div class="row">
+	 <div class="col-md-6">
+		 <h4>Digitadores</h4>
+	<table>
+		<tr>
+			<td colspan="2"><b>Usuario</b></td>
+			<td><b>Actas Digitadas</b></td>
+			<td><b>Actas Validadas</b></td>
+		</tr>
+	<% @users.each do |user| %>
+	 <tr><td><a href="<%=user_profile_path(user.id)%>"><img src="https://graph.facebook.com/<%=user.uid%>/picture?width=35&height=35" alt="<%=user.shortname%>" title="<%=user.shortname%>" width="35"></a></td><td><%=user.shortname%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
+	 <%end%>
+	</table>
   
-</div>
-  <div class="col-md-6">
- 	 <h4>Verificadores</h4>
+	</div>
+	  <div class="col-md-6">
+	 	 <h4>Verificadores</h4>
 	  
-<table>
-	<tr>
-		<td colspan="2"><b>Usuario</b></td>
-		<td><b>Actas Digitadas</b></td>
-		<td><b>Actas Validadas</b></td>
-	</tr>
-<% @usersV.each do |user| %>
- <tr><td><a href="<%=user_profile_path(user.id)%>"><img src="https://graph.facebook.com/<%=user.uid%>/picture?width=35&height=35" alt="<%=user.shortname%>" title="<%=user.shortname%>" width="35"></a></td><td><%=user.shortname%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
- <%end%>
-</table>
-</div>
-</div>
+	<table>
+		<tr>
+			<td colspan="2"><b>Usuario</b></td>
+			<td><b>Actas Digitadas</b></td>
+			<td><b>Actas Validadas</b></td>
+		</tr>
+	<% @usersV.each do |user| %>
+	 <tr><td><a href="<%=user_profile_path(user.id)%>"><img src="https://graph.facebook.com/<%=user.uid%>/picture?width=35&height=35" alt="<%=user.shortname%>" title="<%=user.shortname%>" width="35"></a></td><td><%=user.shortname%></td><td> <%=user.acta_count%></td> <td><%=user.verifications_count%></td>
+	 <%end%>
+	</table>
+	</div>
+	</div>
+<%end%>

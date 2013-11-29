@@ -1,8 +1,7 @@
 class UserProfileController < ApplicationController
   def index
-    @users = User.order("acta_count DESC").limit(50)
-    @usersV = User.order("verifications_count DESC").limit(50)
-    
+    @users = Rails.cache.fetch("top-creators", :expires_in=>5.minutes) {User.order("acta_count DESC").limit(50)}
+    @usersV = Rails.cache.fetch("top-verificators", :expires_in=>5.minutes) {User.order("verifications_count DESC").limit(50)}
   end
 
   def show
