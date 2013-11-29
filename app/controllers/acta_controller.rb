@@ -19,7 +19,7 @@ class ActaController < ApplicationController
     @sumPinu = Rails.cache.fetch("sum-pinu", :expires_in=>exp_sums.seconds) {Actum.sum('pinu')}
     @sumBlancos = Rails.cache.fetch("sum-blancos", :expires_in=>exp_sums.seconds) {Actum.sum('blancos')}
     @sumNulos = Rails.cache.fetch("sum-nulos", :expires_in=>exp_sums.seconds) {Actum.sum('nulos')}
-    @sumVerified = ARails.cache.fetch("sum-verified", :expires_in=>exp_sums.seconds) {ctum.sum('verified_count')}
+    @sumVerified = Rails.cache.fetch("sum-verified", :expires_in=>exp_sums.seconds) {Actum.sum('verified_count')}
     
     @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
@@ -36,7 +36,7 @@ class ActaController < ApplicationController
   def show
     
     if(params[:numero])
-       @actum= Actum.where(numero: params[:numero].to_i).first
+       @actum= Actum.where(numero: params[:numero].to_s).first
     elsif(params[:id]=="random")
       @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
     else
