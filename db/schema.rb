@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131129013255) do
+ActiveRecord::Schema.define(:version => 20131129141203) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20131129013255) do
   end
 
   add_index "acta", ["liberal", "nacional", "libre", "pac", "ud", "dc", "alianza", "pinu", "blancos", "nulos"], :name => "acta_counts_index"
+  add_index "acta", ["numero"], :name => "acta_numero_index"
 
   create_table "available_numbers", :force => true do |t|
     t.string   "numero"
