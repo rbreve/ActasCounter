@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128160245) do
+ActiveRecord::Schema.define(:version => 20131129013255) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -39,6 +39,15 @@ ActiveRecord::Schema.define(:version => 20131128160245) do
     t.boolean  "already_assigned", :default => false
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+  end
+
+  create_table "reportes", :force => true do |t|
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "acta_id"
+    t.datetime "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

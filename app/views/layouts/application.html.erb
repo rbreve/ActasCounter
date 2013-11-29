@@ -3,7 +3,10 @@
 <head>
   <title>Conteo de Actas</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag :rails, :application %>
+  <%= javascript_include_tag :defaults %>
+  
+  
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -31,13 +34,16 @@
 <nav class="navbar navbar-default" role="navigation" style="padding:10px">
 	<div class="navbar-left">
 	<%if user_signed_in?%>
-		<%=link_to acta_path do%><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button><%end%>
+	
+	<%=link_to "/" do%><button type="button" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-home"></span> Inicio</button><%end%>
+	
+		<%=link_to acta_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button><%end%>
 
 		<%=link_to new_actum_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button><%end%>
 
-		<%=link_to "/acta/random" do%><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Acta</button><%end%>
+		<%=link_to "/acta/random" do%><button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Acta</button><%end%>
 	
-		<%=link_to "/user_profile" do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-user"></span> Top Contribuidores</button><%end%>
+		<%=link_to "/user_profile" do%><button type="button" class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-user"></span> Top Contribuidores</button><%end%>
 		
 	
 	<%else%>
@@ -83,3 +89,5 @@
 
 </body>
 </html>
+
+

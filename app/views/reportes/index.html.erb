@@ -1,0 +1,24 @@
+<h1>Listing reportes</h1>
+
+<table>
+  <tr>
+    <th>Body</th>
+    <th>User</th>
+    <th>Acta</th>
+    <th>Date</th>
+   
+  </tr>
+
+<% @reportes.each do |reporte| %>
+  <tr>
+    <td><%= reporte.body %></td>
+    <td><%= reporte.user_id %></td>
+    <td><%= reporte.acta_id %></td>
+    <td><%= reporte.date %></td>
+   
+  </tr>
+<% end %>
+</table>
+
+ 
+ 

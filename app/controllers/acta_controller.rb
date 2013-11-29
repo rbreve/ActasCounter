@@ -66,7 +66,11 @@ class ActaController < ApplicationController
     if @actum.verifications.count==0 and @actum.user_id==current_user.id
       @trigger_verification=true
     end
-
+    
+    @report = Reporte.new
+    @report.acta_id = @actum.id
+   
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @actum }

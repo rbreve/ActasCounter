@@ -185,6 +185,30 @@
 </div>
 <%end%>
 
+<p>
+	<div style="float:left;width:650px;clear:both;padding-top:1px;padding-bottom:0px">
+
+<div class="panel panel-danger" style="margin-top:50px;" id="reportForm">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Reportar Problema  en Acta o Duda</div>
+  <div class="panel-body">
+	  
+	  <%= form_for(@report, remote: true) do |f| %>
+	    <div id= "post_errors" style="display:none"></div>
+  
+ 	      <%= f.text_area :body, :rows => 3, :cols=>60 %>
+		  <%= f.hidden_field :acta_id %> 
+		  <p></p>
+ 	    <p><%= f.submit "Enviar"%></p>
+	  <% end %>
+	  
+  </div>
+
+  
+</div>
+</div>
+</p>
+
 <script>
 $(document).ready(function(){
 	function calculate_sum(){
