@@ -32,7 +32,10 @@ class ActaController < ApplicationController
   # GET /acta/1
   # GET /acta/1.json
   def show
-    if(params[:id]=="random")
+    
+    if(params[:numero])
+       @actum= Actum.where(numero: params[:numero]).first
+    elsif(params[:id]=="random")
       @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
     else
       @actum = Actum.find(params[:id])
