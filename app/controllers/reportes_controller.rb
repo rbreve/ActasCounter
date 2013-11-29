@@ -34,7 +34,7 @@ class ReportesController < ApplicationController
 
   # GET /reportes/1/edit
   def edit
-    @reporte = Reporte.find(params[:id])
+    #@reporte = Reporte.find(params[:id])
   end
 
   # POST /reportes
@@ -60,28 +60,12 @@ class ReportesController < ApplicationController
   # PUT /reportes/1
   # PUT /reportes/1.json
   def update
-    @reporte = Reporte.find(params[:id])
-
-    respond_to do |format|
-      if @reporte.update_attributes(params[:reporte])
-        format.html { redirect_to @reporte, notice: 'Reporte was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @reporte.errors, status: :unprocessable_entity }
-      end
-    end
+    #
   end
 
   # DELETE /reportes/1
   # DELETE /reportes/1.json
   def destroy
-    @reporte = Reporte.find(params[:id])
-    @reporte.destroy
-
-    respond_to do |format|
-      format.html { redirect_to reportes_url }
-      format.json { head :no_content }
-    end
+    
   end
 end
