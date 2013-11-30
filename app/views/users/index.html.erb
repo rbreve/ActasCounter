@@ -1,4 +1,8 @@
-<h1>Listing users</h1>
+<h1>Listing users (Total: <%=@users.total_entries%>)</h1>
+
+<div class="pagination-centered" style="padding:20px 0px">
+  <%= will_paginate @users, :inner_window=>6, :outer_window=>6%>
+</div>
 
 <table>
   <tr>
@@ -27,3 +31,7 @@
   </tr>
 <% end %>
 </table>
+
+<div class="pagination-centered" style="padding:20px 0px">
+  <%= will_paginate @users, :inner_window=>6, :outer_window=>6%>
+</div>
