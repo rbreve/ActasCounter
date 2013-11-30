@@ -7,7 +7,7 @@ class Actum < ActiveRecord::Base
 
   belongs_to :user #, counter_cache: true
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
-  has_many :reportes
+  has_many :reportes, class_name: "Reporte",:foreign_key=>"acta_id"
   after_save :update_counters
   
   def total_votes
