@@ -1,13 +1,12 @@
 ConteoActas::Application.routes.draw do
   resources :reportes, :except=>[:destroy, :edit, :update]
-
-
   resources :users, :except=>[:destroy, :new]
   resources :verifications, :except=>[:edit,:destroy,:update,:new]
   resources :acta, :except=>[:edit,:update,:destroy]
   resources :user_profile
   
   get '/search' => 'acta#show'
+  get '/acerca' => 'home#about'
   get 'all-done' => 'home#all_done', :as => :all_done
   
   devise_for :users, :path => "auth", :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }

@@ -1,7 +1,15 @@
+CONTEO.VOTOSOCIAL.ORG
+------------------------------------------------------
+
 ENV VARS:
-  To set Unicorn on Heroku add this config var:
+
+1) To set Unicorn on Heroku add this config var:
 
   heroku config:set WEB_CONCURRENCY=6
+
+2) To set the Rails secret token:
+
+  heroku config:set RAILS_SECRET_TOKEN=paste-the-full-token-here
 
 -----
 Facebook app credentials:

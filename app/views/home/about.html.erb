@@ -1,24 +1,97 @@
+<%cache "about-copy", :expires_in=>24.hours do %>
 <div class="container">
   <div class="jumbotron">
-	<h1>Conteo y Validación de Actas</h1>
+	<h1><span class="glyphicon glyphicon-info-sign"></span> Acerca de VotoSocial</h1>
 
-	<div style="color:gray">
-	  <%if user_signed_in?%>
-		<p>Colabora con una de estas tareas:</p> 
+    <div class="qa-box">
+		<h2>¿Qué es conteo.votosocial.org?</h2>
+	    <p>
+		Es una plataforma crowdsourced para digitar, validar y reportar irregularidades en actas de votación, en este caso de las elecciones de Honduras 2013.
+	    </p>
+    </div>
 
-		<a href="<%=new_actum_path%>"><button type="button" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button></a>
-	
-		<a href="/acta/random"> <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Validar  Acta</button></a>
-	  <%else%>
-		<p class="lead">Este es una aplicación web para reconteo y validación de actas presidenciales tomadas del TSE. 
-		Ayudanos a digitar y validar las actas para tener mayor transparencia en el proceso electoral.</p>
-		<p>
-		<a href="/auth/auth/facebook"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
-		</p>
-	  <%end%>
-	  
-	    <a href="/acerca"> <button type="button" class="btn btn-primary btn-lg "> <span class="glyphicon glyphicon-user"></span> Entrar Con Facebook</button></a>
-	info-sign
-	</div>
+    <div class="qa-box">
+		<h2>¿Por qué nace?</h2>
+	    <p>
+		Nace de la inconformidad de la población Hondureña con la transparencia en el conteo y transmisión de resultados de las elecciones presidenciales. La población consideraba que las actas se estaban ingresando mal al sistema y que el sistema no estaba calculando bien los totales. Era necesario un sistema independiente y transparente que permitiera a la población formar parte del proceso, sea para descubrir que realmente había irregularidades o para encontrar que el proceso se desarrolló correctamente. El enfoque fue comprobar únicamente la parte de digitación y suma de las actas. 
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Cómo funciona?</h2>
+	    <p>
+			Las elecciones de Honduras cuentan con 16135 mesas electorales. Cada una de las mesas produjo 3 actas de cierre, una para presidente, otra para diputados y por último la de alcaldes. En este momento nos enfocamos únicamente en las actas de nivel presidencial. 
+			
+			<ol>
+			  <li>Se va mostrando de manera aleatoria un acta para que sea digitada</li>
+			  <li>Las actas que son digitadas deben ser validadas por 3 personas diferentes, también diferente a la persona que la ingresó.</li>
+			  <li>Si una de las personas que la valida encuentra que la digitación fue incorrecta entonces puede corregilar para lo cual el acta nuevamente debe ser validada por 3 personas. Las personas que ya fueron parte de la digitación y validación del acta ya no pueden hacer modificaciones a ella.</li>
+			  <li>Toda la bitácora de cambios al acta queda registrada de manera pública con la fecha, hora, autor y valores.</li>
+			  <li>Al ser validada el acta por 3 personas entonces el acta se considera válida. </li>
+			</ol>
+			Los usuarios pueden también reportar irregularidades en un acta como ser que la suma real no concuerda con la suma en el acta, y otras irregularidades. Hemos encontrado actas vacías, actas con la misma letra y actas que tienen sumas erróneas.
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Por qué usar Facebook como autenticación?</h2>
+	    <p>
+		La plataforma la desarrollamos rápidamente y en el momento nos pareció la forma más transparente de autenticar usuarios, siendo usuarios de facebook es más fácil comprobar que son cuentas y personas reales y no cuentas falsas con el objetivo de manipular los datos. 
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Es este proyecto iniciativa de algún partido político u organización?</h2>
+	    <p>
+		No es iniciativa de ningún partido político ni organización nacional o internacional. Fue la iniciativa de un grupo de amigos que no queríamos quedarnos con la duda sobre el resultado de las elecciones. También queríamos poder utilizar toda esa energía que estaba en Facebook el día después de las elecciones para poder tener más claro el resultado. 
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Por qué solo tienen 15088 actas y no 16135 actas?</h2>
+	    <p>
+		Las actas son una copia de las actas que publicó el Tribunal Supremo Electoral en su plataforma llamada SIEDE. Hasta el día Jueves 28 de Noviembre el SIEDE solo tenía 15088 actas en su cuenta pública de Amazon S3.
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Cómo obtuvieron las actas?</h2>
+	    <p>
+			Al analizar el código HTML de la página del SIEDE encontramos que las actas estaban almacenadas en una ruta particular y que el nombre de las actas seguía un patrón predecible, es así que con solo cambiar el número del acta era posible ver el acta de otra mesa. 
+        <p/><p>
+			Al saber esto creamos un programa sencillo que tomaba cada una de las actas y la copiaba a nuestro propio almacenamiento.
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Por qué copiaron las actas a su almacenamiento y no usaron simplemente las que estaban en el SIEDE?</h2>
+	    <p>
+		Como todo el mundo desconfiaba del SIEDE preferimos copiar las actas para asegurarnos que luego no fueran cambiadas. De esta manera si eso sucedía tendríamos una forma de comprobarlo manteniendo una copia en nuestro poder. 
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Se argumenta que las actas fueron falsificadas, puede ser esto detectado en la plataforma?</h2>
+	    <p>
+		Hemos dado la opción de reportar actas irregulares a nuestros usuarios de manera que podamos encontrar actas que se miran irregulares. Invitamos a los partidos políticos, organizaciones y personas naturales a que utilicen esta herramienta para reportar actas falsas acompañando el reporte con una foto o scan del acta verdadera.
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Cómo podemos garantizar que la plataforma realiza bien los cálculos?</h2>
+	    <p>
+			Para garantizar la transparencia hemos dejado bitácora de todos los cambios de manera pública, bitácora de los reportes y el código es Open Source <a href="https://github.com/corp/ActasCounter" target="_blank">https://github.com/corp/ActasCounter</a>
+        <p/><p>
+			Adicionalmente pensamos crear un API para que los datos sean abiertos y puedan ser utilizados en el futuro para análisis.
+	    </p>
+    </div>
+
+    <div class="qa-box">
+		<h2>¿Quiénes lo crearon?</h2>
+	    <p>
+		Fue creado por Jorge García, Alejandro Corpeño, Roberto Brevé y Fernando Irias. 
+	    </p>
+    </div>
   </div>
 </div>
+<%end%>
