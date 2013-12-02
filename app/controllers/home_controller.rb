@@ -8,4 +8,7 @@ class HomeController < ApplicationController
   
   def about
   end
+
+  def contacto
+  end
 end
