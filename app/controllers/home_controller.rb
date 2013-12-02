@@ -5,4 +5,7 @@ class HomeController < ApplicationController
   
   def all_done
   end
+  
+  def about
+  end
 end
