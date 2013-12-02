@@ -21,6 +21,10 @@ class Actum < ActiveRecord::Base
   def to_param  # overridden
     numero
   end
+  
+  def image
+    "http://s3-us-west-2.amazonaws.com/actashn/presidente/4/%05d.jpg" % self.numero
+  end
 
   def self.count_all_votes
     Actum.all.map{|a| a.total_votes }.inject(:+)

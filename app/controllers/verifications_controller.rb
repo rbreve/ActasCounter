@@ -36,7 +36,7 @@ class VerificationsController < ApplicationController
       else
         @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
 
-        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % @actum.numero
+        @imageUrl = @actum.image
         @verification=@log
 
         @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
