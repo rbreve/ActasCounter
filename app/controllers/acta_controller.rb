@@ -34,12 +34,15 @@ class ActaController < ApplicationController
   # GET /acta/1
   # GET /acta/1.json
   def show
-    
     if(params[:numero])
        @actum= Actum.where(numero: params[:numero].to_s).first
        notice_msg="Acta no encontrada..."
     elsif(params[:id]=="random")
-      @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
+      if current_user.verifications.length>0
+        @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
+      else
+        @actum= Actum.where(["user_id<>? AND ready_for_review=? AND verified_count<?",current_user.id,true,VERIFICATIONS]).order("RANDOM()").first
+      end
       notice_msg="No hay actas pendientes de verificacion ingresadas por otros usuarios..."
     else
       @actum = Actum.find_by_numero(params[:id].to_s)
