@@ -109,11 +109,16 @@
 		<tr>
 			<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Coincide nuestra suma con la de la boleta (ultima fila)?</b></td>
 		</tr>
+		<%if current_user.is_admin%>
+		   <tr>
+			<td colspan="2"><b><%=f.check_box :image_changed, :style=>"width:15px"%> ¿La imagen cambio?</b></td>
+		</tr>
+		<%end%>
 	</table>
  
    <div style="float:left;margin-top:10px">	
-   <%if @actum.verified_count<VERIFICATIONS %>
-     <%if @allow_verification%>
+   <%if @actum.verified_count<VERIFICATIONS or (@actum.verified_count>=VERIFICATIONS and current_user.is_admin)%>
+     <%if @allow_verification or (@actum.verified_count>=VERIFICATIONS and current_user.is_admin)%>
 	    <h2>Verificación</h2>
     
 	    <div id="correct-buttons">
@@ -164,6 +169,12 @@
 	  <td>
 	     <%if verification.user_id==@actum.user_id%>
 	       Ingreso inicial de datos...
+	     <%elsif verification.image_changed%>
+	       <span class="label label-danger"><span class="glyphicon glyphicon-warning-sign"></span> La imagen cambió en el TSE</span> - Reiniciando validación.<br/><br/> Imagenes:
+	       <a href="<%=@actum.versioned_image(1)%>" target="_blank">Import #1</a>,
+	       <a href="<%=@actum.versioned_image(2)%>" target="_blank">Import #2</a>,
+		   <a href="<%=@actum.versioned_image(3)%>" target="_blank">Import #3</a>,
+	       <a href="<%=@actum.versioned_image(4)%>" target="_blank">Import #4 (actual)</a>,
 	     <%else%>
 	       <%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%>
 	     <%end%>
@@ -212,7 +223,6 @@
 	  <div class="panel-body">
 		  <%= form_for(@report, remote: true) do |f| %>
 		    <div id= "post_errors" style="display:none"></div>
-  
 	 	      <%= f.text_area :body, :rows => 3, :cols=>60 %>
 			  <%= f.hidden_field :acta_id %> 
 			  <p></p>
@@ -220,7 +230,6 @@
 		  <% end %>
 	  </div>
 	</div>
-		
 </div>
 </p>
 

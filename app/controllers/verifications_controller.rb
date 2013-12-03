@@ -22,6 +22,7 @@ class VerificationsController < ApplicationController
           @actum.blancos=@log.blancos
           @actum.nulos=@log.nulos
           @actum.is_sum_ok=@log.is_sum_ok
+          @actum.image_changed=@log.image_changed
         end
         @actum.ready_for_review=true
         @actum.save
@@ -42,6 +43,9 @@ class VerificationsController < ApplicationController
         @allow_verification = ((@actum.user_id != current_user.id) and (current_user.verifications.where(:acta_id=>@actum.id).count==0))
         
         @trigger_verification=true
+        
+        @report = Reporte.new
+        @report.acta_id = @actum.id
         
         format.html { render "/acta/show"}
         format.json { render json: @actum.errors, status: :unprocessable_entity }

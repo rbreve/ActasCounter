@@ -1,5 +1,5 @@
 class Actum < ActiveRecord::Base
-  attr_accessible :alianza, :dc, :liberal, :libre, :nacional, :numero, :pac, :pinu, :ud, :nulos, :blancos, :user_id, :ready_for_review,:is_sum_ok
+  attr_accessible :alianza, :dc, :liberal, :libre, :nacional, :numero, :pac, :pinu, :ud, :nulos, :blancos, :user_id, :ready_for_review,:is_sum_ok,:image_changed
 
   validates :numero, :uniqueness=>true
   
@@ -23,7 +23,11 @@ class Actum < ActiveRecord::Base
   end
   
   def image
-    "http://s3-us-west-2.amazonaws.com/actashn/presidente/4/%05d.jpg" % self.numero
+    versioned_image(4)
+  end
+  
+  def versioned_image(v)
+    "http://s3-us-west-2.amazonaws.com/actashn/presidente/#{v}/%05d.jpg" % self.numero
   end
 
   def self.count_all_votes
