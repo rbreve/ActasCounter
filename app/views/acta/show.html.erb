@@ -201,7 +201,7 @@
 		  <tr>
 	        <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
 		    <td><a href="<%=user_profile_path(reporte.user.id)%>"><img src="https://graph.facebook.com/<%=reporte.user.uid%>/picture?width=35&height=35" alt="<%=reporte.user.shortname%>" title="<%=reporte.user.shortname%>"></a></td>
-		    <td><%= reporte.body %></td>
+		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %></td>
 		  </tr>
 		<% end %>
 		</table>
