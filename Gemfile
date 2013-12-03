@@ -10,6 +10,7 @@ group :production do
   gem "activerecord-postgresql-adapter"
   gem 'newrelic_rpm'
   gem 'unicorn'
+  gem 'unicorn-worker-killer'
 end
  
 # Gems used only for assets and not required
