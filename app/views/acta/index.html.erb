@@ -23,7 +23,7 @@ A&uacute;n tienes que completar estas actas:
     <td><%="%05d" % actum.numero %></td>
     <td><%=actum.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
     <td>
-      <%= link_to actum do %><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span> Completar</button></a><%end%>
+      <%= link_to actum_type_path(:type=>Actum.full_type(actum.actum_type),:id=>actum.numero) do %><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span> Completar</button></a><%end%>
 	</td>
   </tr>
   <%end%>

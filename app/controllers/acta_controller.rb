@@ -148,7 +148,7 @@ class ActaController < ApplicationController
       @actum.user_id=current_user.id
       @actum.ready_for_review=false
       @actum.actum_type=@next_available.actum_type
-      @actum.municipio_id=@actum.get_municipio_id @actum.actum_type=="a"
+      @actum.municipio_id=@actum.get_municipio_id if @actum.actum_type=="a"
       @actum.save
       @next_available.update_attribute(:already_assigned,true) if @next_available
       

@@ -48,11 +48,15 @@ class Actum < ActiveRecord::Base
   end
   
   def image
-    versioned_image(4)
+    if self.actum_type=="p"
+      versioned_image(4)
+    else
+      versioned_image(3)
+    end
   end
   
   def versioned_image(v)
-    "http://s3-us-west-2.amazonaws.com/actashn/presidente/#{v}/%05d.jpg" % self.numero
+    "http://s3-us-west-2.amazonaws.com/actashn/#{self.full_type}/#{v}/%05d.jpg" % self.numero
   end
 
   def self.count_all_votes
