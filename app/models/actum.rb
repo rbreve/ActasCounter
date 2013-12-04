@@ -70,6 +70,10 @@ class Actum < ActiveRecord::Base
   def self.short_type(type)
     ACTUM_TYPE_SHORT[type]
   end
+  
+  def self.full_type(type)
+    ACTUM_TYPE_FULL[type]
+  end
 
   def full_type
     ACTUM_TYPE_FULL[self.actum_type]
