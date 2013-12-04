@@ -16,7 +16,7 @@
 # departamento = Departamento.create(:name=>"Otro",:num=>2)
 #  Municipio.create(:name=>"Otro 1",:num=>1,:departamento_id=>departamento.id)
 #  Municipio.create(:name=>"Otro 2",:num=>2,:departamento_id=>departamento.id)
- 
+
 #--- Y así para los 18 departamentos y todos los municipios... copy pastiate el output aquí para poder correr el rake db:seed en heroku y alimentar de un solo esas tablas
 
 department = Departamento.create(:name=>"ATLANTIDA",:num=>01, :from_actum => 1, :to_actum => 856)
