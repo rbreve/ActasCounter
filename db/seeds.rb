@@ -10,11 +10,11 @@
 #---- Ejemplo de lo que tiene que generar el script:
 
 departamento = Departamento.create(:name=>"Atlantida",:num=>1)
- Municipio.create(:name=>"La Ceiba",:num=>1,:departamento_id=>departamento.id)
- Municipio.create(:name=>"Tela",:num=>2,:departamento_id=>departamento.id)
+ Municipio.create(:name=>"La Ceiba",:num=>1,:departamento_id=>departamento.id, :actum_from=>1,:actum_to=>100)
+ Municipio.create(:name=>"Tela",:num=>2,:departamento_id=>departamento.id, :actum_from=>101,:actum_to=>200)
 
 departamento = Departamento.create(:name=>"Otro",:num=>2)
- Municipio.create(:name=>"Otro 1",:num=>1,:departamento_id=>departamento.id)
- Municipio.create(:name=>"Otro 2",:num=>2,:departamento_id=>departamento.id)
+ Municipio.create(:name=>"Otro 1",:num=>1,:departamento_id=>departamento.id, :actum_from=>201,:actum_to=>300)
+ Municipio.create(:name=>"Otro 2",:num=>2,:departamento_id=>departamento.id, :actum_from=>301,:actum_to=>400)
  
 #--- Y así para los 18 departamentos y todos los municipios... copy pastiate el output aquí para poder correr el rake db:seed en heroku y alimentar de un solo esas tablas
