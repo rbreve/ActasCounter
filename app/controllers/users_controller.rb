@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.order("created_at ASC").page(params[:page]).per_page(25)
 
     respond_to do |format|
       format.html # index.html.erb

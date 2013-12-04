@@ -109,11 +109,16 @@
 		<tr>
 			<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Coincide nuestra suma con la de la boleta (ultima fila)?</b></td>
 		</tr>
+		<%if current_user.is_admin%>
+		   <tr>
+			<td colspan="2"><b><%=f.check_box :image_changed, :style=>"width:15px"%> ¿La imagen cambio?</b></td>
+		</tr>
+		<%end%>
 	</table>
  
    <div style="float:left;margin-top:10px">	
-   <%if @actum.verified_count<VERIFICATIONS %>
-     <%if @allow_verification%>
+   <%if @actum.verified_count<VERIFICATIONS or (@actum.verified_count>=VERIFICATIONS and current_user.is_admin)%>
+     <%if @allow_verification or (@actum.verified_count>=VERIFICATIONS and current_user.is_admin)%>
 	    <h2>Verificación</h2>
     
 	    <div id="correct-buttons">
@@ -164,6 +169,12 @@
 	  <td>
 	     <%if verification.user_id==@actum.user_id%>
 	       Ingreso inicial de datos...
+	     <%elsif verification.image_changed%>
+	       <span class="label label-danger"><span class="glyphicon glyphicon-warning-sign"></span> La imagen cambió en el TSE</span> - Reiniciando validación.<br/><br/> Imagenes:
+	       <a href="<%=@actum.versioned_image(1)%>" target="_blank">Import #1</a>,
+	       <a href="<%=@actum.versioned_image(2)%>" target="_blank">Import #2</a>,
+		   <a href="<%=@actum.versioned_image(3)%>" target="_blank">Import #3</a>,
+	       <a href="<%=@actum.versioned_image(4)%>" target="_blank">Import #4 (actual)</a>,
 	     <%else%>
 	       <%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%>
 	     <%end%>
@@ -186,28 +197,42 @@
 <%end%>
 
 <p>
-	<div style="float:left;width:650px;clear:both;padding-top:1px;padding-bottom:0px">
+<div style="float:left;width:100%;clear:both;padding-top:1px;padding-bottom:0px">
+    <%if @actum.reportes.length>0%>  
+	    <h3><span class="glyphicon glyphicon-warning-sign"></span> Problemas Reportados</h3>
 
-<div class="panel panel-danger" style="margin-top:50px;" id="reportForm">
-  <!-- Default panel contents -->
-  <div class="panel-heading">Reportar Problema  en Acta o Duda</div>
-  <div class="panel-body">
-	  
-	  <%= form_for(@report, remote: true) do |f| %>
-	    <div id= "post_errors" style="display:none"></div>
-  
- 	      <%= f.text_area :body, :rows => 3, :cols=>60 %>
-		  <%= f.hidden_field :acta_id %> 
-		  <p></p>
- 	    <p><%= f.submit "Enviar"%></p>
-	  <% end %>
-	  
-  </div>
+		<table style="width:100%">
+		  <tr>
+			<th width="200">Fecha de reporte</th>
+			<th width="100">Usuario</th>
+		    <th>Mensaje</th>
+		  </tr>
 
-  
-</div>
+		<% @actum.reportes.each do |reporte| %>
+		  <tr>
+	        <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
+		    <td><a href="<%=user_profile_path(reporte.user.id)%>"><img src="https://graph.facebook.com/<%=reporte.user.uid%>/picture?width=35&height=35" alt="<%=reporte.user.shortname%>" title="<%=reporte.user.shortname%>"></a></td>
+		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %></td>
+		  </tr>
+		<% end %>
+		</table>
+    <%end%>	
+	<div class="panel panel-danger" style="margin-top:50px;" id="reportForm">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">Reportar Problemas en Acta o Dudas</div>
+	  <div class="panel-body">
+		  <%= form_for(@report, remote: true) do |f| %>
+		    <div id= "post_errors" style="display:none"></div>
+	 	      <%= f.text_area :body, :rows => 3, :cols=>60 %>
+			  <%= f.hidden_field :acta_id %> 
+			  <p></p>
+	 	    <p><%= f.submit "Enviar"%></p>
+		  <% end %>
+	  </div>
+	</div>
 </div>
 </p>
+
 
 <script>
 $(document).ready(function(){

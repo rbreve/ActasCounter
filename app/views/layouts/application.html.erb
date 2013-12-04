@@ -32,35 +32,29 @@
 	<div class="navbar-left">
 	<%if user_signed_in?%>
 	
-	<%=link_to "/" do%><button type="button" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-home"></span> Inicio</button><%end%>
+	<%=link_to "/" do%><button type="button" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-home"></span></button><%end%>
 	
 		<%=link_to acta_path do%><button type="button" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-list"></span> Listar Actas</button><%end%>
 
 		<%=link_to new_actum_path do%><button type="button" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Digitar Acta</button><%end%>
 
 		<%=link_to "/acta/random" do%><button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Validar Acta</button><%end%>
-	
+
+		<%=link_to "/reportes" do%><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-warning-sign"></span> Reportes</button><%end%>
+			
 		<%=link_to "/user_profile" do%><button type="button" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-user"></span> Top Contribuidores</button><%end%>
 		
-	
 	<%else%>
 	  <h4 class="text-muted">Sistema de Conteo de Actas</h4>
 	<%end%>
 	</div>
 	<div class="navbar-left" style="padding-top:6px;padding-left:10px">
 		<div class="fb-share-button" data-href="http://conteo.votosocial.org" data-type="button_count"></div>
-		
-		
 	</div>
 	
 
 	<div class="navbar-right">
-		
-		
 	 	<%if user_signed_in?%>
-
-		
-		
 		<a href="#">Digitadas <span class="badge"><%=current_user.acta_count%></span></a>
  		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count-current_user.acta_count%></span></a>
 	 
@@ -92,7 +86,16 @@
  <%= yield %>
 </div>
 
-</body>
+<div class="footer">
+<div class="btn-group">
+    <button type="button" class="btn btn-default"><a href="/"><span class="glyphicon glyphicon-home"></span> Inicio</a></button>
+	
+  <button type="button" class="btn btn-default"><a href="/acerca"><span class="glyphicon glyphicon-info-sign"></span> Acerca de VotoSocial</a></button>
+  <button type="button" class="btn btn-default"><a href="/contacto"><span class="glyphicon glyphicon-envelope"></span> Contacto</a></button>
+ </div>
+</div>
+
+ </body>
 </html>
 
 

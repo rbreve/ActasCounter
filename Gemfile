@@ -10,6 +10,7 @@ group :production do
   gem "activerecord-postgresql-adapter"
   gem 'newrelic_rpm'
   gem 'unicorn'
+  #gem 'unicorn-worker-killer'
 end
  
 # Gems used only for assets and not required
@@ -29,6 +30,7 @@ gem 'bootstrap-sass', '~> 3.0.2.0'
 gem 'rails_12factor', group: :production
 gem 'memcachier'
 gem 'dalli'
+gem 'rails_autolink'
 
 gem 'devise'
 gem 'omniauth'

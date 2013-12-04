@@ -44,11 +44,26 @@ class ActaController < ApplicationController
   # GET /acta/1
   # GET /acta/1.json
   def show
-    (redirect_to(actum_type_path("presidente", params[:id])) and return) if not params[:type]
+    actum_type="presidente" if not params[:type]
 
-    @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(params[:type]))
+    @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(actum_type))
     notice_msg="Acta no encontrada..."
 
+    if(params[:numero])
+       @actum= Actum.find_by_numero_and_actum_type(params[:numero].to_s, Actum.short_type(actum_type))
+       notice_msg="Acta no encontrada..."
+    elsif(params[:id]=="random")
+      if current_user.verifications.length>0
+        @actum= Actum.where(["user_id<>? AND ready_for_review=? AND id NOT IN (?) and verified_count<?",current_user.id,true,current_user.verifications.map{ |x| x.acta_id },VERIFICATIONS]).order("RANDOM()").first
+      else
+        @actum= Actum.where(["user_id<>? AND ready_for_review=? AND verified_count<?",current_user.id,true,VERIFICATIONS]).order("RANDOM()").first
+      end
+      notice_msg="No hay actas pendientes de verificacion ingresadas por otros usuarios..."
+    else
+      @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(actum_type))
+      notice_msg="Acta no encontrada..."
+    end
+    
     if @actum.nil?
       redirect_to acta_path, :notice=>notice_msg
       return
@@ -180,7 +195,7 @@ class ActaController < ApplicationController
           format.json { render json: @actum, status: :created, location: @actum }
         else
           i=@actum.numero.to_i
-          @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % i
+          @imageUrl = @actum.image
           
           format.html { render action: "new" }
           format.json { render json: @actum.errors, status: :unprocessable_entity }
