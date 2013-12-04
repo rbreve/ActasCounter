@@ -5,21 +5,23 @@ class ActaController < ApplicationController
   # GET /acta
   # GET /acta.json
   def index
+    actum_short_type= begin Actum.short_type(params[:type]) rescue "p" end
+      
     exp_sums=90
     
-    @acta = Actum.where(:ready_for_review=>true).order("created_at ASC").page(params[:page]).per_page(25)
+    @acta = Rails.cache.fetch("actum-page-#{params[:page]}-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:ready_for_review=>true,:actum_type=>actum_short_type).order("created_at ASC").page(params[:page]).per_page(25)}
 
-    @sumLiberal = Rails.cache.fetch("sum-liberal", :expires_in=>exp_sums.seconds) {Actum.sum('liberal')}
-    @sumLibre = Rails.cache.fetch("sum-libre", :expires_in=>exp_sums.seconds) {Actum.sum('libre')}
-    @sumNacional = Rails.cache.fetch("sum-nacional", :expires_in=>exp_sums.seconds) {Actum.sum('nacional')}
-    @sumPac = Rails.cache.fetch("sum-pac", :expires_in=>exp_sums.seconds) {Actum.sum('pac')}
-    @sumUD = Rails.cache.fetch("sum-ud", :expires_in=>exp_sums.seconds) {Actum.sum('ud')}
-    @sumDC = Rails.cache.fetch("sum-dc", :expires_in=>exp_sums.seconds) {Actum.sum('dc')}
-    @sumAlianza = Rails.cache.fetch("sum-alianza", :expires_in=>exp_sums.seconds) {Actum.sum('alianza')}
-    @sumPinu = Rails.cache.fetch("sum-pinu", :expires_in=>exp_sums.seconds) {Actum.sum('pinu')}
-    @sumBlancos = Rails.cache.fetch("sum-blancos", :expires_in=>exp_sums.seconds) {Actum.sum('blancos')}
-    @sumNulos = Rails.cache.fetch("sum-nulos", :expires_in=>exp_sums.seconds) {Actum.sum('nulos')}
-    @sumVerified = Rails.cache.fetch("sum-verified", :expires_in=>exp_sums.seconds) {Actum.sum('verified_count')}
+    @sumLiberal = Rails.cache.fetch("sum-liberal-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('liberal')}
+    @sumLibre = Rails.cache.fetch("sum-libre-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('libre')}
+    @sumNacional = Rails.cache.fetch("sum-nacional-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('nacional')}
+    @sumPac = Rails.cache.fetch("sum-pac-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('pac')}
+    @sumUD = Rails.cache.fetch("sum-ud-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('ud')}
+    @sumDC = Rails.cache.fetch("sum-dc-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('dc')}
+    @sumAlianza = Rails.cache.fetch("sum-alianza-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('alianza')}
+    @sumPinu = Rails.cache.fetch("sum-pinu-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('pinu')}
+    @sumBlancos = Rails.cache.fetch("sum-blancos-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('blancos')}
+    @sumNulos = Rails.cache.fetch("sum-nulos-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('nulos')}
+    @sumVerified = Rails.cache.fetch("sum-verified-#{actum_short_type}", :expires_in=>exp_sums.seconds) {Actum.where(:actum_type =>actum_short_type).sum('verified_count')}
     
     @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
@@ -31,26 +33,16 @@ class ActaController < ApplicationController
     
   end
 
-  def random
-    @actum = Actum.random(current_user)
-
-    if @actum.nil?
-      redirect_to(acta_path, :notice=>notice_msg) and return
-    else
-      redirect_to(actum_type_path(@actum.full_type, @actum.numero))
-    end
-  end
-
   # GET /acta/1
   # GET /acta/1.json
   def show
-    actum_type="presidente" if not params[:type]
-
-    @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(actum_type))
+    actum_short_type= begin Actum.short_type(params[:type]) rescue "p" end
+      
+    @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, actum_short_type)
     notice_msg="Acta no encontrada..."
 
     if(params[:numero])
-       @actum= Actum.find_by_numero_and_actum_type(params[:numero].to_s, Actum.short_type(actum_type))
+       @actum= Actum.find_by_numero_and_actum_type(params[:numero].to_s, actum_short_type)
        notice_msg="Acta no encontrada..."
     elsif(params[:id]=="random")
       if current_user.verifications.length>0
@@ -60,7 +52,7 @@ class ActaController < ApplicationController
       end
       notice_msg="No hay actas pendientes de verificacion ingresadas por otros usuarios..."
     else
-      @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(actum_type))
+      @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, actum_short_type)
       notice_msg="Acta no encontrada..."
     end
     

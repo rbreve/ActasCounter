@@ -10,7 +10,7 @@ class Actum < ActiveRecord::Base
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
   has_many :reportes, class_name: "Reporte",:foreign_key=>"acta_id"
   after_save :update_counters
-
+  
   ACTUM_TYPE_FULL = {
     "p" => "presidente",
     "a" => "alcalde",
