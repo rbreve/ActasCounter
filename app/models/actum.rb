@@ -23,6 +23,18 @@ class Actum < ActiveRecord::Base
     "diputados" => "d"
   }
   
+  def get_municipio_id
+    if self.actum_type=="a"
+      begin
+        Municipio.where(["actum_from<=? AND actum_to>=?",self.numero.to_i,self.numero.to_i]).first.id
+      rescue
+        nil
+      end
+    else
+      nil
+    end
+  end
+  
   def total_votes
  self.nacional.to_i+self.liberal.to_i+self.libre.to_i+self.ud.to_i+self.alianza.to_i+self.pinu.to_i+self.blancos.to_i+self.pac.to_i+self.nulos.to_i+self.dc.to_i
   end
