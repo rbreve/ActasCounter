@@ -10,7 +10,7 @@ class Actum < ActiveRecord::Base
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
   has_many :reportes, class_name: "Reporte",:foreign_key=>"acta_id"
   after_save :update_counters
-
+  
   ACTUM_TYPE_FULL = {
     "p" => "presidente",
     "a" => "alcalde",
@@ -22,6 +22,18 @@ class Actum < ActiveRecord::Base
     "alcalde" => "a",
     "diputados" => "d"
   }
+  
+  def get_municipio_id
+    if self.actum_type=="a"
+      begin
+        Municipio.where(["from_actum<=? AND from_actum>=?",self.numero.to_i,self.numero.to_i]).first.id
+      rescue
+        nil
+      end
+    else
+      nil
+    end
+  end
   
   def total_votes
  self.nacional.to_i+self.liberal.to_i+self.libre.to_i+self.ud.to_i+self.alianza.to_i+self.pinu.to_i+self.blancos.to_i+self.pac.to_i+self.nulos.to_i+self.dc.to_i
@@ -69,6 +81,10 @@ class Actum < ActiveRecord::Base
 
   def self.short_type(type)
     ACTUM_TYPE_SHORT[type]
+  end
+  
+  def self.full_type(type)
+    ACTUM_TYPE_FULL[type]
   end
 
   def full_type

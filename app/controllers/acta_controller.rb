@@ -5,23 +5,61 @@ class ActaController < ApplicationController
   # GET /acta
   # GET /acta.json
   def index
+    @actum_short_type= Actum.short_type(params[:type])
+    @actum_short_type= "p" if @actum_short_type.nil?
+      
     exp_sums=90
     
-    @acta = Actum.where(:ready_for_review=>true).order("created_at ASC").page(params[:page]).per_page(25)
+    @acta = Rails.cache.fetch("actum-page-#{params[:page]}-#{@actum_short_type}", :expires_in=>exp_sums.seconds) {
+      Actum.where(:ready_for_review=>true,:actum_type=>@actum_short_type).order("created_at ASC").page(params[:page]).per_page(25)
+      }
 
-    @sumLiberal = Rails.cache.fetch("sum-liberal", :expires_in=>exp_sums.seconds) {Actum.sum('liberal')}
-    @sumLibre = Rails.cache.fetch("sum-libre", :expires_in=>exp_sums.seconds) {Actum.sum('libre')}
-    @sumNacional = Rails.cache.fetch("sum-nacional", :expires_in=>exp_sums.seconds) {Actum.sum('nacional')}
-    @sumPac = Rails.cache.fetch("sum-pac", :expires_in=>exp_sums.seconds) {Actum.sum('pac')}
-    @sumUD = Rails.cache.fetch("sum-ud", :expires_in=>exp_sums.seconds) {Actum.sum('ud')}
-    @sumDC = Rails.cache.fetch("sum-dc", :expires_in=>exp_sums.seconds) {Actum.sum('dc')}
-    @sumAlianza = Rails.cache.fetch("sum-alianza", :expires_in=>exp_sums.seconds) {Actum.sum('alianza')}
-    @sumPinu = Rails.cache.fetch("sum-pinu", :expires_in=>exp_sums.seconds) {Actum.sum('pinu')}
-    @sumBlancos = Rails.cache.fetch("sum-blancos", :expires_in=>exp_sums.seconds) {Actum.sum('blancos')}
-    @sumNulos = Rails.cache.fetch("sum-nulos", :expires_in=>exp_sums.seconds) {Actum.sum('nulos')}
-    @sumVerified = Rails.cache.fetch("sum-verified", :expires_in=>exp_sums.seconds) {Actum.sum('verified_count')}
+    @sumLiberal = Rails.cache.fetch("sum-liberal-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('liberal')
+      }
+      
+    @sumLibre = Rails.cache.fetch("sum-libre-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('libre')
+      }
+      
+    @sumNacional = Rails.cache.fetch("sum-nacional-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('nacional')
+      }
+      
+    @sumPac = Rails.cache.fetch("sum-pac-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('pac')
+      }
+      
+    @sumUD = Rails.cache.fetch("sum-ud-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('ud')
+      }
+      
+    @sumDC = Rails.cache.fetch("sum-dc-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('dc')
+      }
+      
+    @sumAlianza = Rails.cache.fetch("sum-alianza-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('alianza')
+      }
+      
+    @sumPinu = Rails.cache.fetch("sum-pinu-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('pinu')
+      }
+      
+    @sumBlancos = Rails.cache.fetch("sum-blancos-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('blancos')
+      }
+      
+    @sumNulos = Rails.cache.fetch("sum-nulos-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('nulos')
+      }
+      
+    @sumVerified = Rails.cache.fetch("sum-verified-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('verified_count')
+      }
     
     @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
+    
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
            
     respond_to do |format|
@@ -31,26 +69,14 @@ class ActaController < ApplicationController
     
   end
 
-  def random
-    @actum = Actum.random(current_user)
-
-    if @actum.nil?
-      redirect_to(acta_path, :notice=>notice_msg) and return
-    else
-      redirect_to(actum_type_path(@actum.full_type, @actum.numero))
-    end
-  end
-
   # GET /acta/1
   # GET /acta/1.json
   def show
-    actum_type="presidente" if not params[:type]
-
-    @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(actum_type))
-    notice_msg="Acta no encontrada..."
-
+    @actum_short_type= begin Actum.short_type(params[:type]) rescue "p" end
+    @actum_short_type= "p" if @actum_short_type.nil?
+    
     if(params[:numero])
-       @actum= Actum.find_by_numero_and_actum_type(params[:numero].to_s, Actum.short_type(actum_type))
+       @actum= Actum.find_by_numero_and_actum_type(params[:numero].to_s, @actum_short_type)
        notice_msg="Acta no encontrada..."
     elsif(params[:id]=="random")
       if current_user.verifications.length>0
@@ -60,7 +86,7 @@ class ActaController < ApplicationController
       end
       notice_msg="No hay actas pendientes de verificacion ingresadas por otros usuarios..."
     else
-      @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, Actum.short_type(actum_type))
+      @actum = Actum.find_by_numero_and_actum_type(params[:id].to_s, @actum_short_type)
       notice_msg="Acta no encontrada..."
     end
     
@@ -121,86 +147,13 @@ class ActaController < ApplicationController
       @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
       @actum.user_id=current_user.id
       @actum.ready_for_review=false
+      @actum.actum_type=@next_available.actum_type
+      @actum.municipio_id=@actum.get_municipio_id @actum.actum_type=="a"
       @actum.save
       @next_available.update_attribute(:already_assigned,true) if @next_available
       
       redirect_to @actum
       return
-    end
-  end
-
-
-  def new_old_version
-    @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
-    if @pending_actas.length>0
-      @actum=@pending_actas.first
-    else
-       @invalid=true
-       @numero=0
-       
-       while(@invalid)
-        begin
-          @next_available = AvailableNumber.where(:has_valid_image=>true, :already_assigned=>false).order("RANDOM()").reload.first
-        rescue
-          @next_available = nil
-        end
-        #--- we use .reload to force the query to run again and not from sql cache...
-        
-        if @next_available
-          i = @next_available.numero.to_i
-        else
-          i = Random.rand(15000)
-        end
-
-        @imageUrl = "http://s3-us-west-2.amazonaws.com/actashn/presidente/3/%05d.jpg" % i
- 
-        begin
-          open(@imageUrl)
-        rescue OpenURI::HTTPError  
-           print "invalid "
-           @next_available.update_attribute(:has_valid_image,false) if @next_available
-        else
-           print "valid"  
-           if(!Actum.exists?(numero: i.to_s))
-             @invalid=false
-           end
-        end
-        @numero=i
-      end
-    
-      @actum = Actum.new
-      @actum.numero=@numero
-      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
-      @actum.user_id=current_user.id
-      @actum.ready_for_review=false
-      @actum.save
-     
-      @next_available.update_attribute(:already_assigned,true) if @next_available
-    end
-    redirect_to @actum
-  end
-  
-  # POST /acta
-  # POST /acta.json
-  def create
-    if @actum=Actum.find_by_numero(params[:actum][:numero])
-      redirect_to @actum, notice: 'Alguien ingreso esta acta antes. Puedes verificarla...'
-    else
-      @actum = Actum.new(params[:actum])
-      @actum.user_id = current_user.id
-        
-      respond_to do |format|
-        if @actum.save
-          format.html { redirect_to acta_path, notice: 'El Acta fue ingresada al sistema.' }
-          format.json { render json: @actum, status: :created, location: @actum }
-        else
-          i=@actum.numero.to_i
-          @imageUrl = @actum.image
-          
-          format.html { render action: "new" }
-          format.json { render json: @actum.errors, status: :unprocessable_entity }
-        end
-      end
     end
   end
 end

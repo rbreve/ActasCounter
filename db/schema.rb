@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131204030743) do
+ActiveRecord::Schema.define(:version => 20131204044940) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20131204030743) do
     t.boolean  "already_assigned", :default => false
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.string   "actum_type",       :default => "p"
   end
 
   create_table "departamentos", :force => true do |t|

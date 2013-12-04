@@ -2,10 +2,13 @@ ConteoActas::Application.routes.draw do
   resources :reportes, :except=>[:destroy, :edit, :update]
   resources :users, :except=>[:destroy, :new]
   resources :verifications, :except=>[:edit,:destroy,:update,:new]
-  resources :acta, :except=>[:edit,:update,:destroy] do
-    get "random", :on => :collection
-  end
-  get "/acta/:type/:id", to: "acta#show", as: "actum_type"
+
+  get "/acta/lista/:type", to: "acta#index", as: "acta_list"
+  get "/acta/lista/:type/:id", to: "acta#show", as: "actum_type"
+  
+  resources :acta, :except=>[:edit,:update,:destroy]
+  
+  
   resources :user_profile
   
   get '/search' => 'acta#show'
