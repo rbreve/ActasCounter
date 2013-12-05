@@ -221,11 +221,13 @@
 	  <!-- Default panel contents -->
 	  <div class="panel-heading">Reportar Problemas en Acta o Dudas</div>
 	  <div class="panel-body">
-		  <%= form_for(@report, remote: true) do |f| %>
+		  <%= form_for(@report, remote: true, :html => {:multipart => true}) do |f| %>
 		    <div id= "post_errors" style="display:none"></div>
 	 	      <%= f.text_area :body, :rows => 3, :cols=>60 %>
 			  <%= f.hidden_field :acta_id %> 
 			  <p></p>
+		      <%= f.file_field :imagenActa %>
+			  
 	 	    <p><%= f.submit "Enviar"%></p>
 		  <% end %>
 	  </div>
