@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20131205015940) do
     t.datetime "date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "imagenActa"
+    t.string   "image"
   end
 
   create_table "users", :force => true do |t|
