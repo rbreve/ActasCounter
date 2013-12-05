@@ -18,3 +18,4 @@
 /config/initializers/dev_environment.rb
 /config/initializers/01_dev_environment.rb
 /config/database.yml
+/public/uploads/tmp/*
