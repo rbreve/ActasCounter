@@ -212,7 +212,16 @@
 		  <tr>
 	        <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
 		    <td><a href="<%=user_profile_path(reporte.user.id)%>"><img src="https://graph.facebook.com/<%=reporte.user.uid%>/picture?width=35&height=35" alt="<%=reporte.user.shortname%>" title="<%=reporte.user.shortname%>"></a></td>
-		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %></td>
+		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %> 
+				<br/>
+				
+				<% if not reporte.image.blank?%>
+			<p>
+				<a href="<%=reporte.image%>">
+				<img class="img-thumbnail" width="100px" src="<%=reporte.image%>"></td>
+			</a>
+			</p>
+			<%end%>
 		  </tr>
 		<% end %>
 		</table>
@@ -221,14 +230,28 @@
 	  <!-- Default panel contents -->
 	  <div class="panel-heading">Reportar Problemas en Acta o Dudas</div>
 	  <div class="panel-body">
-		  <%= form_for(@report, remote: true, :html => {:multipart => true}) do |f| %>
+		  <%= form_for(@report,  :html => {:multipart => true}) do |f| %>
+		  
 		    <div id= "post_errors" style="display:none"></div>
-	 	      <%= f.text_area :body, :rows => 3, :cols=>60 %>
+		
+		 	<div class="form-group">
+		     <label for="reportetexto">Texto Del Reporte</label>
+ 	    	  <%= f.text_area :body, :rows => 3, :cols=>60, :class=> "form-control" %>
+		 	</div>
+			
 			  <%= f.hidden_field :acta_id %> 
-			  <p></p>
-		      <%= f.file_field :imagenActa %>
-			  
-	 	    <p><%= f.submit "Enviar"%></p>
+		
+	 		<div class="form-group">
+			   	<label for="adjuntarimagen">Adjuntar Imagen (opcional)</label>
+		      	<%= f.file_field :image,  :class=> "form-control" %> 
+		  	</div>
+			
+		  </div>
+			  <div class="form-group">
+		  
+	 	    <p><%= f.submit "Enviar Reporte", :class=>"btn btn-default"%></p>
+		 
+			</div>
 		  <% end %>
 	  </div>
 	</div>
