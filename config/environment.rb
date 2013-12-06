@@ -6,3 +6,4 @@ ConteoActas::Application.initialize!
 
 VERIFICATIONS=3
 MAX_ACTAS=16135
+MAX_ACTAS_SPS=1295

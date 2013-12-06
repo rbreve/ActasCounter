@@ -7,7 +7,7 @@ class ActaController < ApplicationController
   def index
     @actum_short_type= Actum.short_type(params[:type])
     @actum_short_type= "p" if @actum_short_type.nil?
-      
+    
     exp_sums=90
     
     @acta = Rails.cache.fetch("actum-page-#{params[:page]}-#{@actum_short_type}", :expires_in=>exp_sums.seconds) {
@@ -65,7 +65,13 @@ class ActaController < ApplicationController
     @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumFaper+@sumBlancos+@sumNulos
     
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
-           
+    
+    if @actum_short_type=="a"
+      @max_actas=MAX_ACTAS_SPS
+    else
+      @max_actas=MAX_ACTAS
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @acta }
