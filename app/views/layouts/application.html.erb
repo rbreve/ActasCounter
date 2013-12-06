@@ -64,7 +64,7 @@
 	<div class="navbar-right">
 	 	<%if user_signed_in?%>
 		<a href="#">Digitadas <span class="badge"><%=current_user.acta_count%></span></a>
- 		<a href="#">Verificadas <span class="badge"><%=current_user.verifications_count-current_user.acta_count%></span></a>
+ 		<a href="#">Verificadas <span class="badge"><%=current_user.calculated_verification_count%></span></a>
 	 
 			<%if current_user.is_admin%>		
 			  <%=link_to users_path do%><button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-user"></span> User Admin</button><%end%><%end%>

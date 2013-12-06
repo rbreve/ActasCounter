@@ -33,6 +33,13 @@ class User < ActiveRecord::Base
   end
   
  
+  def calculated_verification_count
+    if self.verifications_count-self.acta_count<0
+      0
+    else
+      self.verifications_count-self.acta_count
+    end
+  end
   
   
 end
