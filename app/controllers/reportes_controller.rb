@@ -46,7 +46,8 @@ class ReportesController < ApplicationController
     
     respond_to do |format|
       if @reporte.save
-        format.html { redirect_to @reporte, notice: 'Reporte was successfully created.' }
+        @acta = @reporte.actum
+        format.html { redirect_to @acta, notice: 'Gracias, su reporte fue creado' }
         format.json { render json: @reporte, status: :created, location: @reporte }
         format.js {}
       else
