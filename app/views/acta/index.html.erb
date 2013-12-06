@@ -2,6 +2,7 @@
 	<form action="/search" method="GET">
 	    <div class="col-md-6">
 		<input type="text" class="form-control" placeholder="Número de Acta" name="numero">
+		<input type="hidden" name="type" value="<%=@actum_short_type=="a"? "alcalde" : "presidente"%>">
 	</div>
     <div class="col-md-6">
 	    <button type="submit" class="btn btn-primary btn-normal">  <span class="glyphicon glyphicon-search"> </span> Buscar</button>
