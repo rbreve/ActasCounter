@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20131205015940) do
     t.boolean  "ready_for_review", :default => true
     t.boolean  "is_sum_ok",        :default => true
     t.boolean  "image_changed",    :default => false
+    t.string   "actum_type",       :default => "p"
+    t.integer  "municipio_id"
   end
 
   add_index "acta", ["liberal", "nacional", "libre", "pac", "ud", "dc", "alianza", "pinu", "blancos", "nulos"], :name => "acta_counts_index"
@@ -44,6 +46,26 @@ ActiveRecord::Schema.define(:version => 20131205015940) do
     t.boolean  "already_assigned", :default => false
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.string   "actum_type",       :default => "p"
+  end
+
+  create_table "departamentos", :force => true do |t|
+    t.string   "name"
+    t.integer  "num"
+    t.integer  "from_actum"
+    t.integer  "to_actum"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "municipios", :force => true do |t|
+    t.string   "name"
+    t.integer  "num"
+    t.integer  "from_actum"
+    t.integer  "to_actum"
+    t.integer  "departamento_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "reportes", :force => true do |t|
@@ -74,8 +96,8 @@ ActiveRecord::Schema.define(:version => 20131205015940) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
-    t.integer  "acta_count",             :default => 0
-    t.integer  "verifications_count",    :default => 0
+    t.integer  "acta_count"
+    t.integer  "verifications_count"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

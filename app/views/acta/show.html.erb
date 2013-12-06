@@ -212,16 +212,16 @@
 		  <tr>
 	        <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
 		    <td><a href="<%=user_profile_path(reporte.user.id)%>"><img src="https://graph.facebook.com/<%=reporte.user.uid%>/picture?width=35&height=35" alt="<%=reporte.user.shortname%>" title="<%=reporte.user.shortname%>"></a></td>
-		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %> 
-				<br/>
-				
-				<% if not reporte.image.blank?%>
-			<p>
-				<a href="<%=reporte.image%>">
-				<img class="img-thumbnail" width="100px" src="<%=reporte.image%>"></td>
-			</a>
-			</p>
-			<%end%>
+		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %>
+				<% unless reporte.image.blank?%>
+			      <br/><p>
+				    <a href="<%=reporte.image.url%>" target="_blank">
+					<img class="img-thumbnail" width="200px" src="<%=reporte.image%>">
+					</a>
+			      </p>
+		   	    <%end%>
+			</td>
+			
 		  </tr>
 		<% end %>
 		</table>
