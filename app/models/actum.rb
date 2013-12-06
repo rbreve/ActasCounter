@@ -60,23 +60,23 @@ class Actum < ActiveRecord::Base
   end
 
   def self.count_all_votes
-    Actum.all.map{|a| a.total_votes }.inject(:+)
+    Actum.where(:actum_type=>'p').map{|a| a.total_votes }.inject(:+)
   end
 
   def self.results
     return {
       total: Actum.count_all_votes,
-      alianza: Actum.sum("alianza"),
-      dc: Actum.sum("dc"),
-      liberal: Actum.sum("liberal"),
-      libre: Actum.sum("libre"),
-      nacional: Actum.sum("nacional"),
-      pac: Actum.sum("pac"),
+      alianza: Actum.where(:actum_type=>'p').sum("alianza"),
+      dc: Actum.where(:actum_type=>'p').sum("dc"),
+      liberal: Actum.where(:actum_type=>'p').sum("liberal"),
+      libre: Actum.where(:actum_type=>'p').sum("libre"),
+      nacional: Actum.where(:actum_type=>'p').sum("nacional"),
+      pac: Actum.where(:actum_type=>'p').where(:actum_type=>'p').sum("pac"),
       pinu: Actum.sum("pinu"),
-      faper: Actum.sum("faper"),
-      ud: Actum.sum("ud"),
-      nulos: Actum.sum("nulos"),
-      blancos: Actum.sum("blancos")
+      faper: Actum.where(:actum_type=>'p').sum("faper"),
+      ud: Actum.where(:actum_type=>'p').sum("ud"),
+      nulos: Actum.where(:actum_type=>'p').sum("nulos"),
+      blancos: Actum.where(:actum_type=>'p').sum("blancos")
     }
   end
 

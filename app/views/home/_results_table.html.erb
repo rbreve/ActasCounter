@@ -1,23 +1,23 @@
 <div>
 	<h1 class="center">Resultados Actuales</h1>
 	<h3 >
-		Actas procesadas: <%=Actum.count%>  de <%=MAX_ACTAS%> actas <%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>%
+		Actas procesadas: <%=Actum.where(:actum_type=>"p").count%>  de <%=MAX_ACTAS%> actas <%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>%
 	</h3>
 	
 		<div class="progress">
-		  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>%">
-		    <span class="sr-only"><%=number_with_precision((Actum.count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% Complete (success)</span>
+		  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>%">
+		    <span class="sr-only"><%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% Complete (success)</span>
 		  </div>
 		 
 		</div>
 		
 		<h3 >
-			Actas verificadas 3 veces: <%=Actum.where(["verified_count>=?",VERIFICATIONS]).count%> (<%=number_with_precision((Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f)*100,precision: 2)%>% de las actas digitadas)
+			Actas verificadas 3 veces: <%=Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count%> (<%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>% de las actas digitadas)
 		</h3>
 	
 			<div class="progress">
-			  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f)*100,precision: 2)%>%">
-			    <span class="sr-only"><%=number_with_precision((Actum.where(["verified_count>=?",VERIFICATIONS]).count.to_f/Actum.count.to_f)*100, precision:2)%> % Complete (success)</span>
+			  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>%">
+			    <span class="sr-only"><%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100, precision:2)%> % Complete (success)</span>
 			  </div>
 			</div>
 			
