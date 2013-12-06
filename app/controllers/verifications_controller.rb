@@ -19,6 +19,7 @@ class VerificationsController < ApplicationController
           @actum.dc=@log.dc
           @actum.alianza=@log.alianza
           @actum.pinu=@log.pinu
+          @actum.faper=@log.faper
           @actum.blancos=@log.blancos
           @actum.nulos=@log.nulos
           @actum.is_sum_ok=@log.is_sum_ok
