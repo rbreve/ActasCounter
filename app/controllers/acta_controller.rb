@@ -46,6 +46,10 @@ class ActaController < ApplicationController
       Actum.where(:actum_type =>@actum_short_type).sum('pinu')
       }
       
+    @sumFaper = Rails.cache.fetch("sum-faper-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('faper')
+      }
+      
     @sumBlancos = Rails.cache.fetch("sum-blancos-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
       Actum.where(:actum_type =>@actum_short_type).sum('blancos')
       }
@@ -58,7 +62,7 @@ class ActaController < ApplicationController
       Actum.where(:actum_type =>@actum_short_type).sum('verified_count')
       }
     
-    @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumBlancos+@sumNulos
+    @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumFaper+@sumBlancos+@sumNulos
     
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
            
@@ -108,6 +112,7 @@ class ActaController < ApplicationController
     @verification.dc=@actum.dc
     @verification.alianza=@actum.alianza
     @verification.pinu=@actum.pinu
+    @verification.faper=@actum.faper
     @verification.blancos=@actum.blancos
     @verification.nulos=@actum.nulos
     @verification.is_sum_ok=@actum.is_sum_ok

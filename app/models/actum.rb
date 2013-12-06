@@ -73,6 +73,7 @@ class Actum < ActiveRecord::Base
       nacional: Actum.sum("nacional"),
       pac: Actum.sum("pac"),
       pinu: Actum.sum("pinu"),
+      faper: Actum.sum("faper"),
       ud: Actum.sum("ud"),
       nulos: Actum.sum("nulos"),
       blancos: Actum.sum("blancos")

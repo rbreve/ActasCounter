@@ -51,6 +51,7 @@ A&uacute;n tienes que completar estas actas:
 	    <th>Dc</th>
 	    <th>Alianza</th>
 	    <th>Pinu</th>
+	    <%if @actum_short_type=="a"%><th>Faper</th><%end%>
 	    <th>Blancos</th>
 	    <th>Nulos</th>
 	    <th>Suma Coincide?</th>
@@ -69,6 +70,7 @@ A&uacute;n tienes que completar estas actas:
 	   <td><b><%= @sumDC %></b></td>
 	   <td><b><%= @sumAlianza %></b></td>
 	   <td><b><%= @sumPinu %></b></td>
+	   <%if @actum_short_type=="a"%><th><%=@sumFaper%></th><%end%>
 	   <td><b><%= @sumBlancos %></b></td>
 	   <td><b><%= @sumNulos %></b></td>
 	   <td></td>
@@ -87,6 +89,9 @@ A&uacute;n tienes que completar estas actas:
 	   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+	   <%if @actum_short_type=="a"%>
+	     <td><b><%= number_with_precision((@sumFaper.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+	   <%end%>
 	   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td></td>
@@ -106,6 +111,7 @@ A&uacute;n tienes que completar estas actas:
 	    <td><%= actum.dc %></td>
 	    <td><%= actum.alianza %></td>
 	    <td><%= actum.pinu %></td>
+	    <%if @actum_short_type=="a"%> <td><%= actum.faper %></td>  <%end%>
 	    <td><%= actum.blancos %></td>
 	    <td><%= actum.nulos %></td>
 	    <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
@@ -135,6 +141,7 @@ A&uacute;n tienes que completar estas actas:
 		   <td><b><%= @sumDC %></b></td>
 		   <td><b><%= @sumAlianza %></b></td>
 		   <td><b><%= @sumPinu %></b></td>
+		   <%if @actum_short_type=="a"%><th><%=@sumFaper%></th><%end%>
 		   <td><b><%= @sumBlancos %></b></td>
 		   <td><b><%= @sumNulos %></b></td>
 		   <td></td>
@@ -153,6 +160,9 @@ A&uacute;n tienes que completar estas actas:
 		   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+		   <%if @actum_short_type=="a"%>
+		     <td><b><%= number_with_precision((@sumFaper.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+		   <%end%>
 		   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td></td>
