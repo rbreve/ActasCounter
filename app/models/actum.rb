@@ -1,10 +1,10 @@
 class Actum < ActiveRecord::Base
-  attr_accessible :alianza, :dc, :liberal, :libre, :nacional, :numero, :pac, :pinu, :ud, :nulos, :blancos, :user_id, :ready_for_review,:is_sum_ok, :actum_type,:image_changed
+  attr_accessible :alianza,:dc,:liberal,:libre,:nacional,:numero,:pac,:pinu,:ud,:faper,:nulos,:blancos,:user_id, :ready_for_review,:is_sum_ok,:actum_type,:image_changed
 
   validates :numero, :uniqueness=> {:scope => :actum_type}
   belongs_to :municipio 
   
-  validates :alianza, :dc, :liberal, :libre, :nacional, :pac, :pinu, :ud, :nulos, :blancos, :numericality => { :greater_than_or_equal_to=>0, :less_than_or_equal_to => 400 }, :presence => true
+  validates :alianza, :dc, :liberal, :libre, :nacional, :pac, :pinu, :ud, :nulos, :blancos,:faper, :numericality => { :greater_than_or_equal_to=>0, :less_than_or_equal_to => 400 }, :presence => true
 
   belongs_to :user #, counter_cache: true
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
@@ -106,9 +106,6 @@ class Actum < ActiveRecord::Base
     end
   end
 
-  def image
-    "http://s3-us-west-2.amazonaws.com/actashn/#{self.full_type}/#{self.folder_number}/%05d.jpg" % self.numero
-  end
   
   private
     def update_counters

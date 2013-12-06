@@ -31,7 +31,7 @@ A&uacute;n tienes que completar estas actas:
 <%end%>
 
 <%cache "acta-stats-for-list-#{@actum_short_type}", :expires_in => 1.minutes do %>
-	<h1>Listado de Actas: <%=Actum.full_type(@actum_short_type).titleize%></h1>
+	<h1>Listado de Actas: <%=@actum_short_type=="p"? "Presidentes" : "Alcalde de San Pedro Sula"%></h1>
 	Actas procesadas: <%=Actum.count%> (<%=number_with_precision((Actum.where(:actum_type=>@actum_short_type).count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% de <%=MAX_ACTAS%> actas) | Actas verificadas por más de <%=VERIFICATIONS%> usuarios: <%=Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,@actum_short_type]).count%>
 <%end%>
 

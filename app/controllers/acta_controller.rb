@@ -152,7 +152,7 @@ class ActaController < ApplicationController
       @actum.save
       @next_available.update_attribute(:already_assigned,true) if @next_available
       
-      redirect_to @actum
+      redirect_to actum_type_path(:type=>@actum.full_type,:id=>@actum.numero)
       return
     end
   end

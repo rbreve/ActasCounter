@@ -15,7 +15,7 @@ class ReportesController < ApplicationController
     
     respond_to do |format|
       if @reporte.save
-        format.html { redirect_to  @reporte.actum, notice: 'Gracias, su reporte fue creado' }
+        format.html { redirect_to actum_type_path(:type=>@reporte.actum.full_type,:id=>@reporte.actum.numero), notice: 'Gracias, su reporte fue creado' }
         format.json { render json: @reporte, status: :created, location: @reporte }
       else
         format.html { render action: "new" }

@@ -28,7 +28,7 @@ class VerificationsController < ApplicationController
         @actum.save
         
         if @actum.user_id==@log.user_id
-          format.html { redirect_to @actum, notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado. " }
+          format.html { redirect_to actum_type_path(:type=>@actum.full_type,:id=>@actum.numero), notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado. " }
         else
           format.html { redirect_to "/acta/random", notice: "Gracias! Tu chequeo del acta #{@actum.numero} ha sido ingresado. " }
         end
