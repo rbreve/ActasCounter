@@ -35,3 +35,5 @@ FOR YOUR LOCAL DEVELOPMENT:
     ENV["AWS_REGION"]="the_aws_region"
     ENV["AWS_BUCKET"]="the_aws_bucket"
   end
+
+- Updating stack to cedar-14
