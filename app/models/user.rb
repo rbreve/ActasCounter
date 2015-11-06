@@ -6,13 +6,17 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :lastname, :name, :password, :password_confirmation, :remember_me,:provider, :uid, :is_admin
+  attr_accessible :email, :lastname, :name, :password, :password_confirmation, :remember_me,:provider, :uid, :is_admin, :verifications_count, :acta_count
   
-  has_many :actum
+  has_many :acta
   has_many :verifications
   
   def shortname
-    "#{name} #{lastname[0]}"
+    if lastname
+      "#{name} #{lastname[0]}"
+    else
+      name
+    end
   end
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
@@ -26,6 +30,15 @@ class User < ActiveRecord::Base
                            )
     end
     user
+  end
+  
+ 
+  def calculated_verification_count
+    if self.verifications_count-self.acta_count<0
+      0
+    else
+      self.verifications_count-self.acta_count
+    end
   end
   
   

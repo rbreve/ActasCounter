@@ -87,3 +87,81 @@ table {
     }
   }
 }
+
+.pagination{ 
+  padding: 10px;
+  font-size: 12px;
+  width: 90%;
+  margin: 0 auto;
+  text-align:center;
+  
+  a{
+    border:solid 1px #CCC;
+    padding:5px;
+    margin:0px;
+    margin-left:-4px;
+    text-align:center;
+    &:hover{
+      background:#EDEDED;
+    }
+  }
+  
+  .current{
+    border:solid 1px #CCC;
+    padding:6px 5px;
+    margin-left:-4px;
+    text-align:center;
+    background:#EDEDED;
+  }
+}
+
+.notice{
+ border: solid 1px #CCC;
+ padding: 10px;
+ background: #FFFDC7;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.total-sum{
+  font-weight:bold;background:#FFF36B;font-size: 16px;text-align:center;
+}
+
+.stats-table{
+   font-size:12px;
+   tr{
+    font-size:12px;
+    th{font-size:11px;}
+    td{font-size:11px;}
+   }
+}
+
+.jumbotron{
+  padding:30px 0px;
+}
+
+.qa-box{
+ border: solid 1px #CCC;
+ padding: 10px 25px;
+ background: #FEFEFE;
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+ border-radius: 5px;
+ margin-top:20px;
+ h2{
+   font-size:18px;
+ }
+ p{
+    font-size:15px;
+ }
+}
+
+.footer{
+  width:100%;
+  border-top: solid 1px #CCC;
+  margin-top:20px;
+  padding-top:20px;
+  padding-bottom:30px;
+  text-align:center;
+}

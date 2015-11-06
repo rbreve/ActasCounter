@@ -1,7 +1,14 @@
 class HomeController < ApplicationController
   def index
-    if user_signed_in?
-      redirect_to acta_path
-    end
+    @results = Rails.cache.fetch("main-results", :expires_in=>1.minute) {Actum.results}
+  end
+  
+  def all_done
+  end
+  
+  def about
+  end
+
+  def contacto
   end
 end

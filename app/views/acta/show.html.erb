@@ -2,159 +2,203 @@
   <div style="float:right;width:80%">
 	    <img src="<%=@imageUrl%>" style="width:100%">
   </div>
-<%= form_for(@verification) do |f| %>
-  <%= f.hidden_field :acta_id %>
-  <%= f.hidden_field :is_valid %>
+<%= form_for(@verification, :html=>{:autocomplete=>:off}) do |f| %>
+<%= f.hidden_field :acta_id %>
+<%= f.hidden_field :is_valid %>
 
+  <% if @verification.errors.any? %>
+	  <div id="error_explanation">
+	    <h2><%= pluralize(@verification.errors.count, "error") %> prohibited this actum from being saved:</h2>
+
+	    <ul>
+	    <% @verification.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </ul>
+	  </div>
+  <% end %>
   <div style="float:left;width:20%">	
-	<table id="stored-data"style="float:left">
-		<tr>
-			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
-		</tr>
-		<tr>
-			<td><b>DC:</b></td><td><%= @actum.dc %></td>
-		</tr>
-		<tr>
-			<td><b>Alianza Pat.</b></td><td><%= @actum.alianza %></td>
-		</tr>
-		<tr>
-			<td><b>Liberal:</b></td><td><%= @actum.liberal %></td>
-		</tr>
-		<tr>
-			<td><b>PAC:</b></td><td><%= @actum.pac %></td>
-		</tr>
-		<tr>
-			<td><b>Libre:</b></td><td><%= @actum.libre %></td>
-		</tr>
-		<tr>
-			<td><b>UD:</b></td><td><%= @actum.ud %></td>
-		</tr>
-		<tr>
-			<td><b>Pinu:</b></td><td><%= @actum.pinu %></td>
-		</tr>
-		<tr>
-			<td><b>Nacional:</b></td><td><%= @actum.nacional %></td>
-		</tr>
-		<tr>
-			<td><b>Blancos:</b></td><td><%= @actum.blancos %></td>
-		</tr>
-		<tr>
-			<td><b>Nulos:</b></td><td><%= @actum.nulos %></td>
-		</tr>
-		<tr>
-			<td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
-		</tr>
-		<tr>
-			<td><b>Ingresada por</b></td><td><a href="http://facebook.com/<%=@actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=@actum.user.uid%>/picture?width=35&height=35" alt="<%=@actum.user.shortname%>" title="<%=@actum.user.shortname%>"></a></td>
-		</tr>
-		<% if @actum.verified_count>0%>
-		<tr>
-			<td><b>Verificado:</b></td><td><%= @actum.verified_count %> veces</td>
-		</tr>
-		<%end%>
-	</table>
+   <%=render :partial=>"#{@actum.full_type}_form", :locals=>{:f=>f}%>
 
-	<table id="editable-data" style="display:none">
-		<tr>
-			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
-		</tr>
-		<tr>
-			<td><b>DC:</b></td><td><%= f.number_field :dc%></td>
-		</tr>
-		<tr>
-			<td><b>Alianza Pat.</b></td><td><%= f.number_field :alianza %></td>
-		</tr>
-		<tr>
-			<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
-		</tr>
-		<tr>
-			<td><b>PAC:</b></td><td><%= f.number_field :pac %></td>
-		</tr>
-		<tr>
-			<td><b>Libre:</b></td><td><%= f.number_field :libre %></td>
-		</tr>
-		<tr>
-			<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
-		</tr>
-		<tr>
-			<td><b>Pinu:</b></td><td><%= f.number_field :pinu %></td>
-		</tr>
-		<tr>
-			<td><b>Nacional:</b></td><td><%= f.number_field :nacional %></td>
-		</tr>
-		<tr>
-			<td><b>Blancos:</b></td><td><%= f.number_field :blancos %></td>
-		</tr>
-		<tr>
-			<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
-		</tr>
-	</table>
-  </div>
+   <div style="float:left;margin-top:10px">	
+   <%if @actum.verified_count<VERIFICATIONS or (@actum.verified_count>=VERIFICATIONS and current_user.is_admin)%>
+     <%if @allow_verification or (@actum.verified_count>=VERIFICATIONS and current_user.is_admin)%>
+	    <h2>Verificación</h2>
+    
+	    <div id="correct-buttons">
+	      <h3><%= f.submit  "Correcta!", :class=>"btn btn-success" %>  <button type="button" id="show-form" class="btn btn-danger"> Incorrecta</button>
+	    </div>
 
-  <div style="float:left;margin-top:5px">
-	  <%if @actum.verified_count<VERIFICATIONS %>
-	    <%if @allow_verification%>
-		    <h2>Verificación</h2>
-	    
-		    <div id="correct-buttons">
-		      <h3><%= f.submit  "Correcta!" %>  <button type="button" id="show-form"> [X] Incorrecta</button>
-		    </div>
+	    <div id="incorrect-buttons" style="display:none">
+	      <h3><%= f.submit  "Enviar mis Correcciones", :class=>"btn btn-primary" %>
+	    </div>
+	 <%else%>
+	   <%if current_user.id==@actum.user_id%>
+		 <%if @trigger_verification%>
+	       <div id="incorrect-buttons" style="display:none">
+	        <%= f.submit  "Registrar", :class=>"btn btn-success" %>
+	       </div>
+	     <%else%>
+	       <h5><span class="glyphicon glyphicon-time"></span> Esperando verificaci&oacute;n de otros</h5>
+	     <%end%>
+	   <%else%>
+	     <h2></h2>
+	     <h5><span class="glyphicon glyphicon-ok"></span> Ya has verificado esta acta.</h5>
+	   <%end%>
+	 <%end%>	
+   <%else%>
+      <h4><span class="glyphicon glyphicon-ok-circle"></span> Validaci&oacute;n completa  <a href="/acta/random"><button type="button" class="btn btn-primary" style="margin:10px">Validar Otra?</button></a></h4>
+   <%end%>
+   </div>
 	
-		    <div id="incorrect-buttons" style="display:none">
-		      <h3><%= f.submit  "Enviar mis Correcciones" %></button>
-		    </div>
-		<%else%>
-		   <%if current_user.id==@actum.user_id%>
-		     <h2>Esperando verificaci&oacute;n de otros</h2>
-		   <%else%>
-		     <h2>Ya has verificado esta acta</h2>
-		   <%end%>
-		<%end%>	
-	  <%else%>
-	    <h3>Verificación completa</h3>
-	  <%end%>
   </div>
 <%end%>
 
-<%if @actum.verified_count>0%>
-<div style="float:left:width:100%;clear:both;padding-top:20px">
-  <h2>Auditor&iacute;a de verificaciones</h2>
+<%if @actum.verifications.count>0%>
+<div style="float:left:width:100%;clear:both;padding-top:20px;padding-bottom:20px">
+  <h3><span class="glyphicon glyphicon-eye-open"></span> Auditor&iacute;a de verificaciones</h3>
   <table>
   <tr>
 	 <th>User</th>
 	 <th>Hora</th>
-	 <th>Vered&iacute;cto</th>
-	 <th>DC</th><th>AP</th><th>PL</th><th>PAC</th><th>LIB</th><th>UD</th><th>PINU</th><th>PN</th><th>Blancos</th><th>Nulos</th>
+	 <th>Info</th>
+     <%=render :partial=>"#{@actum.full_type}_table_headers"%>
+     <th>Blancos</th><th>Nulos</th><th>Suma Correcta?</th>
   </tr>
-  <%Verification.where(:acta_id=>@actum.id).order("created_at ASC").each do |verification|%>
+  <%@actum.verifications.order("created_at ASC").each do |verification|%>
     <tr>
 	  <td>
 		<a href="http://facebook.com/<%=verification.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=verification.user.uid%>/picture?width=35&height=35" alt="<%=verification.user.shortname%>" title="<%=verification.user.shortname%>"></a>
 	  </td>
 	  <td><%=verification.created_at.strftime("%d/%b/%Y - %k:%M:%S")%></td>
-	  <td><%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%></td>
-	  <td><%=verification.dc%></td>
-	  <td><%=verification.alianza%></td>
-	  <td><%=verification.liberal%></td>
-	  <td><%=verification.pac%></td>
-	  <td><%=verification.libre%></td>
-	  <td><%=verification.ud%></td>
-	  <td><%=verification.pinu%></td>
+	  <td>
+	     <%if verification.user_id==@actum.user_id%>
+	       Ingreso inicial de datos...
+	     <%elsif verification.image_changed%>
+	       <span class="label label-danger"><span class="glyphicon glyphicon-warning-sign"></span> La imagen cambió en el TSE</span> - Reiniciando validación.<br/><br/> Imagenes:
+	       <a href="<%=@actum.versioned_image(1)%>" target="_blank">Import #1</a>,
+	       <a href="<%=@actum.versioned_image(2)%>" target="_blank">Import #2</a>,
+		   <a href="<%=@actum.versioned_image(3)%>" target="_blank">Import #3</a>,
+	       <a href="<%=@actum.versioned_image(4)%>" target="_blank">Import #4 (actual)</a>,
+	     <%else%>
+	       <%=verification.is_valid ? "Correcto" : "Incorrecto - Reinicia contador de verificado"%>
+	     <%end%>
+	  </td>
+	
+	  <%=render :partial=>"#{@actum.full_type}_table_fields", :locals=>{:verification=>verification}%>
+	
 	  <td><%=verification.nacional%></td>
 	  <td><%=verification.blancos%></td>
 	  <td><%=verification.nulos%></td>
+	  <td><%=verification.is_sum_ok ? "Si" : "No"%></td>
     </tr>
   <%end%>
   </table>
 </div>
 <%end%>
 
+<p>
+<div style="float:left;width:100%;clear:both;padding-top:1px;padding-bottom:0px">
+    <%if @actum.reportes.length>0%>  
+	    <h3><span class="glyphicon glyphicon-warning-sign"></span> Problemas Reportados</h3>
+
+		<table style="width:100%">
+		  <tr>
+			<th width="200">Fecha de reporte</th>
+			<th width="100">Usuario</th>
+		    <th>Mensaje</th>
+		  </tr>
+
+		<% @actum.reportes.each do |reporte| %>
+		  <tr>
+	        <td><%= reporte.date.strftime("%d/%b/%Y - %k:%M:%S")%></td>
+		    <td><a href="<%=user_profile_path(reporte.user.id)%>"><img src="https://graph.facebook.com/<%=reporte.user.uid%>/picture?width=35&height=35" alt="<%=reporte.user.shortname%>" title="<%=reporte.user.shortname%>"></a></td>
+		    <td><%= auto_link(reporte.body,:html => { :target => '_blank' }) %>
+				<% unless reporte.image.blank?%>
+			      <br/><p>
+				    <a href="<%=reporte.image.url%>" target="_blank">
+					<img class="img-thumbnail" width="200px" src="<%=reporte.image%>">
+					</a>
+			      </p>
+		   	    <%end%>
+			</td>
+			
+		  </tr>
+		<% end %>
+		</table>
+    <%end%>	
+	<div class="panel panel-danger" style="margin-top:50px;" id="reportForm">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">Reportar Problemas en Acta o Dudas</div>
+	  <div class="panel-body">
+		  <%= form_for(@report,  :html => {:multipart => true}) do |f| %>
+		  
+		    <div id= "post_errors" style="display:none"></div>
+		
+		 	<div class="form-group">
+		     <label for="reportetexto">Texto Del Reporte</label>
+ 	    	  <%= f.text_area :body, :rows => 3, :cols=>60, :class=> "form-control" %>
+		 	</div>
+			
+			  <%= f.hidden_field :acta_id %> 
+		
+	 		<div class="form-group">
+			   	<label for="adjuntarimagen">Adjuntar Imagen (opcional)</label>
+		      	<%= f.file_field :image,  :class=> "form-control" %> 
+		  	</div>
+			
+		  </div>
+			  <div class="form-group">
+		  
+	 	    <p><%= f.submit "Enviar Reporte", :class=>"btn btn-default"%></p>
+		 
+			</div>
+		  <% end %>
+	  </div>
+	</div>
+</div>
+</p>
+
+
 <script>
-$('#show-form').click(function(){
-  $('#stored-data').hide();
-  $('#correct-buttons').hide();
-  $('#editable-data').show();
-  $('#incorrect-buttons').show();
-  $('#verification_is_valid').val(false);
+$(document).ready(function(){
+	function calculate_sum(){
+		vote_sum=0;
+		vote_sum+=parseInt($("#verification_dc").val());
+		vote_sum+=parseInt($("#verification_alianza").val());
+		vote_sum+=parseInt($("#verification_liberal").val());
+		vote_sum+=parseInt($("#verification_pac").val());
+		vote_sum+=parseInt($("#verification_libre").val());
+		vote_sum+=parseInt($("#verification_ud").val());
+		vote_sum+=parseInt($("#verification_pinu").val());
+		vote_sum+=parseInt($("#verification_faper").val());
+		vote_sum+=parseInt($("#verification_nacional").val());
+		vote_sum+=parseInt($("#verification_blancos").val());
+		vote_sum+=parseInt($("#verification_nulos").val());
+		$("#vote-sum").html(vote_sum);
+	}
+	$("input").change(function() {
+		calculate_sum();
+	});
+	
+	$("input").keyup(function() {
+		calculate_sum();
+	});
+		
+	$('#show-form').click(function(){
+	  $('#stored-data').hide();
+	  $('#correct-buttons').hide();
+	  $('#editable-data').show();
+	  $('#incorrect-buttons').show();
+	  $('#verification_is_valid').val(false);
+	})
+
+	<%if @trigger_verification%>
+	 $('#stored-data').hide();
+	 $('#correct-buttons').hide();
+	 $('#editable-data').show();
+	 $('#incorrect-buttons').show();
+	 $('#verification_is_valid').val(false);
+	<%end%>
 })
 </script>

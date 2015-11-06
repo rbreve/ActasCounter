@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131127144156) do
+ActiveRecord::Schema.define(:version => 20131206034950) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -23,12 +23,60 @@ ActiveRecord::Schema.define(:version => 20131127144156) do
     t.integer  "dc"
     t.integer  "alianza"
     t.integer  "pinu"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "blancos"
     t.integer  "nulos"
     t.integer  "user_id"
-    t.integer  "verified_count", :default => 0
+    t.integer  "verified_count",   :default => 0
+    t.boolean  "ready_for_review", :default => true
+    t.boolean  "is_sum_ok",        :default => true
+    t.boolean  "image_changed",    :default => false
+    t.string   "actum_type",       :default => "p"
+    t.integer  "municipio_id"
+    t.integer  "faper",            :default => 0
+  end
+
+  add_index "acta", ["liberal", "nacional", "libre", "pac", "ud", "dc", "alianza", "pinu", "blancos", "nulos"], :name => "acta_counts_index"
+  add_index "acta", ["numero"], :name => "acta_numero_index"
+  add_index "acta", ["user_id", "ready_for_review", "id", "verified_count"], :name => "acta_for_random_index"
+
+  create_table "available_numbers", :force => true do |t|
+    t.string   "numero"
+    t.boolean  "has_valid_image",  :default => true
+    t.boolean  "already_assigned", :default => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.string   "actum_type",       :default => "p"
+  end
+
+  create_table "departamentos", :force => true do |t|
+    t.string   "name"
+    t.integer  "num"
+    t.integer  "from_actum"
+    t.integer  "to_actum"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "municipios", :force => true do |t|
+    t.string   "name"
+    t.integer  "num"
+    t.integer  "from_actum"
+    t.integer  "to_actum"
+    t.integer  "departamento_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "reportes", :force => true do |t|
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "acta_id"
+    t.datetime "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "image"
   end
 
   create_table "users", :force => true do |t|
@@ -49,6 +97,8 @@ ActiveRecord::Schema.define(:version => 20131127144156) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
+    t.integer  "acta_count"
+    t.integer  "verifications_count"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -68,8 +118,11 @@ ActiveRecord::Schema.define(:version => 20131127144156) do
     t.boolean  "is_valid"
     t.integer  "acta_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "is_sum_ok",     :default => true
+    t.boolean  "image_changed", :default => false
+    t.integer  "faper",         :default => 0
   end
 
 end
