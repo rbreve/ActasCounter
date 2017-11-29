@@ -18,8 +18,8 @@ class ActaController < ApplicationController
       Actum.where(:actum_type =>@actum_short_type).sum('liberal')
       }
       
-    @sumLibre = Rails.cache.fetch("sum-libre-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
-      Actum.where(:actum_type =>@actum_short_type).sum('libre')
+    @sumLibre_Pinu = Rails.cache.fetch("sum-libre_pinu-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('libre_pinu')
       }
       
     @sumNacional = Rails.cache.fetch("sum-nacional-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
@@ -38,16 +38,16 @@ class ActaController < ApplicationController
       Actum.where(:actum_type =>@actum_short_type).sum('dc')
       }
       
-    @sumAlianza = Rails.cache.fetch("sum-alianza-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
-      Actum.where(:actum_type =>@actum_short_type).sum('alianza')
+    @sumAlianza_Patriotica = Rails.cache.fetch("sum-alianza_patriotica-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('alianza_patriotica')
       }
       
-    @sumPinu = Rails.cache.fetch("sum-pinu-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
-      Actum.where(:actum_type =>@actum_short_type).sum('pinu')
+    @sumVamos = Rails.cache.fetch("sum-vamos-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('vamos')
       }
       
-    @sumFaper = Rails.cache.fetch("sum-faper-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
-      Actum.where(:actum_type =>@actum_short_type).sum('faper')
+    @sumFrente_Amplio = Rails.cache.fetch("sum-frente_amplio-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
+      Actum.where(:actum_type =>@actum_short_type).sum('frente_amplio')
       }
       
     @sumBlancos = Rails.cache.fetch("sum-blancos-#{@actum_short_type}", :expires_in=>exp_sums.seconds){
@@ -62,7 +62,7 @@ class ActaController < ApplicationController
       Actum.where(:actum_type =>@actum_short_type).sum('verified_count')
       }
     
-    @sumAll=@sumLiberal+@sumLibre+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza+@sumPinu+@sumFaper+@sumBlancos+@sumNulos
+    @sumAll=@sumLiberal+@sumLibre_Pinu+@sumNacional+@sumPac+@sumUD+@sumDC+@sumAlianza_Patriotica+@sumVamos+@sumFrente_Amplio+@sumBlancos+@sumNulos
     
     @pending_actas = Actum.where(:ready_for_review=>false,:user_id=>current_user.id)
     
@@ -104,7 +104,7 @@ class ActaController < ApplicationController
       redirect_to acta_path, :notice=>notice_msg
       return
     end
-    @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
+    @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre_pinu.to_i+@actum.ud.to_i+@actum.alianza_patriotica.to_i+@actum.vamos.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i+@actum.frente_amplio.to_i
     
     @imageUrl = @actum.image
     
@@ -112,13 +112,13 @@ class ActaController < ApplicationController
     @verification.is_valid=true
     @verification.liberal=@actum.liberal
     @verification.nacional=@actum.nacional
-    @verification.libre=@actum.libre
+    @verification.libre_pinu=@actum.libre_pinu
     @verification.pac=@actum.pac
     @verification.ud=@actum.ud
     @verification.dc=@actum.dc
-    @verification.alianza=@actum.alianza
-    @verification.pinu=@actum.pinu
-    @verification.faper=@actum.faper
+    @verification.alianza_patriotica=@actum.alianza_patriotica
+    @verification.vamos=@actum.vamos
+    @verification.frente_amplio=@actum.frente_amplio
     @verification.blancos=@actum.blancos
     @verification.nulos=@actum.nulos
     @verification.is_sum_ok=@actum.is_sum_ok
@@ -155,7 +155,7 @@ class ActaController < ApplicationController
       @numero = @next_available.numero.to_i
       @actum = Actum.new
       @actum.numero=@numero
-      @actum.liberal=@actum.nacional=@actum.libre=@actum.pac=@actum.ud=@actum.dc=@actum.alianza=@actum.pinu=@actum.blancos=@actum.nulos=0
+      @actum.frente_amplio=@actum.liberal=@actum.nacional=@actum.libre_pinu=@actum.pac=@actum.ud=@actum.dc=@actum.alianza_patriotica=@actum.vamos=@actum.blancos=@actum.nulos=0
       @actum.user_id=current_user.id
       @actum.ready_for_review=false
       @actum.actum_type=@next_available.actum_type

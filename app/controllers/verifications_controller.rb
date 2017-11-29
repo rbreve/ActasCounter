@@ -13,13 +13,13 @@ class VerificationsController < ApplicationController
           @actum.verified_count=0
           @actum.liberal=@log.liberal
           @actum.nacional=@log.nacional
-          @actum.libre=@log.libre
+          @actum.libre_pinu=@log.libre_pinu
           @actum.pac=@log.pac
           @actum.ud=@log.ud
           @actum.dc=@log.dc
-          @actum.alianza=@log.alianza
-          @actum.pinu=@log.pinu
-          @actum.faper=@log.faper
+          @actum.alianza_patriotica=@log.alianza_patriotica
+          @actum.vamos=@log.vamos
+          @actum.frente_amplio=@log.frente_amplio
           @actum.blancos=@log.blancos
           @actum.nulos=@log.nulos
           @actum.is_sum_ok=@log.is_sum_ok
@@ -36,7 +36,7 @@ class VerificationsController < ApplicationController
         
         format.json { render json: @actum, status: :created, location: @actum }
       else
-        @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre.to_i+@actum.ud.to_i+@actum.alianza.to_i+@actum.pinu.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i
+        @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre_pinu.to_i+@actum.ud.to_i+@actum.alianza_patriotica.to_i+@actum.vamos.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i+@actum.frente_amplio.to_i
 
         @imageUrl = @actum.image
         @verification=@log
