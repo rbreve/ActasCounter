@@ -34,10 +34,12 @@ class User < ActiveRecord::Base
   
  
   def calculated_verification_count
-    if self.verifications_count-self.acta_count<0
+    v_count = self.verifications_count || 0
+    a_count = self.acta_count || 0
+    if v_count-a_count<0
       0
     else
-      self.verifications_count-self.acta_count
+      v_count-a_count
     end
   end
   
