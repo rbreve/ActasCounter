@@ -222,7 +222,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   require "omniauth-facebook"
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development? 
-  config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_APP_SECRET"], {:scope => 'email', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} 
+  config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_APP_SECRET"], {:token_params => {:parse => :json}, :scope => 'email', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} 
   
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
