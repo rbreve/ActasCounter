@@ -134,9 +134,7 @@
         <tr>
 	  <td><b>Total de Papeletas Utilizadas:</b></td><td class="total-sum"><span id="actas-sum" ><%=@totalActas%></span></td>
 	</tr>
-	<tr>
-		<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Son todos los totales iguales?</b></td>
-	</tr>
+        <%=f.hidden_field :is_sum_ok %>
 	<%if current_user.is_admin and @actum.verifications.count>0%>
 	   <tr>
 		<td colspan="2"><b><%=f.check_box :image_changed, :style=>"width:15px"%> ¿La imagen cambio?</b></td>

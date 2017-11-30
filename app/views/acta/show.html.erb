@@ -177,10 +177,16 @@ vote_sum+=parseInt($("#verification_nulos").val());
 
 actas_sum=parseInt($("#verification_recibidas").val())-parseInt($("#verification_sobrantes").val());
 reported_sum=parseInt($("#verification_ciudadanos").val())+parseInt($("#verification_miembros_mer").val());
+
+coinciden = (vote_sum == actas_sum) && (vote_sum == reported_sum) && (actas_sum == reported_sum);
+
                 
                 $("#actas-sum").html(actas_sum);
                 $("#reported-sum").html(reported_sum);
-		$("#vote-sum").html(vote_sum);
+$("#vote-sum").html(vote_sum);
+
+$("#verification_is_sum_ok").val(coinciden ? "1" : "0");
+
 	}
 	$("input").change(function() {
 		calculate_sum();
