@@ -24,6 +24,10 @@ class VerificationsController < ApplicationController
           @actum.nulos=@log.nulos
           @actum.is_sum_ok=@log.is_sum_ok
           @actum.image_changed=@log.image_changed
+          @actum.recibidas=@log.recibidas
+          @actum.sobrantes=@log.sobrantes
+          @actum.ciudadanos=@log.ciudadanos
+          @actum.miembros_mer=@log.miembros_mer
         end
         @actum.ready_for_review=true
         @actum.save
