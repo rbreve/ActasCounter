@@ -86,7 +86,7 @@ class Actum < ActiveRecord::Base
   
   def versioned_image(v)
     if Rails.env.production?
-      "http://s3-us-west-2.amazonaws.com/actashn/#{self.full_type}/#{v}/%05d104.jpg" % self.numero
+      "http://s3-us-west-2.amazonaws.com/actashn/2017/%05d104.JPG" % self.numero
     else
       "/actas/p/%05d104.jpg" % self.numero
     end
