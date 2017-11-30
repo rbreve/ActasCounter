@@ -7,7 +7,7 @@ class AvailableNumber < ActiveRecord::Base
        if (Actum.exists?(numero: i.to_s,actum_type: actum_type))
          puts "Already in... not created..."
        else
-         num=AvailableNumber.create(:numero=>i.to_s,:actum_type=>actum_type,:has_valid_image=>false)
+         num=AvailableNumber.create(:numero=>i.to_s,:actum_type=>actum_type,:has_valid_image=>true)
          puts "New slot created for #{i} for #{actum_type} ... (with id #{num.id})..."
        end
     end

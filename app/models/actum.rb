@@ -28,6 +28,7 @@ class Actum < ActiveRecord::Base
   has_many :verifications, class_name: "Verification",:foreign_key=>"acta_id"
   has_many :reportes, class_name: "Reporte",:foreign_key=>"acta_id"
   after_save :update_counters
+  before_validation :set_defaults
   
   ACTUM_TYPE_FULL = {
     "p" => "presidente",
@@ -84,7 +85,11 @@ class Actum < ActiveRecord::Base
   end
   
   def versioned_image(v)
-    "http://s3-us-west-2.amazonaws.com/actashn/#{self.full_type}/#{v}/%05d.jpg" % self.numero
+    if Rails.env.production?
+      "http://s3-us-west-2.amazonaws.com/actashn/#{self.full_type}/#{v}/%05d104.jpg" % self.numero
+    else
+      "/actas/p/%05d104.jpg" % self.numero
+    end
   end
 
   def self.count_all_votes
@@ -137,6 +142,19 @@ class Actum < ActiveRecord::Base
 
   
   private
+  def set_defaults
+    self.liberal ||= 0
+    self.nacional ||= 0
+    self.ud ||= 0
+    self.dc ||= 0
+    self.vamos ||= 0
+    self.alianza_patriotica ||= 0
+    self.libre_pinu ||= 0
+    self.pac ||= 0
+    self.frente_amplio ||= 0
+    self.blancos ||= 0
+    self.nulos ||= 0
+  end
     def update_counters
       user = User.find self.user_id
       user.acta_count = user.acta.count
