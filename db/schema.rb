@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171129164224) do
+ActiveRecord::Schema.define(:version => 20171130055352) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
@@ -35,6 +35,10 @@ ActiveRecord::Schema.define(:version => 20171129164224) do
     t.integer  "frente_amplio"
     t.integer  "alianza_patriotica"
     t.integer  "vamos"
+    t.integer  "recibidas"
+    t.integer  "sobrantes"
+    t.integer  "ciudadanos"
+    t.integer  "miembros_mer"
   end
 
   add_index "acta", ["liberal", "nacional", "libre_pinu", "pac", "ud", "dc", "alianza_patriotica", "blancos", "nulos", "frente_amplio", "vamos"], :name => "acta_counts_index"
@@ -123,6 +127,10 @@ ActiveRecord::Schema.define(:version => 20171129164224) do
     t.integer  "frente_amplio"
     t.integer  "alianza_patriotica"
     t.integer  "vamos"
+    t.integer  "recibidas"
+    t.integer  "sobrantes"
+    t.integer  "ciudadanos"
+    t.integer  "miembros_mer"
   end
 
 end

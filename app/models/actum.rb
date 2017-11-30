@@ -8,7 +8,7 @@ class Actum < ActiveRecord::Base
                   :ud,
                   :frente_amplio,
                   :vamos,
-                  :numero,:nulos,:blancos,:user_id,:ready_for_review,:is_sum_ok,:actum_type,:image_changed
+                  :numero,:nulos,:blancos,:user_id,:ready_for_review,:is_sum_ok,:actum_type,:image_changed,:recibidas,:sobrantes,:ciudadanos,:miembros_mer
 
   validates :numero, :uniqueness=> {:scope => :actum_type}
   belongs_to :municipio 
