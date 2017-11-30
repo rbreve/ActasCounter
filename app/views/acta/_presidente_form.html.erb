@@ -2,33 +2,38 @@
 	<tr>
 		<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
 	</tr>
+
+
+
+        <tr>
+		<td><b>UD:</b></td><td><%= @actum.ud %></td>
+	</tr>
 	<tr>
+		<td><b>Alianza de Oposición Contra la Dictadura (Libre-Pinu):</b></td><td><%= @actum.libre_pinu %></td>
+	</tr>
+
+	<tr>
+		<td><b>Vamos:</b></td><td><%= @actum.vamos %></td>
+	</tr>
+        <tr>
 		<td><b>DC:</b></td><td><%= @actum.dc %></td>
 	</tr>
-	<tr>
-		<td><b>Alianza Pat.</b></td><td><%= @actum.alianza_patriotica %></td>
-	</tr>
-	<tr>
+        <tr>
 		<td><b>Liberal:</b></td><td><%= @actum.liberal %></td>
+	</tr>
+        <tr>
+		<td><b>Alianza Patriótica</b></td><td><%= @actum.alianza_patriotica %></td>
+	</tr>
+        <tr>
+		<td><b>Frente Amplio:</b></td><td><%= @actum.frente_amplio %></td>
 	</tr>
 	<tr>
 		<td><b>PAC:</b></td><td><%= @actum.pac %></td>
 	</tr>
 	<tr>
-		<td><b>Alianza de Oposición Contra la Dictadura (Libre-Pinu):</b></td><td><%= @actum.libre_pinu %></td>
-	</tr>
-	<tr>
-		<td><b>UD:</b></td><td><%= @actum.ud %></td>
-	</tr>
-	<tr>
-		<td><b>Vamos:</b></td><td><%= @actum.vamos %></td>
-	</tr>
-	<tr>
 		<td><b>Nacional:</b></td><td><%= @actum.nacional %></td>
 	</tr>
-        <tr>
-		<td><b>Frente Amplio:</b></td><td><%= @actum.frente_amplio %></td>
-	</tr>
+
 	<tr>
 		<td><b>Blancos:</b></td><td><%= @actum.blancos %></td>
 	</tr>
@@ -36,7 +41,7 @@
 		<td><b>Nulos:</b></td><td><%= @actum.nulos %></td>
 	</tr>
 	<tr>
-		<td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
+		<td><b>Total Votos (Votantes Ciudadanos + Miembros MER):</b></td><td><%=@totalVotos%></td>
 	</tr>
 	<tr>
 		<td><b>Suma Correcta?:</b></td><td><%=@actum.is_sum_ok ? "Si" : "No"%></td>
@@ -55,33 +60,34 @@
 	<tr>
 		<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
 	</tr>
+        <tr>
+		<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
+	</tr>
+        <tr>
+		<td><b>Alianza de Oposición Contra la Dictadura (Libre-Pinu):</b></td><td><%= f.number_field :libre_pinu %></td>
+	</tr>
+        <tr>
+		<td><b>Vamos:</b></td><td><%= f.number_field :vamos %></td>
+	</tr>
 	<tr>
 		<td><b>DC:</b></td><td><%= f.number_field :dc%></td>
 	</tr>
-	<tr>
-		<td><b>Alianza Pat.</b></td><td><%= f.number_field :alianza_patriotica %></td>
+        <tr>
+		<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
 	</tr>
 	<tr>
-		<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
+		<td><b>Alianza Patriótica:</b></td><td><%= f.number_field :alianza_patriotica %></td>
+	</tr>
+        <tr>
+		<td><b>Frente Amplio:</b></td><td><%= f.number_field :frente_amplio %></td>
 	</tr>
 	<tr>
 		<td><b>PAC:</b></td><td><%= f.number_field :pac %></td>
 	</tr>
 	<tr>
-		<td><b>Alianza de Oposición Contra la Dictadura (Libre-Pinu):</b></td><td><%= f.number_field :libre_pinu %></td>
-	</tr>
-	<tr>
-		<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
-	</tr>
-	<tr>
-		<td><b>Vamos:</b></td><td><%= f.number_field :vamos %></td>
-	</tr>
-	<tr>
 		<td><b>Nacional:</b></td><td><%= f.number_field :nacional %></td>
 	</tr>
-        <tr>
-		<td><b>Frente Amplio:</b></td><td><%= f.number_field :frente_amplio %></td>
-	</tr>
+
 	<tr>
 		<td><b>Blancos:</b></td><td><%= f.number_field :blancos %></td>
 	</tr>
@@ -89,10 +95,10 @@
 		<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
 	</tr>
 	<tr>
-		<td><b>Suma:</b></td><td class="total-sum"><span id="vote-sum" ><%=@totalVotos%></span></td>
+		<td><b>Suma (Votantes Ciudadanos + MER):</b></td><td class="total-sum"><span id="vote-sum" ><%=@totalVotos%></span></td>
 	</tr>
 	<tr>
-		<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Coincide nuestra suma con la de la boleta (ultima fila)?</b></td>
+		<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Coincide nuestra suma con la de la boleta (Suma de votantes ciudadanos + miembros MER)?</b></td>
 	</tr>
 	<%if current_user.is_admin and @actum.verifications.count>0%>
 	   <tr>
