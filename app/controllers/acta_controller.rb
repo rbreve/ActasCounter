@@ -105,6 +105,8 @@ class ActaController < ApplicationController
       return
     end
     @totalVotos=@actum.nacional.to_i+@actum.liberal.to_i+@actum.libre_pinu.to_i+@actum.ud.to_i+@actum.alianza_patriotica.to_i+@actum.vamos.to_i+@actum.blancos.to_i+@actum.pac.to_i+@actum.nulos.to_i+@actum.dc.to_i+@actum.frente_amplio.to_i
+    @totalActas=@actum.recibidas.to_i-@actum.sobrantes.to_i
+    @totalVotosReportados=@actum.ciudadanos.to_i+@actum.miembros_mer.to_i
     
     @imageUrl = @actum.image
     

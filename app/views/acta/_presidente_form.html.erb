@@ -3,7 +3,18 @@
 		<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
 	</tr>
 
-
+        <tr>
+	  <td><b>Recibidas:</b></td><td><%= @actum.recibidas %></td>
+	</tr>
+        <tr>
+	  <td><b>Sobrantes:</b></td><td><%= @actum.sobrantes %></td>
+	</tr>
+        <tr>
+	  <td><b>Votos de Ciudadanos:</b></td><td><%= @actum.ciudadanos %></td>
+	</tr>
+        <tr>
+	  <td><b>Votos de Miembros MER:</b></td><td><%= @actum.miembros_mer %></td>
+	</tr>
 
         <tr>
 		<td><b>UD:</b></td><td><%= @actum.ud %></td>
@@ -40,11 +51,18 @@
 	<tr>
 		<td><b>Nulos:</b></td><td><%= @actum.nulos %></td>
 	</tr>
-	<tr>
-		<td><b>Total Votos (Votantes Ciudadanos + Miembros MER):</b></td><td><%=@totalVotos%></td>
+
+        <tr> 
+	  <td><b>Total Actas Utilizadas (Recibidas - Sobrantes):</b></td><td><%=@totalActas%></td>
+	</tr>
+        <tr> 
+	  <td><b>Total Votos Reportados (Ciudadanos + MER):</b></td><td><%=@totalVotosReportados%></td>
+	</tr>
+	<tr> 
+	  <td><b>Total Votos:</b></td><td><%=@totalVotos%></td>
 	</tr>
 	<tr>
-		<td><b>Suma Correcta?:</b></td><td><%=@actum.is_sum_ok ? "Si" : "No"%></td>
+	  <td><b>Totales iguales?:</b></td><td><%=@actum.is_sum_ok ? "Si" : "No"%></td>
 	</tr>
 	<tr>
 		<td><b>Ingresada por</b></td><td><a href="http://facebook.com/<%=@actum.user.uid%>" target="_blank"><img src="https://graph.facebook.com/<%=@actum.user.uid%>/picture?width=35&height=35" alt="<%=@actum.user.shortname%>" title="<%=@actum.user.shortname%>"></a></td>
@@ -59,6 +77,18 @@
 <table id="editable-data" style="display:none">
 	<tr>
 		<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
+	</tr>
+         <tr>
+	  <td><b>Recibidas:</b></td><td><%= f.number_field :recibidas %></td>
+	</tr>
+        <tr>
+	  <td><b>Sobrantes:</b></td><td><%= f.number_field :sobrantes %></td>
+	</tr>
+        <tr>
+	  <td><b>Votos de Ciudadanos:</b></td><td><%= f.number_field :ciudadanos %></td>
+	</tr>
+        <tr>
+	  <td><b>Votos de Miembros MER:</b></td><td><%= f.number_field :miembros_mer %></td>
 	</tr>
         <tr>
 		<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
@@ -94,11 +124,18 @@
 	<tr>
 		<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
 	</tr>
+       
 	<tr>
-		<td><b>Suma (Votantes Ciudadanos + MER):</b></td><td class="total-sum"><span id="vote-sum" ><%=@totalVotos%></span></td>
+	  <td><b>Suma de Votos Digitados:</b></td><td class="total-sum"><span id="vote-sum" ><%=@totalVotos%></span></td>
+	</tr>
+        <tr>
+	  <td><b>Total de Votos Reportados:</b></td><td class="total-sum"><span id="reported-sum" ><%=@totalVotosReportados%></span></td>
+	</tr>
+        <tr>
+	  <td><b>Total de Actas Utilizadas:</b></td><td class="total-sum"><span id="actas-sum" ><%=@totalActas%></span></td>
 	</tr>
 	<tr>
-		<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Coincide nuestra suma con la de la boleta (Suma de votantes ciudadanos + miembros MER)?</b></td>
+		<td colspan="2"><b><%=f.check_box :is_sum_ok, :style=>"width:15px"%> Son todos los totales iguales?</b></td>
 	</tr>
 	<%if current_user.is_admin and @actum.verifications.count>0%>
 	   <tr>

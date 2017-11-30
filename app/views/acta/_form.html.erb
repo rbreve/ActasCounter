@@ -16,39 +16,53 @@
 		<tr>
 			<td><b>Numero:</b></td><td><%="%05d" % @actum.numero %></td>
 		</tr>
-		<tr>
-			<td><b>DC:</b></td><td><%= f.number_field :dc%></td>
-		</tr>
-		<tr>
-			<td><b>Alianza Pat.</b></td><td><%= f.number_field :alianza_patriotica %></td>
-		</tr>
-		<tr>
-			<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
-		</tr>
-		<tr>
-			<td><b>PAC:</b></td><td><%= f.number_field :pac %></td>
-		</tr>
-		<tr>
-			<td><b>Alianza de Oposición Contra La Dictadura (Libre-Pinu):</b></td><td><%= f.number_field :libre_pinu %></td>
-		</tr>
-		<tr>
-			<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
-		</tr>
-		<tr>
-			<td><b>Vamos:</b></td><td><%= f.number_field :vamos %></td>
-		</tr>
-                <tr>
-			<td><b>Frente Amplio:</b></td><td><%= f.number_field :frente_amplio %></td>
-		</tr>
-		<tr>
-			<td><b>Nacional:</b></td><td><%= f.number_field :nacional %></td>
-		</tr>
-		<tr>
-			<td><b>Blancos:</b></td><td><%= f.number_field :blancos %></td>
-		</tr>
-		<tr>
-			<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
-		</tr>
+         <tr>
+	  <td><b>Recibidas:</b></td><td><%= f.number_field :recibidas %></td>
+	</tr>
+        <tr>
+	  <td><b>Sobrantes:</b></td><td><%= f.number_field :sobrantes %></td>
+	</tr>
+        <tr>
+	  <td><b>Votos de Ciudadanos:</b></td><td><%= f.number_field :ciudadanos %></td>
+	</tr>
+        <tr>
+	  <td><b>Votos de Miembros MER:</b></td><td><%= f.number_field :miembros_mer %></td>
+	</tr>
+        <tr>
+		<td><b>UD:</b></td><td><%= f.number_field :ud %></td>
+	</tr>
+        <tr>
+		<td><b>Alianza de Oposición Contra la Dictadura (Libre-Pinu):</b></td><td><%= f.number_field :libre_pinu %></td>
+	</tr>
+        <tr>
+		<td><b>Vamos:</b></td><td><%= f.number_field :vamos %></td>
+	</tr>
+	<tr>
+		<td><b>DC:</b></td><td><%= f.number_field :dc%></td>
+	</tr>
+        <tr>
+		<td><b>Liberal:</b></td><td><%= f.number_field :liberal %></td>
+	</tr>
+	<tr>
+		<td><b>Alianza Patriótica:</b></td><td><%= f.number_field :alianza_patriotica %></td>
+	</tr>
+        <tr>
+		<td><b>Frente Amplio:</b></td><td><%= f.number_field :frente_amplio %></td>
+	</tr>
+	<tr>
+		<td><b>PAC:</b></td><td><%= f.number_field :pac %></td>
+	</tr>
+	<tr>
+		<td><b>Nacional:</b></td><td><%= f.number_field :nacional %></td>
+	</tr>
+
+	<tr>
+		<td><b>Blancos:</b></td><td><%= f.number_field :blancos %></td>
+	</tr>
+	<tr>
+		<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
+	</tr>
+
 	</table>
 	  
   <div class="actions">
