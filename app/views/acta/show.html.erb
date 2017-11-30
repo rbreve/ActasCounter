@@ -87,7 +87,6 @@
 	
 	  <%=render :partial=>"#{@actum.full_type}_table_fields", :locals=>{:verification=>verification}%>
 	
-	  <td><%=verification.nacional%></td>
 	  <td><%=verification.blancos%></td>
 	  <td><%=verification.nulos%></td>
 	  <td><%=verification.is_sum_ok ? "Si" : "No"%></td>
