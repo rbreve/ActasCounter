@@ -1,32 +1,36 @@
 <div>
-	<h1 class="center">Resultados Actuales</h1>
-	<h3 >
-		Actas procesadas: <%=Actum.where(:actum_type=>"p").count%>  de <%=MAX_ACTAS%> actas <%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>%
+	<h1>Resultados Actuales</h1>
+	<h3>
+		Actas procesadas: <%=Actum.where(:actum_type=>"p").count%>  de <%=MAX_ACTAS%> (<%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% del total de actas)
 	</h3>
-	
+
 		<div class="progress">
 		  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>%">
 		    <span class="sr-only"><%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% Complete (success)</span>
 		  </div>
-		 
+
 		</div>
-		
+
 		<h3 >
 			Actas verificadas 3 veces: <%=Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count%> (<%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>% de las actas digitadas)
 		</h3>
-	
+
 			<div class="progress">
 			  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>%">
 			    <span class="sr-only"><%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",VERIFICATIONS,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100, precision:2)%> % Complete (success)</span>
 			  </div>
 			</div>
-			
+
 	<table class="table table-striped" >
 	    <tbody><tr><th></th><th>Candidato(a)</th><th>Votos</th><th colspan="2">Porcentaje</th></tr>
-		
+
 	      <tr>
 	        <td><a href="https://www.facebook.com/124300620957187" target="_blank"><img src="presidential_candidates/nacional.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/124300620957187" target="_blank">Juan Hernández - Nacional</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/124300620957187" target="_blank">
+	        		<h3>Juan Hernández</h3>
+	        	</a>
+	        <h4>Nacional</h4></td>
 	        <td style="text-align:right"><%= @results[:nacional]%></td>
 
 	        <td style="width:200px">
@@ -40,7 +44,11 @@
 
 	      <tr>
 	        <td><a href="https://www.facebook.com/1644144785802801" target="_blank"><img src="presidential_candidates/libre_pinu.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/1644144785802801" target="_blank">Salvador Nasralla - Alianza de Oposición Contra La Dictadura (LIBRE-PINU)</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/1644144785802801" target="_blank">
+	        		<h3>Salvador Nasralla</h3>
+	        	</a>
+	        <h4>Alianza de Oposición Contra La Dictadura (LIBRE-PINU)</h4></td>
 	        <td style="text-align:right"><%= @results[:libre_pinu] %></td>
 
 	        <td style="width:200px">
@@ -55,7 +63,12 @@
 
 	      <tr>
 	        <td><a href="https://www.facebook.com/607812589389584" target="_blank"><img src="presidential_candidates/liberal.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/607812589389584" target="_blank">Luis Zelaya - Liberal</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/607812589389584" target="_blank">
+	        		<h3>Luis Zelaya</h3>
+        		</a>
+	        	<h4>Liberal</h4>
+	        </td>
 	        <td style="text-align:right"><%= @results[:liberal] %></td>
 
 	        <td style="width:200px">
@@ -65,12 +78,17 @@
 	          </div>
 	        </td>
 	        <td style="text-align:right"><%= (@results[:liberal].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-      
+
 	      </tr>
 
 	      <tr>
 	        <td><a href="https://www.facebook.com/167693046755457" target="_blank"><img src="presidential_candidates/pac.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/167693046755457" target="_blank">Marlene Alvarenga - PAC</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/167693046755457" target="_blank">
+	        		<h3>Marlene Alvarenga</h3>
+	        	</a>
+	        	<h4>PAC</h4>
+	        </td>
 	        <td style="text-align:right"><%= @results[:pac] %></td>
 
 	        <td style="width:200px">
@@ -81,10 +99,15 @@
 	        </td>
 	        <td style="text-align:right"><%= (@results[:pac].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
 	      </tr>
-	
+
 	      <tr>
 	        <td><a href="https://www.facebook.com/299457643846248" target="_blank"><img src="presidential_candidates/vamos.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/299457643846248" target="_blank">Eliseo Reyes - VAMOS</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/299457643846248" target="_blank">
+	        		<h3>Eliseo Reyes</h3>
+        		</a>
+        		<h4>VAMOS</h4>
+        	</td>
 	        <td style="text-align:right"><%= @results[:vamos] %></td>
 
 	        <td style="width:200px">
@@ -94,12 +117,17 @@
 	          </div>
 	        </td>
 	        <td style="text-align:right"><%= (@results[:vamos].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-      
+
 	      </tr>
-	
+
 	      <tr>
 	        <td><a href="https://www.facebook.com/146827225496682" target="_blank"><img src="presidential_candidates/alianza_patriotica.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/146827225496682" target="_blank">Romeo Vásquez - Alianza Patriótica</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/146827225496682" target="_blank">
+	        		<h3>Romeo Vásquez</h3>
+	        	</a>
+	        	<h4>Alianza Patriótica</h4>
+	        </td>
 	        <td style="text-align:right"><%=@results[:alianza_patriotica] %></td>
 
 	        <td style="width:200px">
@@ -114,7 +142,12 @@
 
 	      <tr>
 	        <td><a href="https://www.facebook.com/100007439388282" target="_blank"><img src="presidential_candidates/dc.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/100007439388282" target="_blank">Lucas Aguilera - DC</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/100007439388282" target="_blank">
+	        		<h3>Lucas Aguilera</h3>
+	        	</a>
+	        	<h4>DC</h4>
+	        </td>
 	        <td style="text-align:right"><%= @results[:dc] %></td>
 
 	        <td style="width:200px">
@@ -124,12 +157,17 @@
 	          </div>
 	        </td>
 	        <td style="text-align:right"><%= (@results[:dc].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-      
+
 	      </tr>
-	
+
 	      <tr>
 	        <td><a href="https://www.facebook.com/2019348681409468" target="_blank"><img src="presidential_candidates/ud.jpg" class="img-circle"></a></td>
-	        <td><a href="https://www.facebook.com/2019348681409468" target="_blank">Alfonso Díaz - UD</a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/2019348681409468" target="_blank">
+	        		<h3>Alfonso Díaz</h3>
+	        	</a>
+	        	<h4>UD</h4>
+	        </td>
 	        <td style="text-align:right"><%= @results[:ud] %></td>
 
 	        <td style="width:200px">
@@ -139,12 +177,17 @@
 	          </div>
 	        </td>
 	        <td style="text-align:right"><%= (@results[:ud].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-      
+
 	      </tr>
 
 	      <tr>
-	        <td><a href="" target="_blank"><img src="presidential_candidates/frente_amplio.jpg" class="img-circle"></a></td>
-	        <td><a href="" target="_blank">Isaías Fonseca Aguilar - Frente Amplio</a></td>
+	        <td><a href="https://www.facebook.com/isaiasfonseca.hn2017/" target="_blank"><img src="presidential_candidates/frente_amplio.jpg" class="img-circle"></a></td>
+	        <td>
+	        	<a href="https://www.facebook.com/isaiasfonseca.hn2017/" target="_blank">
+		        	<h3>Isaías Fonseca Aguilar</h3>
+		        </a>
+		        <h4>Frente Amplio</h4>
+	      	</td>
 	        <td style="text-align:right"><%= @results[:frente_amplio] %></td>
 
 	        <td style="width:200px">
@@ -154,7 +197,7 @@
 	          </div>
 	        </td>
 	        <td style="text-align:right"><%= (@results[:frente_amplio].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-      
+
 	      </tr>
 
 
@@ -163,7 +206,7 @@
 	      <td></td>
 	      <td>Nulos</td>
 	      <td style="text-align:right"><%= @results[:nulos] %></td>
-          
+
 	      <td style="width:200px">
 	        <div class="progress ">
 	          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:nulos].to_f/@results[:total].to_f*100.0).round(2) %>%">
@@ -171,7 +214,7 @@
 	        </div>
 	      </td>
 	      <td style="text-align:right"><%= (@results[:nulos].to_f/@results[:total].to_f*100.0).round(2) %>%</td>
-    
+
 	      </tr>
 
 	    <tr>
@@ -179,7 +222,7 @@
 	      <td>  </td>
 	      <td>Blancos</td>
 	      <td style="text-align:right"><%= @results[:blancos] %></td>
-          
+
 	      <td style="width:200px">
 	        <div class="progress">
 	          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@results[:blancos].to_f/@results[:total].to_f*100.0).round(2)%> %">
