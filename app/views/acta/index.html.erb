@@ -46,13 +46,13 @@ A&uacute;n tienes que completar estas actas:
 	    <th>Numero</th>
 	    <th>Liberal</th>
 	    <th>Nacional</th>
-	    <th>Libre</th>
+	    <th>Alianza de Oposición Contra la Dictadura (Libre-Pinu)</th>
 	    <th>Pac</th>
 	    <th>Ud</th>
 	    <th>Dc</th>
-	    <th>Alianza</th>
-	    <th>Pinu</th>
-	    <%if @actum_short_type=="a"%><th>Faper</th><%end%>
+	    <th>Alianza Patriótica</th>
+	    <th>Vamos</th>
+            <th>Frente Amplio</th>
 	    <th>Blancos</th>
 	    <th>Nulos</th>
 	    <th>Suma Coincide?</th>
@@ -65,13 +65,13 @@ A&uacute;n tienes que completar estas actas:
 	   <td>Totales</td>
 	   <td><b><%= @sumLiberal %></b></td>
 	   <td><b><%= @sumNacional %></b></td>
-	   <td><b><%= @sumLibre %></b></td>
+	   <td><b><%= @sumLibre_Pinu %></b></td>
 	   <td><b><%= @sumPac %></b></td>
 	   <td><b><%= @sumUD%></b></td>
 	   <td><b><%= @sumDC %></b></td>
-	   <td><b><%= @sumAlianza %></b></td>
-	   <td><b><%= @sumPinu %></b></td>
-	   <%if @actum_short_type=="a"%><td><b><%=@sumFaper%></b></td><%end%>
+	   <td><b><%= @sumAlianza_Patriotica %></b></td>
+	   <td><b><%= @sumVamos %></b></td>
+	   <td><b><%=@sumFrente_Amplio%></b></td>
 	   <td><b><%= @sumBlancos %></b></td>
 	   <td><b><%= @sumNulos %></b></td>
 	   <td></td>
@@ -84,15 +84,13 @@ A&uacute;n tienes que completar estas actas:
 	   <td>Porcentajes</td>
 	   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+	   <td><b><%= number_with_precision((@sumLibre_Pinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
 	   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <%if @actum_short_type=="a"%>
-	     <td><b><%= number_with_precision((@sumFaper.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-	   <%end%>
+	   <td><b><%= number_with_precision((@sumAlianza_Patriotica.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+	   <td><b><%= number_with_precision((@sumVamos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+	   <td><b><%= number_with_precision((@sumFrente_Amplio.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 	   <td></td>
@@ -106,13 +104,13 @@ A&uacute;n tienes que completar estas actas:
 	    <td><%="%05d" % actum.numero %></td>
 	    <td><%= actum.liberal %></td>
 	    <td><%= actum.nacional %></td>
-	    <td><%= actum.libre %></td>
+	    <td><%= actum.libre_pinu %></td>
 	    <td><%= actum.pac %></td>
 	    <td><%= actum.ud %></td>
 	    <td><%= actum.dc %></td>
-	    <td><%= actum.alianza %></td>
-	    <td><%= actum.pinu %></td>
-	    <%if @actum_short_type=="a"%> <td><%= actum.faper %></td>  <%end%>
+	    <td><%= actum.alianza_patriotica %></td>
+	    <td><%= actum.vamos %></td>
+	    <td><%= actum.frente_amplio %></td>
 	    <td><%= actum.blancos %></td>
 	    <td><%= actum.nulos %></td>
 	    <td><%= actum.is_sum_ok ? "Si" : "No"%></td> 
@@ -136,13 +134,13 @@ A&uacute;n tienes que completar estas actas:
 		   <td>Totales</td>
 		   <td><b><%= @sumLiberal %></b></td>
 		   <td><b><%= @sumNacional %></b></td>
-		   <td><b><%= @sumLibre %></b></td>
+		   <td><b><%= @sumLibre_Pinu %></b></td>
 		   <td><b><%= @sumPac %></b></td>
 		   <td><b><%= @sumUD%></b></td>
 		   <td><b><%= @sumDC %></b></td>
-		   <td><b><%= @sumAlianza %></b></td>
-		   <td><b><%= @sumPinu %></b></td>
-		   <%if @actum_short_type=="a"%><td><b><%=@sumFaper%></b></td><%end%>
+		   <td><b><%= @sumAlianza_Patriotica %></b></td>
+		   <td><b><%= @sumVamos %></b></td>
+		   <td><b><%=@sumFrente_Amplio%></b></td>
 		   <td><b><%= @sumBlancos %></b></td>
 		   <td><b><%= @sumNulos %></b></td>
 		   <td></td>
@@ -155,15 +153,13 @@ A&uacute;n tienes que completar estas actas:
 		   <td>Porcentajes</td>
 		   <td><b><%= number_with_precision((@sumLiberal.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumNacional.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-		   <td><b><%= number_with_precision((@sumLibre.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+		   <td><b><%= number_with_precision((@sumLibre_Pinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumPac.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumUD.to_f/@sumAll.to_f)*100,precision: 2)%>%</b></td>
 		   <td><b><%= number_with_precision((@sumDC.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-		   <td><b><%= number_with_precision((@sumAlianza.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-		   <td><b><%= number_with_precision((@sumPinu.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-		   <%if @actum_short_type=="a"%>
-		     <td><b><%= number_with_precision((@sumFaper.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
-		   <%end%>
+		   <td><b><%= number_with_precision((@sumAlianza_Patriotica.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+		   <td><b><%= number_with_precision((@sumVamos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
+		   <td><b><%= number_with_precision((@sumFrente_Amplio.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumBlancos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td><b><%= number_with_precision((@sumNulos.to_f/@sumAll.to_f)*100,precision: 2) %>%</b></td>
 		   <td></td>

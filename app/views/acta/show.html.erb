@@ -87,7 +87,6 @@
 	
 	  <%=render :partial=>"#{@actum.full_type}_table_fields", :locals=>{:verification=>verification}%>
 	
-	  <td><%=verification.nacional%></td>
 	  <td><%=verification.blancos%></td>
 	  <td><%=verification.nulos%></td>
 	  <td><%=verification.is_sum_ok ? "Si" : "No"%></td>
@@ -162,20 +161,32 @@
 
 <script>
 $(document).ready(function(){
-	function calculate_sum(){
+         function calculate_sum(){
 		vote_sum=0;
 		vote_sum+=parseInt($("#verification_dc").val());
-		vote_sum+=parseInt($("#verification_alianza").val());
+		vote_sum+=parseInt($("#verification_alianza_patriotica").val());
 		vote_sum+=parseInt($("#verification_liberal").val());
 		vote_sum+=parseInt($("#verification_pac").val());
-		vote_sum+=parseInt($("#verification_libre").val());
+		vote_sum+=parseInt($("#verification_libre_pinu").val());
 		vote_sum+=parseInt($("#verification_ud").val());
-		vote_sum+=parseInt($("#verification_pinu").val());
-		vote_sum+=parseInt($("#verification_faper").val());
+		vote_sum+=parseInt($("#verification_vamos").val());
+		vote_sum+=parseInt($("#verification_frente_amplio").val());
 		vote_sum+=parseInt($("#verification_nacional").val());
 		vote_sum+=parseInt($("#verification_blancos").val());
-		vote_sum+=parseInt($("#verification_nulos").val());
-		$("#vote-sum").html(vote_sum);
+vote_sum+=parseInt($("#verification_nulos").val());
+
+actas_sum=parseInt($("#verification_recibidas").val())-parseInt($("#verification_sobrantes").val());
+reported_sum=parseInt($("#verification_ciudadanos").val())+parseInt($("#verification_miembros_mer").val());
+
+coinciden = (vote_sum == actas_sum) && (vote_sum == reported_sum) && (actas_sum == reported_sum);
+
+                
+                $("#actas-sum").html(actas_sum);
+                $("#reported-sum").html(reported_sum);
+$("#vote-sum").html(vote_sum);
+
+$("#verification_is_sum_ok").val(coinciden ? "1" : "0");
+
 	}
 	$("input").change(function() {
 		calculate_sum();

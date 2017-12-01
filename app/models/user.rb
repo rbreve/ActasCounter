@@ -21,11 +21,12 @@ class User < ActiveRecord::Base
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
+
     unless user
-      user = User.create(name:(auth.extra.raw_info.first_name || auth.extra.raw_info.name), lastname:(auth.extra.raw_info.last_name || ""),
+      user = User.create(name:(auth.info.name || auth.extra.raw_info.first_name || auth.extra.raw_info.name), lastname:(auth.extra.raw_info.last_name || ""),
                            provider:auth.provider,
                            uid:auth.uid,
-                           email:auth.info.email,
+                           email:auth.info.email || "#{auth.uid}@#{auth.uid}.net",
                            password:Devise.friendly_token[0,20]
                            )
     end
@@ -34,10 +35,12 @@ class User < ActiveRecord::Base
   
  
   def calculated_verification_count
-    if self.verifications_count-self.acta_count<0
+    v_count = self.verifications_count || 0
+    a_count = self.acta_count || 0
+    if v_count-a_count<0
       0
     else
-      self.verifications_count-self.acta_count
+      v_count-a_count
     end
   end
   

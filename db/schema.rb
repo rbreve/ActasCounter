@@ -11,33 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206034950) do
+ActiveRecord::Schema.define(:version => 20171130055352) do
 
   create_table "acta", :force => true do |t|
     t.string   "numero"
     t.integer  "liberal"
     t.integer  "nacional"
-    t.integer  "libre"
     t.integer  "pac"
     t.integer  "ud"
     t.integer  "dc"
-    t.integer  "alianza"
-    t.integer  "pinu"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "blancos"
     t.integer  "nulos"
     t.integer  "user_id"
-    t.integer  "verified_count",   :default => 0
-    t.boolean  "ready_for_review", :default => true
-    t.boolean  "is_sum_ok",        :default => true
-    t.boolean  "image_changed",    :default => false
-    t.string   "actum_type",       :default => "p"
+    t.integer  "verified_count",     :default => 0
+    t.boolean  "ready_for_review",   :default => true
+    t.boolean  "is_sum_ok",          :default => true
+    t.boolean  "image_changed",      :default => false
+    t.string   "actum_type",         :default => "p"
     t.integer  "municipio_id"
-    t.integer  "faper",            :default => 0
+    t.integer  "libre_pinu"
+    t.integer  "frente_amplio"
+    t.integer  "alianza_patriotica"
+    t.integer  "vamos"
+    t.integer  "recibidas"
+    t.integer  "sobrantes"
+    t.integer  "ciudadanos"
+    t.integer  "miembros_mer"
   end
 
-  add_index "acta", ["liberal", "nacional", "libre", "pac", "ud", "dc", "alianza", "pinu", "blancos", "nulos"], :name => "acta_counts_index"
+  add_index "acta", ["liberal", "nacional", "libre_pinu", "pac", "ud", "dc", "alianza_patriotica", "blancos", "nulos", "frente_amplio", "vamos"], :name => "acta_counts_index"
   add_index "acta", ["numero"], :name => "acta_numero_index"
   add_index "acta", ["user_id", "ready_for_review", "id", "verified_count"], :name => "acta_for_random_index"
 
@@ -107,22 +111,26 @@ ActiveRecord::Schema.define(:version => 20131206034950) do
   create_table "verifications", :force => true do |t|
     t.integer  "liberal"
     t.integer  "nacional"
-    t.integer  "libre"
     t.integer  "pac"
     t.integer  "ud"
     t.integer  "dc"
-    t.integer  "alianza"
-    t.integer  "pinu"
     t.integer  "nulos"
     t.integer  "blancos"
     t.boolean  "is_valid"
     t.integer  "acta_id"
     t.integer  "user_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.boolean  "is_sum_ok",     :default => true
-    t.boolean  "image_changed", :default => false
-    t.integer  "faper",         :default => 0
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.boolean  "is_sum_ok",          :default => true
+    t.boolean  "image_changed",      :default => false
+    t.integer  "libre_pinu"
+    t.integer  "frente_amplio"
+    t.integer  "alianza_patriotica"
+    t.integer  "vamos"
+    t.integer  "recibidas"
+    t.integer  "sobrantes"
+    t.integer  "ciudadanos"
+    t.integer  "miembros_mer"
   end
 
 end

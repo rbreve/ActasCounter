@@ -6,7 +6,7 @@
     <div class="qa-box">
 		<h2>¿Qué es conteo.votosocial.org?</h2>
 	    <p>
-		Es una plataforma crowdsourced para digitar, validar y reportar irregularidades en actas de votación, en este caso de las elecciones de Honduras 2013.
+		Es una plataforma crowdsourced para digitar, validar y reportar irregularidades en actas de votación, en este caso de las elecciones de Honduras 2017.
 	    </p>
     </div>
 
@@ -20,7 +20,7 @@
     <div class="qa-box">
 		<h2>¿Cómo funciona?</h2>
 	    <p>
-			Las elecciones de Honduras cuentan con 16135 mesas electorales. Cada una de las mesas produjo 3 actas de cierre, una para presidente, otra para diputados y por último la de alcaldes. En este momento nos enfocamos únicamente en las actas de nivel presidencial. 
+			Las elecciones de Honduras cuentan con 18128 mesas electorales. Cada una de las mesas produjo 3 actas de cierre, una para presidente, otra para diputados y por último la de alcaldes. En este momento nos enfocamos únicamente en las actas de nivel presidencial. 
 			
 			<ol>
 			  <li>Se va mostrando de manera aleatoria un acta para que sea digitada</li>
@@ -50,13 +50,6 @@
     </div>
 
     <div class="qa-box">
-		<h2>¿Por qué solo tienen 15088 actas y no 16135 actas?</h2>
-	    <p>
-		Las actas son una copia de las actas que publicó el Tribunal Supremo Electoral en su plataforma llamada SIEDE. Hasta el día Jueves 28 de Noviembre el SIEDE solo tenía 15088 actas en su cuenta pública de Amazon S3.
-	    </p>
-    </div>
-
-    <div class="qa-box">
 		<h2>¿Cómo obtuvieron las actas?</h2>
 	    <p>
 			Al analizar el código HTML de la página del SIEDE encontramos que las actas estaban almacenadas en una ruta particular y que el nombre de las actas seguía un patrón predecible, es así que con solo cambiar el número del acta era posible ver el acta de otra mesa. 
@@ -82,7 +75,7 @@
     <div class="qa-box">
 		<h2>¿Cómo podemos garantizar que la plataforma realiza bien los cálculos?</h2>
 	    <p>
-			Para garantizar la transparencia hemos dejado bitácora de todos los cambios de manera pública, bitácora de los reportes y el código es Open Source <a href="https://github.com/corp/ActasCounter" target="_blank">https://github.com/corp/ActasCounter</a>
+			Para garantizar la transparencia hemos dejado bitácora de todos los cambios de manera pública, bitácora de los reportes y el código es Open Source <a href="https://github.com/votosocial/ActasCounter" target="_blank">https://github.com/votosocial/ActasCounter</a>
         <p/><p>
 			Adicionalmente pensamos crear un API para que los datos sean abiertos y puedan ser utilizados en el futuro para análisis.
 	    </p>

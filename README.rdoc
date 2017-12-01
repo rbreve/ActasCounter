@@ -35,3 +35,7 @@ FOR YOUR LOCAL DEVELOPMENT:
     ENV["AWS_REGION"]="the_aws_region"
     ENV["AWS_BUCKET"]="the_aws_bucket"
   end
+
+TO BOOTSTRAP THE ACTAS
+
+ rails runner "AvailableNumber.generate_all(1,2,'p')"
