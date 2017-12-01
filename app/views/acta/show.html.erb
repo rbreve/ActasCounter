@@ -52,7 +52,8 @@
    </div>
 	
   </div>
-<%end%>
+  <%end%>
+
 
 <%if @actum.verifications.count>0%>
 <div style="float:left:width:100%;clear:both;padding-top:20px;padding-bottom:20px">
@@ -96,6 +97,17 @@
 </div>
 <%end%>
 
+<div class="alert alert-info" style="float:left:width:100%;clear:both;padding-top:20px;padding-bottom:20px">
+  
+  <p>
+    <a style="color:#fff;" class="btn btn-primary btn-lg" href="https://resultadosgenerales2017.tse.hn/Acta.html?nivel=1&mer=<%=@actum.numero%>" target="_blank">Ver Versión del TSE de esta acta.</a>
+  </p>
+  <br/>
+  <p>
+    Si hay inconsistencias notables con el resultado del TSE (la imagen ya no es la misma, errores en los totales digitados, observaciones no acatadas, etc.). Por favor <strong>repórtalas</strong> en el formulario al final de esta página.
+  </p>
+</div>
+
 <p>
 <div style="float:left;width:100%;clear:both;padding-top:1px;padding-bottom:0px">
     <%if @actum.reportes.length>0%>  
@@ -126,7 +138,7 @@
 		<% end %>
 		</table>
     <%end%>	
-	<div class="panel panel-danger" style="margin-top:50px;" id="reportForm">
+	<div class="panel panel-danger" style="margin-top:5px;" id="reportForm">
 	  <!-- Default panel contents -->
 	  <div class="panel-heading">Reportar Problemas en Acta o Dudas</div>
 	  <div class="panel-body">
