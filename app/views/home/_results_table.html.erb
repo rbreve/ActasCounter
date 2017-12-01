@@ -21,6 +21,28 @@
 			  </div>
 			</div>
 
+	<h3 >
+			Actas verificadas 2 veces: <%=Actum.where(["verified_count>=? AND actum_type=?",2,"p"]).count%> (<%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",2,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>% de las actas digitadas)
+		</h3>
+
+			<div class="progress">
+			  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",2,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>%">
+			    <span class="sr-only"><%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",2,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100, precision:2)%> % Complete (success)</span>
+			  </div>
+			</div>
+
+
+	<h3 >
+			Actas verificadas 1 vez: <%=Actum.where(["verified_count>=? AND actum_type=?",1,"p"]).count%> (<%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",1,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>% de las actas digitadas)
+		</h3>
+
+			<div class="progress">
+			  <div class="progress-bar progress-bar-success" style="width: <%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",1,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100,precision: 2)%>%">
+			    <span class="sr-only"><%=number_with_precision((Actum.where(["verified_count>=? AND actum_type=?",1,"p"]).count.to_f/Actum.where(:actum_type=>"p").count.to_f)*100, precision:2)%> % Complete (success)</span>
+			  </div>
+			</div>
+
+
 	<table class="table table-striped" >
 	    <tbody><tr><th></th><th>Candidato(a)</th><th>Votos</th><th colspan="2">Porcentaje</th></tr>
 
