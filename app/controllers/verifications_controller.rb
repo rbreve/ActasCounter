@@ -28,6 +28,7 @@ class VerificationsController < ApplicationController
           @actum.sobrantes=@log.sobrantes
           @actum.ciudadanos=@log.ciudadanos
           @actum.miembros_mer=@log.miembros_mer
+          @actum.firmas=@log.firmas
         end
         @actum.ready_for_review=true
         @actum.save
