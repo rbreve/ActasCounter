@@ -5,6 +5,11 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag :application %>
   <%= csrf_meta_tags %>
+<meta property="og:url"                content="http://votosocial2017.herokuapp.com" />
+<meta property="og:title"              content="Voto Social 2017" />
+<meta property="og:description"        content="Crowdsourcing de conteo de actas presidenciales 2017" />
+<meta property="og:image"              content="https://s3-us-west-2.amazonaws.com/actashn/imagotipo-fondo-blanco.png" />
+  
 </head>
 <body>
 	<script>
@@ -56,7 +61,7 @@
 	<%end%>
 	</div>
 	<div class="navbar-left" style="padding-top:6px;padding-left:10px">
-		<div class="fb-share-button" data-href="http://conteo.votosocial.org" data-type="button_count"></div>
+		<div class="fb-share-button" data-href="http://votosocial2017.herokuapp.com" data-type="button_count"></div>
 	</div>
 	
 

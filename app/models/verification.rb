@@ -12,7 +12,7 @@ class Verification < ActiveRecord::Base
                   :blancos,
                   :nulos,
                   :is_valid,:is_sum_ok,:acta_id,:image_changed,:user_id,
-                  :recibidas,:sobrantes,:ciudadanos,:miembros_mer
+                  :recibidas,:sobrantes,:ciudadanos,:miembros_mer,:firmas
   belongs_to :user #, counter_cache: true
   belongs_to :actum, class_name: "Actum",:foreign_key=>"acta_id"
    

@@ -51,7 +51,10 @@
 	<tr>
 		<td><b>Nulos:</b></td><td><%= @actum.nulos %></td>
 	</tr>
-
+        <tr>
+          <td><b>Número de Firmas de Miembros MER (columna derecha):</b></td>
+          <td><%= @actum.firmas %></td>
+        </tr>
         <tr> 
 	  <td><b>Total Papeletas Utilizadas (Recibidas - Sobrantes):</b></td><td><%=@totalActas%></td>
 	</tr>
@@ -124,6 +127,10 @@
 	<tr>
 		<td><b>Nulos:</b></td><td><%= f.number_field :nulos %></td>
 	</tr>
+        <tr>
+          <td><b>Número de Firmas de Miembros MER (columna derecha):</b></td>
+          <td><%= f.number_field :firmas %></td>
+        </tr>
        
 	<tr>
 	  <td><b>Suma de Votos Digitados:</b></td><td class="total-sum"><span id="vote-sum" ><%=@totalVotos%></span></td>
