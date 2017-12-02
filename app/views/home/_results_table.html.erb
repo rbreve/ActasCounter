@@ -1,5 +1,5 @@
 <div>
-	<h1>Resultados Actuales</h1>
+	<h1>Resultados actuales según Actas del TSE</h1>
 	<h3>
 		Actas procesadas: <%=Actum.where(:actum_type=>"p").count%>  de <%=MAX_ACTAS%> (<%=number_with_precision((Actum.where(:actum_type=>"p").count.to_f/MAX_ACTAS.to_f)*100,precision: 2)%>% del total de actas)
 	</h3>

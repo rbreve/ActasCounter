@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20171201021743) do
     t.integer  "verified_count",     :default => 0
     t.boolean  "ready_for_review",   :default => true
     t.boolean  "is_sum_ok",          :default => true
-    t.boolean  "image_changed",      :default => false
     t.string   "actum_type",         :default => "p"
+    t.boolean  "image_changed",      :default => false
     t.integer  "municipio_id"
     t.integer  "libre_pinu"
     t.integer  "frente_amplio"
@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(:version => 20171201021743) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_admin",               :default => false
-    t.integer  "acta_count"
-    t.integer  "verifications_count"
+    t.integer  "acta_count",             :default => 0
+    t.integer  "verifications_count",    :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
